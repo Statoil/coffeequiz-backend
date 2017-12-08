@@ -10,6 +10,7 @@ let db;
 function connect() {
   return MongoClient.connect(url)
     .then(database => {
+      logger.info("Connected to " + url);
       db = database;
     });
 }

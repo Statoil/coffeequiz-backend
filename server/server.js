@@ -5,43 +5,33 @@ const app = express();
 const bodyParser = require("body-parser");
 const path = require("path");
 const logger = require("./logger");
-const mongo = require("./mongoAPI");
 const cors = require('cors');
+const api = require('./routes/api');
+const http = require("http");
 
 const port = process.env.PORT || 3000;
 
 app.use(express.static(path.join(__dirname, '../www')));
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(cors());
 
+app.use(express.static(path.join(__dirname, '../dist')));
+
 app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header('Access-Control-Allow-Methods', 'GET, POST');
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header('Access-Control-Allow-Methods', 'GET, POST');
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
 });
 
-app.post('/api/response', (req, res) => {
-  const quizResponse = req.body;
-  quizResponse.timestamp = new Date();
-  logger.info("quiz response: ", quizResponse);
-  mongo.saveQuizResponse(quizResponse);
-  res.send({});
+app.use('/api', api);
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../dist/index.html'));
 });
 
-app.get('/api/quizdata', (req, res) => {
-  mongo.getQuizData()
-    .then(quizData => res.send(quizData));
-});
+const server = http.createServer(app);
+server.listen(port,
+    () => logger.info(`CoffeServer is running on ${port}`));
 
-mongo.connect()
-  .then(() => {
-    app.listen(port, (err) => {
-      if (err) {
-        return logger.error('An error occurred', err);
-      }
-      logger.info(`server is listening on ${port}`);
-    });
-  })
-  .catch(error => logger.error(error));
