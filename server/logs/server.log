@@ -1,0 +1,146 @@
+2017-11-30 12:58:30,641  INFO  server is listening on 3000 
+2017-11-30 01:15:45,780  INFO  quiz response:  {"quizItemId":0,"answerIndex":0,"isTrue":false,"timestamp":"2017-11-30T12:15:45.780Z"}
+2017-11-30 01:15:45,786  DEBUG  Document inserted successfully {"quizItemId":0,"answerIndex":0,"isTrue":false,"timestamp":"2017-11-30T12:15:45.780Z","_id":{"_bsontype":"ObjectID","id":{"0":90,"1":31,"2":246,"3":113,"4":158,"5":127,"6":213,"7":34,"8":64,"9":119,"10":73,"11":16}}}
+2017-11-30 01:16:41,164  INFO  quiz response:  {"quizItemId":0,"answerIndex":1,"isTrue":true,"timestamp":"2017-11-30T12:16:41.164Z"}
+2017-11-30 01:16:41,167  DEBUG  Document inserted successfully {"quizItemId":0,"answerIndex":1,"isTrue":true,"timestamp":"2017-11-30T12:16:41.164Z","_id":{"_bsontype":"ObjectID","id":{"0":90,"1":31,"2":246,"3":169,"4":158,"5":127,"6":213,"7":34,"8":64,"9":119,"10":73,"11":17}}}
+2017-11-30 02:42:59,927  INFO  server is listening on 3000 
+2017-11-30 02:43:05,386  INFO  server is listening on 3000 
+2017-11-30 02:47:18,240  INFO  server is listening on 3000 
+2017-11-30 03:06:46,235  INFO  server is listening on 3000 
+2017-11-30 03:07:07,618  INFO  server is listening on 3000 
+2017-12-01 12:37:55,995  INFO  server is listening on 3000 
+2017-12-01 12:38:31,549  INFO  quiz response:  {"quizItemId":17,"answerIndex":2,"isTrue":true,"timestamp":"2017-12-01T11:38:31.548Z"}
+2017-12-01 12:38:31,560  DEBUG  Document inserted successfully {"quizItemId":17,"answerIndex":2,"isTrue":true,"timestamp":"2017-12-01T11:38:31.548Z","_id":{"_bsontype":"ObjectID","id":{"0":90,"1":33,"2":63,"3":55,"4":0,"5":197,"6":231,"7":80,"8":119,"9":86,"10":103,"11":0}}}
+2017-12-01 12:38:36,962  INFO  quiz response:  {"quizItemId":18,"answerIndex":0,"isTrue":false,"timestamp":"2017-12-01T11:38:36.962Z"}
+2017-12-01 12:38:36,964  DEBUG  Document inserted successfully {"quizItemId":18,"answerIndex":0,"isTrue":false,"timestamp":"2017-12-01T11:38:36.962Z","_id":{"_bsontype":"ObjectID","id":{"0":90,"1":33,"2":63,"3":60,"4":0,"5":197,"6":231,"7":80,"8":119,"9":86,"10":103,"11":1}}}
+2017-12-01 12:38:43,449  INFO  quiz response:  {"quizItemId":19,"answerIndex":1,"isTrue":false,"timestamp":"2017-12-01T11:38:43.448Z"}
+2017-12-01 12:38:43,451  DEBUG  Document inserted successfully {"quizItemId":19,"answerIndex":1,"isTrue":false,"timestamp":"2017-12-01T11:38:43.448Z","_id":{"_bsontype":"ObjectID","id":{"0":90,"1":33,"2":63,"3":67,"4":0,"5":197,"6":231,"7":80,"8":119,"9":86,"10":103,"11":2}}}
+2017-12-01 02:17:29,899  INFO  server is listening on 3000 
+2017-12-01 02:21:48,124  INFO  server is listening on 3000 
+2017-12-01 02:24:16,226  INFO  server is listening on 3000 
+2017-12-01 02:49:42,941  INFO  quiz response:  {"quizItemId":19,"answerIndex":1,"isTrue":false,"timestamp":"2017-12-01T13:49:42.941Z"}
+2017-12-01 02:49:42,948  DEBUG  Document inserted successfully {"quizItemId":19,"answerIndex":1,"isTrue":false,"timestamp":"2017-12-01T13:49:42.941Z","_id":{"_bsontype":"ObjectID","id":{"0":90,"1":33,"2":93,"3":246,"4":20,"5":54,"6":113,"7":85,"8":49,"9":250,"10":196,"11":116}}}
+2017-12-01 02:49:55,380  INFO  quiz response:  {"quizItemId":19,"answerIndex":2,"isTrue":false,"timestamp":"2017-12-01T13:49:55.380Z"}
+2017-12-01 02:50:10,087  INFO  quiz response:  {"quizItemId":19,"answerIndex":1,"isTrue":false,"timestamp":"2017-12-01T13:50:10.086Z"}
+2017-12-01 02:54:35,079  ERROR   {"name":"MongoError","message":"failed to connect to server [localhost:27018] on first connect [MongoError: connect ECONNREFUSED 127.0.0.1:27018]"}
+2017-12-01 02:54:46,125  INFO  server is listening on 3000 
+2017-12-01 02:55:05,081  INFO  quiz response:  {"quizItemId":19,"answerIndex":2,"isTrue":false,"timestamp":"2017-12-01T13:55:05.080Z"}
+2017-12-01 02:55:05,092  DEBUG  Document inserted successfully {"quizItemId":19,"answerIndex":2,"isTrue":false,"timestamp":"2017-12-01T13:55:05.080Z","_id":{"_bsontype":"ObjectID","id":{"0":90,"1":33,"2":95,"3":57,"4":12,"5":168,"6":212,"7":86,"8":238,"9":1,"10":68,"11":98}}}
+2017-12-01 02:55:10,236  INFO  quiz response:  {"quizItemId":19,"answerIndex":1,"isTrue":false,"timestamp":"2017-12-01T13:55:10.236Z"}
+2017-12-01 02:55:10,238  DEBUG  Document inserted successfully {"quizItemId":19,"answerIndex":1,"isTrue":false,"timestamp":"2017-12-01T13:55:10.236Z","_id":{"_bsontype":"ObjectID","id":{"0":90,"1":33,"2":95,"3":62,"4":12,"5":168,"6":212,"7":86,"8":238,"9":1,"10":68,"11":99}}}
+2017-12-01 03:00:57,580  INFO  server is listening on 3000 
+2017-12-01 03:01:14,323  INFO  quiz response:  {"quizItemId":19,"answerIndex":1,"isTrue":false,"timestamp":"2017-12-01T14:01:14.322Z"}
+2017-12-01 03:01:14,330  DEBUG  Document inserted successfully {"quizItemId":19,"answerIndex":1,"isTrue":false,"timestamp":"2017-12-01T14:01:14.322Z","_id":{"_bsontype":"ObjectID","id":{"0":90,"1":33,"2":96,"3":170,"4":160,"5":45,"6":143,"7":87,"8":46,"9":6,"10":205,"11":55}}}
+2017-12-01 03:01:19,744  INFO  quiz response:  {"quizItemId":19,"answerIndex":2,"isTrue":false,"timestamp":"2017-12-01T14:01:19.744Z"}
+2017-12-01 03:01:19,748  DEBUG  Document inserted successfully {"quizItemId":19,"answerIndex":2,"isTrue":false,"timestamp":"2017-12-01T14:01:19.744Z","_id":{"_bsontype":"ObjectID","id":{"0":90,"1":33,"2":96,"3":175,"4":160,"5":45,"6":143,"7":87,"8":46,"9":6,"10":205,"11":56}}}
+2017-12-01 03:03:16,778  INFO  quiz response:  {"quizItemId":19,"answerIndex":2,"isTrue":false,"timestamp":"2017-12-01T14:03:16.778Z"}
+2017-12-01 03:03:16,780  DEBUG  Document inserted successfully {"quizItemId":19,"answerIndex":2,"isTrue":false,"timestamp":"2017-12-01T14:03:16.778Z","_id":{"_bsontype":"ObjectID","id":{"0":90,"1":33,"2":97,"3":36,"4":160,"5":45,"6":143,"7":87,"8":46,"9":6,"10":205,"11":57}}}
+2017-12-01 03:04:10,798  INFO  server is listening on 3000 
+2017-12-01 03:04:19,386  INFO  quiz response:  {"quizItemId":19,"answerIndex":1,"isTrue":false,"timestamp":"2017-12-01T14:04:19.385Z"}
+2017-12-01 03:04:19,394  DEBUG  Document inserted successfully {"quizItemId":19,"answerIndex":1,"isTrue":false,"timestamp":"2017-12-01T14:04:19.385Z","_id":{"_bsontype":"ObjectID","id":{"0":90,"1":33,"2":97,"3":99,"4":215,"5":164,"6":82,"7":87,"8":92,"9":15,"10":23,"11":30}}}
+2017-12-01 03:06:04,712  INFO  quiz response:  {"quizItemId":19,"answerIndex":2,"isTrue":false,"timestamp":"2017-12-01T14:06:04.711Z"}
+2017-12-01 03:06:04,715  DEBUG  Document inserted successfully {"quizItemId":19,"answerIndex":2,"isTrue":false,"timestamp":"2017-12-01T14:06:04.711Z","_id":{"_bsontype":"ObjectID","id":{"0":90,"1":33,"2":97,"3":204,"4":215,"5":164,"6":82,"7":87,"8":92,"9":15,"10":23,"11":31}}}
+2017-12-01 03:08:10,078  INFO  quiz response:  {"quizItemId":19,"answerIndex":0,"isTrue":true,"timestamp":"2017-12-01T14:08:10.078Z"}
+2017-12-01 03:08:10,081  DEBUG  Document inserted successfully {"quizItemId":19,"answerIndex":0,"isTrue":true,"timestamp":"2017-12-01T14:08:10.078Z","_id":{"_bsontype":"ObjectID","id":{"0":90,"1":33,"2":98,"3":74,"4":215,"5":164,"6":82,"7":87,"8":92,"9":15,"10":23,"11":32}}}
+2017-12-01 03:09:03,413  INFO  server is listening on 3000 
+2017-12-01 03:09:26,336  INFO  quiz response:  {"quizItemId":19,"answerIndex":2,"isTrue":false,"timestamp":"2017-12-01T14:09:26.335Z"}
+2017-12-01 03:09:26,345  DEBUG  Document inserted successfully {"quizItemId":19,"answerIndex":2,"isTrue":false,"timestamp":"2017-12-01T14:09:26.335Z","_id":{"_bsontype":"ObjectID","id":{"0":90,"1":33,"2":98,"3":150,"4":30,"5":247,"6":131,"7":87,"8":167,"9":170,"10":98,"11":88}}}
+2017-12-01 03:09:57,003  INFO  quiz response:  {"quizItemId":19,"answerIndex":1,"isTrue":false,"timestamp":"2017-12-01T14:09:57.003Z"}
+2017-12-01 03:09:57,006  DEBUG  Document inserted successfully {"quizItemId":19,"answerIndex":1,"isTrue":false,"timestamp":"2017-12-01T14:09:57.003Z","_id":{"_bsontype":"ObjectID","id":{"0":90,"1":33,"2":98,"3":181,"4":30,"5":247,"6":131,"7":87,"8":167,"9":170,"10":98,"11":89}}}
+2017-12-01 03:11:20,577  INFO  quiz response:  {"quizItemId":19,"answerIndex":1,"isTrue":false,"timestamp":"2017-12-01T14:11:20.577Z"}
+2017-12-01 03:11:20,580  DEBUG  Document inserted successfully {"quizItemId":19,"answerIndex":1,"isTrue":false,"timestamp":"2017-12-01T14:11:20.577Z","_id":{"_bsontype":"ObjectID","id":{"0":90,"1":33,"2":99,"3":8,"4":30,"5":247,"6":131,"7":87,"8":167,"9":170,"10":98,"11":90}}}
+2017-12-01 03:12:38,037  INFO  server is listening on 3000 
+2017-12-01 03:12:42,559  INFO  quiz response:  {"quizItemId":19,"answerIndex":1,"isTrue":false,"timestamp":"2017-12-01T14:12:42.559Z"}
+2017-12-01 03:12:42,569  DEBUG  Document inserted successfully {"quizItemId":19,"answerIndex":1,"isTrue":false,"timestamp":"2017-12-01T14:12:42.559Z","_id":{"_bsontype":"ObjectID","id":{"0":90,"1":33,"2":99,"3":90,"4":226,"5":240,"6":67,"7":87,"8":189,"9":42,"10":167,"11":41}}}
+2017-12-01 03:14:10,685  INFO  server is listening on 3000 
+2017-12-01 03:14:37,321  INFO  server is listening on 3000 
+2017-12-01 03:14:45,790  INFO  quiz response:  {"quizItemId":19,"answerIndex":2,"isTrue":false,"timestamp":"2017-12-01T14:14:45.789Z"}
+2017-12-01 03:14:45,796  DEBUG  Document inserted successfully {"quizItemId":19,"answerIndex":2,"isTrue":false,"timestamp":"2017-12-01T14:14:45.789Z","_id":{"_bsontype":"ObjectID","id":{"0":90,"1":33,"2":99,"3":213,"4":32,"5":182,"6":77,"7":87,"8":213,"9":50,"10":77,"11":189}}}
+2017-12-01 03:15:27,288  INFO  quiz response:  {"quizItemId":19,"answerIndex":1,"isTrue":false,"mode":"dev","timestamp":"2017-12-01T14:15:27.287Z"}
+2017-12-01 03:15:27,291  DEBUG  Document inserted successfully {"quizItemId":19,"answerIndex":1,"isTrue":false,"mode":"dev","timestamp":"2017-12-01T14:15:27.287Z","_id":{"_bsontype":"ObjectID","id":{"0":90,"1":33,"2":99,"3":255,"4":32,"5":182,"6":77,"7":87,"8":213,"9":50,"10":77,"11":190}}}
+2017-12-01 03:17:08,356  INFO  server is listening on 3000 
+2017-12-01 03:47:41,849  INFO  server is listening on 3000 
+2017-12-01 06:11:40,675  INFO  server is listening on 3000 
+2017-12-01 06:11:53,879  INFO  quiz response:  {"quizItemId":19,"answerIndex":0,"isTrue":true,"mode":"dev","timestamp":"2017-12-01T17:11:53.879Z"}
+2017-12-01 06:11:53,887  DEBUG  Document inserted successfully {"quizItemId":19,"answerIndex":0,"isTrue":true,"mode":"dev","timestamp":"2017-12-01T17:11:53.879Z","_id":{"_bsontype":"ObjectID","id":{"0":90,"1":33,"2":141,"3":89,"4":115,"5":160,"6":38,"7":95,"8":89,"9":130,"10":127,"11":86}}}
+2017-12-01 06:11:58,917  INFO  quiz response:  {"quizItemId":19,"answerIndex":1,"isTrue":false,"mode":"dev","timestamp":"2017-12-01T17:11:58.916Z"}
+2017-12-01 06:11:58,919  DEBUG  Document inserted successfully {"quizItemId":19,"answerIndex":1,"isTrue":false,"mode":"dev","timestamp":"2017-12-01T17:11:58.916Z","_id":{"_bsontype":"ObjectID","id":{"0":90,"1":33,"2":141,"3":94,"4":115,"5":160,"6":38,"7":95,"8":89,"9":130,"10":127,"11":87}}}
+2017-12-01 06:12:16,638  INFO  server is listening on 3000 
+2017-12-02 07:57:06,812  INFO  server is listening on 3000 
+2017-12-02 08:01:36,876  INFO  server is listening on 3000 
+2017-12-02 08:06:43,886  INFO  server is listening on 3000 
+2017-12-02 08:11:13,223  INFO  server is listening on 3000 
+2017-12-02 08:13:13,461  INFO  server is listening on 3000 
+2017-12-02 08:14:00,209  INFO  server is listening on 3000 
+2017-12-02 08:14:02,034  INFO   {"pool":null,"server":null,"disconnectHandler":{"s":{"storedOps":[],"storeOptions":{"force":false,"bufferMaxEntries":-1},"topology":{"domain":null,"_events":{},"_eventsCount":8,"clientInfo":{"driver":{"name":"nodejs","version":"2.2.33"},"os":{"type":"Darwin","name":"darwin","architecture":"x64","version":"16.7.0"},"platform":"Node.js v8.9.0, LE"},"s":{"server":{"domain":null,"_events":{},"_eventsCount":17,"id":0,"s":{"options":{"host":"localhost","port":27018,"disconnectHandler":{"$ref":"$[\"disconnectHandler\"]"},"reconnect":true,"emitError":true,"size":5,"socketOptions":{},"socketTimeout":360000,"connectionTimeout":30000,"clientInfo":{"$ref":"$[\"disconnectHandler\"][\"s\"][\"topology\"][\"clientInfo\"]"},"readPreference":{"_type":"ReadPreference","mode":"primary"},"bson":{}},"logger":{"className":"Server"},"bson":{"$ref":"$[\"disconnectHandler\"][\"s\"][\"topology\"][\"s\"][\"server\"][\"s\"][\"options\"][\"bson\"]"},"pool":{"domain":null,"_events":{},"_eventsCount":7,"options":{"host":"localhost","port":27018,"size":5,"connectionTimeout":30000,"socketTimeout":360000,"keepAlive":true,"keepAliveInitialDelay":300000,"noDelay":true,"ssl":false,"checkServerIdentity":true,"ca":null,"crl":null,"cert":null,"key":null,"passPhrase":null,"rejectUnauthorized":false,"promoteLongs":true,"promoteValues":true,"promoteBuffers":false,"reconnect":true,"reconnectInterval":1000,"reconnectTries":30,"domainsEnabled":false,"disconnectHandler":{"$ref":"$[\"disconnectHandler\"]"},"emitError":true,"socketOptions":{"$ref":"$[\"disconnectHandler\"][\"s\"][\"topology\"][\"s\"][\"server\"][\"s\"][\"options\"][\"socketOptions\"]"},"clientInfo":{"$ref":"$[\"disconnectHandler\"][\"s\"][\"topology\"][\"clientInfo\"]"},"readPreference":{"$ref":"$[\"disconnectHandler\"][\"s\"][\"topology\"][\"s\"][\"server\"][\"s\"][\"options\"][\"readPreference\"]"},"bson":{"$ref":"$[\"disconnectHandler\"][\"s\"][\"topology\"][\"s\"][\"server\"][\"s\"][\"options\"][\"bson\"]"}},"id":0,"retriesLeft":30,"reconnectId":null,"logger":{"className":"Pool"},"state":"connected","availableConnections":[{"domain":null,"_events":{},"_eventsCount":4,"options":{"$ref":"$[\"disconnectHandler\"][\"s\"][\"topology\"][\"s\"][\"server\"][\"s\"][\"pool\"][\"options\"]"},"id":0,"logger":{"className":"Connection"},"bson":{"$ref":"$[\"disconnectHandler\"][\"s\"][\"topology\"][\"s\"][\"server\"][\"s\"][\"options\"][\"bson\"]"},"maxBsonMessageSize":67108864,"port":27018,"host":"localhost","family":4,"keepAlive":true,"keepAliveInitialDelay":300000,"noDelay":true,"connectionTimeout":30000,"socketTimeout":360000,"destroyed":false,"domainSocket":false,"singleBufferSerializtion":true,"serializationFunction":"toBinUnified","ca":null,"crl":null,"cert":null,"key":null,"passphrase":null,"ssl":false,"rejectUnauthorized":false,"checkServerIdentity":true,"responseOptions":{"promoteLongs":true,"promoteValues":true,"promoteBuffers":false},"flushing":false,"queue":[],"connection":{"connecting":false,"_hadError":false,"_handle":{"reading":true,"owner":{"$ref":"$[\"disconnectHandler\"][\"s\"][\"topology\"][\"s\"][\"server\"][\"s\"][\"pool\"][\"availableConnections\"][0][\"connection\"]"},"onconnection":null,"writeQueueSize":0},"_parent":null,"_host":"localhost","_readableState":{"objectMode":false,"highWaterMark":16384,"buffer":{"head":null,"tail":null,"length":0},"length":0,"pipes":null,"pipesCount":0,"flowing":true,"ended":false,"endEmitted":false,"reading":true,"sync":false,"needReadable":true,"emittedReadable":false,"readableListening":false,"resumeScheduled":false,"destroyed":false,"defaultEncoding":"utf8","awaitDrain":0,"readingMore":false,"decoder":null,"encoding":null},"readable":true,"domain":null,"_events":{},"_eventsCount":8,"_writableState":{"objectMode":false,"highWaterMark":16384,"finalCalled":false,"needDrain":false,"ending":false,"ended":false,"finished":false,"destroyed":false,"decodeStrings":false,"defaultEncoding":"utf8","length":0,"writing":false,"corked":0,"sync":false,"bufferProcessing":false,"writecb":null,"writelen":0,"bufferedRequest":null,"lastBufferedRequest":null,"pendingcb":0,"prefinished":false,"errorEmitted":false,"bufferedRequestCount":0,"corkedRequestsFree":{"next":null,"entry":null}},"writable":true,"allowHalfOpen":false,"_bytesDispatched":258,"_sockname":null,"_pendingData":null,"_pendingEncoding":"","server":null,"_server":null,"_idleTimeout":360000,"_idleNext":{"_idleNext":{"$ref":"$[\"disconnectHandler\"][\"s\"][\"topology\"][\"s\"][\"server\"][\"s\"][\"pool\"][\"availableConnections\"][0][\"connection\"]"},"_idlePrev":{"$ref":"$[\"disconnectHandler\"][\"s\"][\"topology\"][\"s\"][\"server\"][\"s\"][\"pool\"][\"availableConnections\"][0][\"connection\"]"},"_timer":{"_list":{"$ref":"$[\"disconnectHandler\"][\"s\"][\"topology\"][\"s\"][\"server\"][\"s\"][\"pool\"][\"availableConnections\"][0][\"connection\"][\"_idleNext\"]"}},"_unrefed":true,"msecs":360000,"nextTick":false},"_idlePrev":{"$ref":"$[\"disconnectHandler\"][\"s\"][\"topology\"][\"s\"][\"server\"][\"s\"][\"pool\"][\"availableConnections\"][0][\"connection\"][\"_idleNext\"]"},"_idleStart":260,"_destroyed":false,"_consuming":true},"writeStream":null,"hashedName":"a2c2e9c2b71e274dd8166a52e8f903e947612464","workItems":[],"buffer":null,"sizeOfMessage":0,"bytesRead":0,"stubBuffer":null}],"inUseConnections":[],"connectingConnections":[],"executing":false,"queue":[],"authProviders":{"mongocr":{"bson":{"$ref":"$[\"disconnectHandler\"][\"s\"][\"topology\"][\"s\"][\"server\"][\"s\"][\"options\"][\"bson\"]"},"authStore":[]},"x509":{"bson":{"$ref":"$[\"disconnectHandler\"][\"s\"][\"topology\"][\"s\"][\"server\"][\"s\"][\"options\"][\"bson\"]"},"authStore":[]},"plain":{"bson":{"$ref":"$[\"disconnectHandler\"][\"s\"][\"topology\"][\"s\"][\"server\"][\"s\"][\"options\"][\"bson\"]"},"authStore":[]},"gssapi":{"bson":{"$ref":"$[\"disconnectHandler\"][\"s\"][\"topology\"][\"s\"][\"server\"][\"s\"][\"options\"][\"bson\"]"},"authStore":[]},"sspi":{"bson":{"$ref":"$[\"disconnectHandler\"][\"s\"][\"topology\"][\"s\"][\"server\"][\"s\"][\"options\"][\"bson\"]"},"authStore":[]},"scram-sha-1":{"bson":{"$ref":"$[\"disconnectHandler\"][\"s\"][\"topology\"][\"s\"][\"server\"][\"s\"][\"options\"][\"bson\"]"},"authStore":[],"id":0}},"reconnectConnection":null,"authenticating":false,"loggingout":false,"nonAuthenticatedConnections":[],"authenticatingTimestamp":null,"numberOfConsecutiveTimeouts":0,"connectionIndex":1},"disconnectHandler":{"$ref":"$[\"disconnectHandler\"]"},"monitoring":true,"inTopology":false,"monitoringInterval":5000,"topologyId":-1,"serverDescription":{"topologyType":"Single","servers":[{"address":"localhost:27018","arbiters":[],"hosts":[],"passives":[],"type":"Standalone"}]},"topologyDescription":{"topologyType":"Unknown","servers":[{"address":"localhost:27018","arbiters":[],"hosts":[],"passives":[],"type":"Unknown"}]}},"ismaster":{"ismaster":true,"maxBsonObjectSize":16777216,"maxMessageSizeBytes":48000000,"maxWriteBatchSize":1000,"localTime":"2017-12-02T07:14:02.647Z","maxWireVersion":5,"minWireVersion":0,"readOnly":false,"ok":1},"lastIsMasterMS":6,"monitoringProcessId":{"_called":false,"_idleTimeout":5000,"_idlePrev":{"_idleNext":{"$ref":"$[\"disconnectHandler\"][\"s\"][\"topology\"][\"s\"][\"server\"][\"monitoringProcessId\"]"},"_idlePrev":{"$ref":"$[\"disconnectHandler\"][\"s\"][\"topology\"][\"s\"][\"server\"][\"monitoringProcessId\"]"},"_timer":{"_list":{"$ref":"$[\"disconnectHandler\"][\"s\"][\"topology\"][\"s\"][\"server\"][\"monitoringProcessId\"][\"_idlePrev\"]"}},"_unrefed":false,"msecs":5000,"nextTick":false},"_idleNext":{"$ref":"$[\"disconnectHandler\"][\"s\"][\"topology\"][\"s\"][\"server\"][\"monitoringProcessId\"][\"_idlePrev\"]"},"_idleStart":262,"_repeat":null,"_destroyed":false},"initalConnect":false,"wireProtocolHandler":{"legacyWireProtocol":{}},"_type":"server","clientInfo":{"driver":{"name":"nodejs","version":"2.2.33"},"os":{"type":"Darwin","name":"darwin","architecture":"x64","version":"16.7.0"},"platform":"Node.js v8.9.0, LE, mongodb-core: 2.1.17"},"lastUpdateTime":0,"lastWriteDate":0,"staleness":0},"sCapabilities":{"hasAggregationCursor":true,"hasWriteCommands":true,"hasTextSearch":true,"hasAuthCommands":true,"hasListCollectionsCommand":true,"hasListIndexesCommand":true,"minWireVersion":0,"maxWireVersion":5,"maxNumberOfDocsInBatch":1000,"commandsTakeWriteConcern":true,"commandsTakeCollation":true},"clonedOptions":{"$ref":"$[\"disconnectHandler\"][\"s\"][\"topology\"][\"s\"][\"server\"][\"s\"][\"options\"]"},"reconnect":true,"emitError":true,"poolSize":5,"storeOptions":{"$ref":"$[\"disconnectHandler\"][\"s\"][\"storeOptions\"]"},"store":{"$ref":"$[\"disconnectHandler\"]"},"host":"localhost","port":27018,"options":{"readPreference":{"$ref":"$[\"disconnectHandler\"][\"s\"][\"topology\"][\"s\"][\"server\"][\"s\"][\"options\"][\"readPreference\"]"}}}}},"length":0},"bson":{"$ref":"$[\"disconnectHandler\"][\"s\"][\"topology\"][\"s\"][\"server\"][\"s\"][\"options\"][\"bson\"]"},"ns":"coffequiz.quizResponse","cmd":{"find":"coffequiz.quizResponse","limit":0,"skip":0,"query":{},"readPreference":{"preference":"primary","options":{}},"slaveOk":true},"options":{"readPreference":{"$ref":"$[\"cmd\"][\"readPreference\"]"},"skip":0,"limit":0,"hint":null,"slaveOk":true,"db":{"domain":null,"_events":{},"_eventsCount":0,"s":{"databaseName":"coffequiz","dbCache":{},"children":[],"topology":{"$ref":"$[\"disconnectHandler\"][\"s\"][\"topology\"]"},"options":{"$ref":"$[\"disconnectHandler\"][\"s\"][\"topology\"][\"s\"][\"options\"]"},"logger":{"className":"Db"},"bson":{"$ref":"$[\"disconnectHandler\"][\"s\"][\"topology\"][\"s\"][\"server\"][\"s\"][\"options\"][\"bson\"]"},"readPreference":{"$ref":"$[\"disconnectHandler\"][\"s\"][\"topology\"][\"s\"][\"server\"][\"s\"][\"options\"][\"readPreference\"]"},"bufferMaxEntries":-1,"parentDb":null,"noListener":false},"serverConfig":{"$ref":"$[\"disconnectHandler\"][\"s\"][\"topology\"]"},"bufferMaxEntries":-1,"databaseName":"coffequiz"},"disconnectHandler":{"$ref":"$[\"disconnectHandler\"]"}},"topology":{"$ref":"$[\"disconnectHandler\"][\"s\"][\"topology\"][\"s\"][\"server\"]"},"cursorState":{"cursorId":null,"cmd":{"$ref":"$[\"cmd\"]"},"documents":[],"cursorIndex":0,"dead":false,"killed":false,"init":false,"notified":false,"limit":0,"skip":0,"batchSize":1000,"currentLimit":0},"logger":{"className":"Cursor"},"_readableState":{"objectMode":true,"highWaterMark":16,"buffer":{"head":null,"tail":null,"length":0},"length":0,"pipes":null,"pipesCount":0,"flowing":null,"ended":false,"endEmitted":false,"reading":false,"sync":true,"needReadable":false,"emittedReadable":false,"readableListening":false,"resumeScheduled":false,"destroyed":false,"defaultEncoding":"utf8","awaitDrain":0,"readingMore":false,"decoder":null,"encoding":null},"readable":true,"domain":null,"_events":{},"_eventsCount":0,"s":{"numberOfRetries":5,"tailableRetryInterval":500,"currentNumberOfRetries":5,"state":0,"streamOptions":{},"bson":{"$ref":"$[\"disconnectHandler\"][\"s\"][\"topology\"][\"s\"][\"server\"][\"s\"][\"options\"][\"bson\"]"},"ns":"coffequiz.quizResponse","cmd":{"$ref":"$[\"cmd\"]"},"options":{"$ref":"$[\"options\"]"},"topology":{"$ref":"$[\"disconnectHandler\"][\"s\"][\"topology\"][\"s\"][\"server\"]"},"topologyOptions":{"$ref":"$[\"disconnectHandler\"][\"s\"][\"topology\"][\"s\"][\"server\"][\"s\"][\"options\"]"},"currentDoc":null}}
+2017-12-02 08:19:29,823  INFO  server is listening on 3000 
+2017-12-02 08:19:44,370  INFO  Promise { <pending> } 
+2017-12-02 08:21:22,212  INFO  server is listening on 3000 
+2017-12-02 08:22:38,110  INFO  server is listening on 3000 
+2017-12-02 08:34:29,930  INFO  server is listening on 3000 
+2017-12-02 11:54:12,652  INFO  server is listening on 3000 
+2017-12-02 11:59:16,395  INFO  server is listening on 3000 
+2017-12-02 12:02:15,279  INFO  server is listening on 3000 
+2017-12-02 12:05:19,488  INFO  server is listening on 3000 
+2017-12-02 12:06:48,725  INFO  server is listening on 3000 
+2017-12-02 12:06:54,013  INFO  server is listening on 3000 
+2017-12-02 12:07:17,967  INFO  server is listening on 3000 
+2017-12-02 12:07:18,834  INFO  server is listening on 3000 
+2017-12-02 12:07:29,268  INFO  server is listening on 3000 
+2017-12-02 12:07:30,665  INFO  server is listening on 3000 
+2017-12-02 12:10:10,932  INFO  server is listening on 3000 
+2017-12-02 12:10:16,246  INFO  server is listening on 3000 
+2017-12-02 12:10:40,298  INFO  server is listening on 3000 
+2017-12-02 12:10:41,068  INFO  server is listening on 3000 
+2017-12-03 10:50:51,533  INFO  server is listening on 3000 
+2017-12-03 10:53:21,778  INFO  server is listening on 3000 
+2017-12-03 10:53:26,839  INFO  server is listening on 3000 
+2017-12-03 10:53:49,887  INFO  server is listening on 3000 
+2017-12-03 10:53:50,453  INFO  server is listening on 3000 
+2017-12-03 10:54:00,560  INFO  server is listening on 3000 
+2017-12-03 10:54:01,398  INFO  server is listening on 3000 
+2017-12-03 10:54:01,717  INFO  server is listening on 3000 
+2017-12-03 11:05:32,320  INFO  server is listening on 3000 
+2017-12-03 11:08:25,564  INFO  server is listening on 3000 
+2017-12-03 11:08:30,524  INFO  server is listening on 3000 
+2017-12-03 11:12:41,360  INFO  server is listening on 3000 
+2017-12-03 11:52:19,108  INFO  server is listening on 3000 
+2017-12-04 03:30:50,862  ERROR   {"name":"MongoError","message":"failed to connect to server [localhost:27018] on first connect [MongoError: connect ECONNREFUSED 127.0.0.1:27018]"}
+2017-12-04 03:31:02,513  INFO  server is listening on 3000 
+2017-12-04 03:32:12,262  INFO  server is listening on 3000 
+2017-12-04 03:32:17,067  INFO  server is listening on 3000 
+2017-12-04 03:32:39,621  INFO  server is listening on 3000 
+2017-12-04 03:32:40,218  INFO  server is listening on 3000 
+2017-12-04 03:32:50,243  INFO  server is listening on 3000 
+2017-12-04 03:32:51,399  INFO  server is listening on 3000 
+2017-12-04 03:35:08,065  INFO  server is listening on 3000 
+2017-12-04 03:35:13,275  INFO  server is listening on 3000 
+2017-12-04 03:35:36,396  INFO  server is listening on 3000 
+2017-12-04 03:35:37,134  INFO  server is listening on 3000 
+2017-12-04 03:35:47,539  INFO  server is listening on 3000 
+2017-12-04 03:35:48,779  INFO  server is listening on 3000 
+2017-12-04 03:37:23,859  INFO  server is listening on 3000 
+2017-12-04 03:37:29,415  INFO  server is listening on 3000 
+2017-12-04 03:37:52,274  INFO  server is listening on 3000 
+2017-12-04 03:37:52,749  INFO  server is listening on 3000 
+2017-12-04 03:38:03,486  INFO  server is listening on 3000 
+2017-12-04 03:38:04,398  INFO  server is listening on 3000 
+2017-12-04 03:38:04,709  INFO  server is listening on 3000 
+2017-12-04 03:45:16,532  INFO  server is listening on 3000 
+2017-12-04 06:15:32,586  ERROR   {"name":"MongoError","message":"failed to connect to server [localhost:27018] on first connect [MongoError: connect ECONNREFUSED 127.0.0.1:27018]"}
+2017-12-04 06:16:41,152  INFO  server is listening on 3000 
+2017-12-04 06:29:42,553  INFO  server is listening on 3000 
+2017-12-04 06:33:24,537  INFO  server is listening on 3000 
+2017-12-04 06:35:40,197  INFO  quiz response:  {"answerIndex":2,"isTrue":false,"mode":"dev","platform":"ios","timestamp":"2017-12-04T17:35:40.197Z"}
+2017-12-04 06:35:40,207  DEBUG  Document inserted successfully {"answerIndex":2,"isTrue":false,"mode":"dev","platform":"ios","timestamp":"2017-12-04T17:35:40.197Z","_id":{"_bsontype":"ObjectID","id":{"0":90,"1":37,"2":135,"3":108,"4":31,"5":120,"6":72,"7":6,"8":65,"9":97,"10":231,"11":76}}}
+2017-12-04 06:42:42,569  INFO  quiz response:  {"answerIndex":2,"isTrue":false,"mode":"dev","platform":"ios","timestamp":"2017-12-04T17:42:42.569Z"}
+2017-12-04 06:42:42,572  DEBUG  Document inserted successfully {"answerIndex":2,"isTrue":false,"mode":"dev","platform":"ios","timestamp":"2017-12-04T17:42:42.569Z","_id":{"_bsontype":"ObjectID","id":{"0":90,"1":37,"2":137,"3":18,"4":31,"5":120,"6":72,"7":6,"8":65,"9":97,"10":231,"11":77}}}
+2017-12-04 06:49:23,449  INFO  quiz response:  {"answerIndex":1,"isTrue":false,"mode":"dev","platform":"web","timestamp":"2017-12-04T17:49:23.449Z"}
+2017-12-04 06:49:23,451  DEBUG  Document inserted successfully {"answerIndex":1,"isTrue":false,"mode":"dev","platform":"web","timestamp":"2017-12-04T17:49:23.449Z","_id":{"_bsontype":"ObjectID","id":{"0":90,"1":37,"2":138,"3":163,"4":31,"5":120,"6":72,"7":6,"8":65,"9":97,"10":231,"11":78}}}
+2017-12-04 07:21:38,724  INFO  server is listening on 3000 
+2017-12-04 07:23:30,071  INFO  server is listening on 3000 
+2017-12-04 07:23:38,668  INFO  server is listening on 3000 
+2017-12-04 07:23:41,202  INFO  server is listening on 3000 
+2017-12-04 07:23:47,203  INFO  server is listening on 3000 
+2017-12-04 07:25:01,990  INFO  quiz response:  {"quizItemId":19,"answerIndex":0,"isTrue":true,"mode":"dev","platform":"web","timestamp":"2017-12-04T18:25:01.989Z"}
+2017-12-04 07:25:01,995  DEBUG  Document inserted successfully {"quizItemId":19,"answerIndex":0,"isTrue":true,"mode":"dev","platform":"web","timestamp":"2017-12-04T18:25:01.989Z","_id":{"_bsontype":"ObjectID","id":{"0":90,"1":37,"2":146,"3":253,"4":13,"5":146,"6":97,"7":9,"8":239,"9":4,"10":172,"11":76}}}

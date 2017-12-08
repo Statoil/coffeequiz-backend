@@ -1,0 +1,10 @@
+version: '3'
+services:
+
+  mongo:
+    image: mongo:3.4
+    container_name: coffequiz-mongo
+    ports:
+      - 27018:27017
+    volumes:
+      - /data/coffequiz/mongodb:/data/db
