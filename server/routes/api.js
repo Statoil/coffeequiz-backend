@@ -17,6 +17,14 @@ mongo.connect()
             mongo.getQuizData()
                 .then(quizData => res.send(quizData));
         });
+
+        router.get('/quiz', (req, res) => {
+            mongo.getQuizData()
+                .then(quizData => res.send(quizData.map(quiz => {
+                    return {name: quiz.name, numberOfItems: quiz.quizItems ? quiz.quizItems.length : 0}
+                })));
+        });
+
     })
     .catch(error => {
         logger.error(error);

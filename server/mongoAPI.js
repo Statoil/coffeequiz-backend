@@ -25,7 +25,7 @@ function saveQuizResponse(quizResponse) {
 }
 
 function getQuizData() {
-  return db.collection('quizData').find().toArray();
+  return db.collection('quiz').find().toArray();
 }
 
 const mongoAPI = {
