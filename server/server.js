@@ -11,12 +11,10 @@ const http = require("http");
 
 const port = process.env.PORT || 3000;
 
-app.use(express.static(path.join(__dirname, '../www')));
+app.use(express.static(path.join(__dirname, '../dist')));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(cors());
-
-app.use(express.static(path.join(__dirname, '../dist')));
 
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");

@@ -3,8 +3,8 @@ services:
 
   mongo:
     image: mongo:3.4
-    container_name: coffequiz-mongo
+    container_name: statoilquiz-mongo
     ports:
       - 27018:27017
     volumes:
-      - /data/coffequiz/mongodb:/data/db
+      - /data/statoilquiz/mongodb:/data/db
