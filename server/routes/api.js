@@ -13,22 +13,15 @@ mongo.connect()
             res.send({});
         });
 
-        router.get('/quizdata', (req, res) => {
-            mongo.getQuizData()
-                .then(quizData => res.send(quizData));
-        });
-
         router.get('/quiz', (req, res) => {
             mongo.getQuizData()
-                .then(quizData => res.send(quizData.map(quiz => {
-                    return {name: quiz.name, numberOfItems: quiz.quizItems ? quiz.quizItems.length : 0}
-                })));
+                .then(quizData => res.send(quizData));
         });
 
     })
     .catch(error => {
         logger.error(error);
-        throw error;
+        process.exit();
     });
 
 
