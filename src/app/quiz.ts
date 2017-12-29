@@ -1,4 +1,6 @@
+import {QuizItem} from "./quizitem";
+
 export class Quiz {
     name: string;
-    numberOfItems: number;
+    quizItems: QuizItem[];
 }

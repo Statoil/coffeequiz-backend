@@ -3,6 +3,7 @@
 const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
 const logger = require('./logger');
+const ObjectId = require('mongodb').ObjectId;
 
 const url = process.env.DB_URL || 'mongodb://localhost:27018/statoilquiz';
 let db;
@@ -30,6 +31,7 @@ function getQuizData() {
             let startTime = findQuizTimeExtent(quiz.quizItems, Math.min);
             let endTime = findQuizTimeExtent(quiz.quizItems, Math.max);
             return {
+                id: quiz._id,
                 name: quiz.name,
                 startTime: startTime,
                 endTime: endTime,
@@ -37,7 +39,10 @@ function getQuizData() {
                 createdBy: quiz.createdBy
             }
         }));
+}
 
+function getQuiz(id) {
+    return db.collection('quiz').findOne({"_id": ObjectId(id)})
 }
 
 function findQuizTimeExtent(quizData, minMax) {
@@ -54,7 +59,8 @@ function findQuizTimeExtent(quizData, minMax) {
 const mongoAPI = {
     connect: connect,
     saveQuizResponse: saveQuizResponse,
-    getQuizData: getQuizData
+    getQuizData: getQuizData,
+    getQuiz: getQuiz
 };
 
 module.exports = mongoAPI;

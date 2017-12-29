@@ -13,9 +13,19 @@ mongo.connect()
             res.send({});
         });
 
-        router.get('/quiz', (req, res) => {
+        router.get('/quizes', (req, res) => {
             mongo.getQuizData()
                 .then(quizData => res.send(quizData));
+        });
+
+        router.get('/quiz/:id', (req, res) => {
+            const id = req.params.id;
+            logger.info(id);
+            mongo.getQuiz(id)
+                .then(quiz => {
+                    logger.info(quiz);
+                    res.send(quiz ? quiz : {})
+                });
         });
 
     })
