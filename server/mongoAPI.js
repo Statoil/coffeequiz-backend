@@ -47,7 +47,10 @@ function getQuiz(id) {
 
 function updateQuiz(quiz) {
     quiz._id = ObjectId(quiz._id);
-    db.collection('quiz').updateOne({_id: ObjectId(quiz._id)}, quiz);
+    const criteria = {_id: ObjectId(quiz._id)};
+    quiz.quizItems.forEach((quizItem, index) => quizItem.quizItemId = index);
+    db.collection('quiz').updateOne(criteria, quiz);
+    return Promise.resolve(quiz);
 }
 
 function findQuizTimeExtent(quizData, minMax) {

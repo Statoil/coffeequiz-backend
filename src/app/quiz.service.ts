@@ -34,13 +34,15 @@ export class QuizService {
             })
     }
 
-    saveQuiz(quiz: Quiz): void {
-        this.http
+    saveQuiz(quiz: Quiz): Promise<Quiz> {
+        return this.http
             .put(`${this.quizUrl}/${quiz._id}`, quiz)
-            .subscribe(
-                () => {},
-                error => console.error(error)
-            );
+            .toPromise()
+            .then(rawQuiz => new Quiz(rawQuiz))
+            .catch(error => {
+                console.error(error);
+                return null;
+            })
     }
 
 }

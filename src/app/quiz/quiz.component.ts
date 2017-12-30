@@ -40,6 +40,7 @@ export class QuizComponent implements OnInit {
     }
 
     saveQuiz() {
-        this.quizService.saveQuiz(this.quiz);
+        this.quizService.saveQuiz(this.quiz)
+            .then(quiz => this.quiz = quiz);
     }
 }
