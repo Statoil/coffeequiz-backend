@@ -9,10 +9,12 @@
                 <tr>
                     <th>Date</th>
                     <th>Question</th>
+                    <th></th>
                 </tr>
-                <tr *ngFor="let quizItem of quiz.quizItems" style="cursor: pointer" (click)="openQuizItem(quizItem.quizItemId)">
-                    <td>{{quizItem.startTime | date: 'mediumDate'}}</td>
-                    <td>{{quizItem.question}}</td>
+                <tr *ngFor="let quizItem of quiz.quizItems" style="cursor: pointer">
+                    <td (click)="openQuizItem(quizItem.quizItemId)">{{quizItem.startTime | date: 'mediumDate'}}</td>
+                    <td (click)="openQuizItem(quizItem.quizItemId)">{{quizItem.question}}</td>
+                    <td><button type="button" class="btn btn-primary btn-sm" (click)="deleteQuizItem(quizItem.quizItemId)">Delete</button></td>
                 </tr>
             </table>
         </div>

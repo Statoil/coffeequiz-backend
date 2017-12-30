@@ -10,6 +10,7 @@ export class QuizService {
     private quizesUrl = 'api/quizes';
     private quizUrl = 'api/quiz';
 
+
     constructor(private http: HttpClient) {
     }
 
@@ -23,14 +24,23 @@ export class QuizService {
             )
     }
 
-    getQuiz(quizId): Observable<Quiz> {
+    getQuiz(quizId): Promise<Quiz> {
         return this.http.get<Quiz[]>(`${this.quizUrl}/${quizId}`)
-            .pipe(
-                catchError(error => {
-                    console.error(error);
-                    return []
-                })
-            )
+            .toPromise()
+            .then(rawQuiz => new Quiz(rawQuiz))
+            .catch(error => {
+                console.error(error);
+                return null;
+            })
+    }
+
+    saveQuiz(quiz: Quiz): void {
+        this.http
+            .put(`${this.quizUrl}/${quiz._id}`, quiz)
+            .subscribe(
+                () => {},
+                error => console.error(error)
+            );
     }
 
 }

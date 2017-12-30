@@ -20,12 +20,21 @@ mongo.connect()
 
         router.get('/quiz/:id', (req, res) => {
             const id = req.params.id;
-            logger.info(id);
             mongo.getQuiz(id)
                 .then(quiz => {
-                    logger.info(quiz);
                     res.send(quiz ? quiz : {})
                 });
+        });
+
+        router.put('/quiz/:id', (req, res) => {
+            mongo.updateQuiz(req.body);
+            res.send({});
+        });
+
+        router.delete('/quiz/:quizId/quizItem/:quizItemId', (req, res) => {
+            const quizId = req.params.quizId;
+            const quizItemId = req.params.quizItemId;
+            logger.info(`quizId: ${quizId}. quizItemId: ${quizItemId}`);
         });
 
     })

@@ -45,6 +45,11 @@ function getQuiz(id) {
     return db.collection('quiz').findOne({"_id": ObjectId(id)})
 }
 
+function updateQuiz(quiz) {
+    quiz._id = ObjectId(quiz._id);
+    db.collection('quiz').updateOne({_id: ObjectId(quiz._id)}, quiz);
+}
+
 function findQuizTimeExtent(quizData, minMax) {
     const initialValue = quizData.length > 0 ? new Date(quizData[0].startTime).getTime() : null;
     const timeValue = quizData
@@ -60,7 +65,8 @@ const mongoAPI = {
     connect: connect,
     saveQuizResponse: saveQuizResponse,
     getQuizData: getQuizData,
-    getQuiz: getQuiz
+    getQuiz: getQuiz,
+    updateQuiz: updateQuiz
 };
 
 module.exports = mongoAPI;

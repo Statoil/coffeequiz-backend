@@ -25,12 +25,21 @@ export class QuizComponent implements OnInit {
         const id = this.activatedRoute.snapshot.paramMap.get('id');
         console.log("id: " + id);
         this.quizService.getQuiz(id)
-            .subscribe(quiz => this.quiz = quiz);
+            .then (quiz => this.quiz = quiz);
     }
 
     openQuizItem(quizItemId) {
-        const modalRef = this.modalService.open(QuizItemComponent);
+        const modalRef = this.modalService.open(QuizItemComponent, {size: 'lg'});
         modalRef.componentInstance.quizItem = this.quiz.quizItems.find(quizItem => quizItem.quizItemId === quizItemId);
 
+    }
+
+    deleteQuizItem(quizItemId: any) {
+        this.quiz.deleteQuizItem(quizItemId);
+        this.saveQuiz();
+    }
+
+    saveQuiz() {
+        this.quizService.saveQuiz(this.quiz);
     }
 }

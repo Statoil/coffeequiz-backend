@@ -1,28 +1,40 @@
-<div class="container-fluid" *ngIf="quizItem">
+<div class="modal-header">
+    <h4 class="modal-title">Hi there!</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <div *ngIf="quizItem">
 
-    <div class="form-group">
-        <label for="date">Date</label>
-        <input class="form-control" id="date" [(ngModel)]="quizItem.startTime">
+        <div class="form-group">
+            <label for="date">Date</label>
+            <input class="form-control" id="date" [(ngModel)]="quizItem.startTime">
+        </div>
+
+        <div class="form-group">
+            <label for="question">Question</label>
+            <textarea class="form-control" id="question" [(ngModel)]="quizItem.question"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="alt1">Alternative 1</label>
+            <input class="form-control" id="alt1" [(ngModel)]="quizItem.alternatives[0]">
+        </div>
+
+        <div class="form-group">
+            <label for="alt2">Alternative 2</label>
+            <input class="form-control" id="alt2" [(ngModel)]="quizItem.alternatives[1]">
+        </div>
+
+        <div class="form-group">
+            <label for="alt3">Alternative 2</label>
+            <input class="form-control" id="alt3" [(ngModel)]="quizItem.alternatives[2]">
+        </div>
+
     </div>
-
-    <div class="form-group">
-        <label for="question">Question</label>
-        <textarea class="form-control" id="question" [(ngModel)]="quizItem.question"></textarea>
-    </div>
-
-    <div class="form-group">
-        <label for="alt1">Alternative 1</label>
-        <input class="form-control" id="alt1" [(ngModel)]="quizItem.alternatives[0]">
-    </div>
-
-    <div class="form-group">
-        <label for="alt2">Alternative 2</label>
-        <input class="form-control" id="alt2" [(ngModel)]="quizItem.alternatives[1]">
-    </div>
-
-    <div class="form-group">
-        <label for="alt3">Alternative 2</label>
-        <input class="form-control" id="alt3" [(ngModel)]="quizItem.alternatives[2]">
-    </div>
-
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-primary" (click)="activeModal.close('Close click')">Save</button>
+    <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Cancel</button>
 </div>
