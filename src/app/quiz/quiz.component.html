@@ -1,43 +1,52 @@
 <div class="container-fluid" *ngIf="quiz">
 
     <div class="row">
-        <div class="col-md-6">
-            <h1 style="text-align: center">{{quiz.name}}</h1>
-            <table class="table table-striped table-hover">
-                <tr>
-                    <th>Date</th>
-                    <th>Question</th>
-                    <th></th>
-                </tr>
-                <tr *ngFor="let quizItem of quiz.quizItems" style="cursor: pointer">
-                    <td (click)="openQuizItem(quizItem.quizItemId)">{{quizItem.startTime | date: 'mediumDate'}}</td>
-                    <td (click)="openQuizItem(quizItem.quizItemId)">{{quizItem.question}}</td>
-                    <td><button type="button" class="btn btn-primary btn-sm" (click)="deleteQuizItem(quizItem.quizItemId)">Delete</button></td>
-                </tr>
-            </table>
+        <div class="col-6" style="overflow: auto; height: 100vh">
+            <div>
+                <h1 style="text-align: center">{{quiz.name}}</h1>
+                <table class="table table-striped table-hover">
+                    <tr>
+                        <th>Date</th>
+                        <th>Question</th>
+                        <th></th>
+                    </tr>
+                    <tr *ngFor="let quizItem of quiz.quizItems" style="cursor: pointer">
+                        <td (click)="openQuizItem(quizItem.quizItemId)">{{quizItem.startTime | date: 'mediumDate'}}</td>
+                        <td (click)="openQuizItem(quizItem.quizItemId)">{{quizItem.question}}</td>
+                        <td><button type="button" class="btn btn-primary btn-sm" (click)="deleteQuizItem(quizItem.quizItemId)">Delete</button></td>
+                    </tr>
+                </table>
+            </div>
         </div>
-        <div class="col-md-6" *ngIf="quizItem">
-            <div class="form-group">
-                <label for="question">Question</label>
-                <textarea class="form-control" id="question" [(ngModel)]="quizItem.question"></textarea>
-            </div>
+        <div class="col-6" *ngIf="quizItem" style="overflow: auto; height: 100vh;">
+            <div class="right-content">
+                <div class="quiz-item-edit">
+                    <div class="form-group">
+                        <label for="question">Question</label>
+                        <textarea class="form-control" id="question" [(ngModel)]="quizItem.question"></textarea>
+                    </div>
 
-            <div class="form-group">
-                <label for="alt1">Alternative 1</label>
-                <input class="form-control" id="alt1" [(ngModel)]="quizItem.alternatives[0]">
-            </div>
+                    <div class="form-row">
+                        <div class="form-group col-4">
+                            <label for="alt1">Alternative 1</label>
+                            <input class="form-control" id="alt1" [(ngModel)]="quizItem.alternatives[0]" placeholder="Alternative 1">
+                        </div>
 
-            <div class="form-group">
-                <label for="alt2">Alternative 2</label>
-                <input class="form-control" id="alt2" [(ngModel)]="quizItem.alternatives[1]">
-            </div>
+                        <div class="form-group col-4">
+                            <label for="alt2">Alternative 2</label>
+                            <input class="form-control" id="alt2" [(ngModel)]="quizItem.alternatives[1]" placeholder="Alternative 2">
+                        </div>
 
-            <div class="form-group">
-                <label for="alt3">Alternative 2</label>
-                <input class="form-control" id="alt3" [(ngModel)]="quizItem.alternatives[2]">
+                        <div class="form-group col-4">
+                            <label for="alt3">Alternative 2</label>
+                            <input class="form-control" id="alt3" [(ngModel)]="quizItem.alternatives[2]" placeholder="Alternative 3">
+                        </div>
+                    </div>
+                </div>
+                <div class="quiz-item-preview">
+                    <quiz-item-preview [quizItem]="quizItem"></quiz-item-preview>
+                </div>
             </div>
-            <quiz-item-preview [quizItem]="quizItem"></quiz-item-preview>
-
         </div>
 
 

@@ -4,13 +4,13 @@
 
 div {
     line-height: 1;
-    font-size: 1.2vw;
 }
 
 .wrapper {
     width: 100%;
     padding-bottom: 75%;
     position: relative;
+    flex-shrink: 1;
 }
 
 .content {
