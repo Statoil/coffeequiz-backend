@@ -1,0 +1,32 @@
+.text-center {
+    text-align: center;
+}
+
+div {
+    line-height: 1;
+    font-size: 1.2vw;
+}
+
+.wrapper {
+    width: 100%;
+    padding-bottom: 75%;
+    position: relative;
+}
+
+.content {
+    background-color: #000000;
+    color: #FFFFFF;
+    padding: 5px;
+    position: absolute;
+    top: 0; bottom: 0; left: 0; right: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.image-view {
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 100%;
+    height: 100%;
+}

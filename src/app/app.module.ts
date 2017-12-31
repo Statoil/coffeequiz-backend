@@ -10,13 +10,17 @@ import { QuizListComponent } from './quiz-list/quiz-list.component';
 import { QuizItemComponent } from './quiz-item/quiz-item.component';
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {FormsModule} from "@angular/forms";
+import { QuizItemPreviewComponent } from './quiz-item-preview/quiz-item-preview.component';
+import { VotingButtonComponent } from './voting-button/voting-button.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         QuizComponent,
         QuizListComponent,
-        QuizItemComponent
+        QuizItemComponent,
+        QuizItemPreviewComponent,
+        VotingButtonComponent
     ],
     imports: [
         BrowserModule,

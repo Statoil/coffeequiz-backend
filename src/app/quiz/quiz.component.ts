@@ -3,7 +3,7 @@ import {ActivatedRoute} from "@angular/router";
 import {QuizService} from "../quiz.service";
 import {Quiz} from "../quiz";
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {QuizItemComponent} from "../quiz-item/quiz-item.component";
+import {QuizItem} from "../quizitem";
 
 @Component({
     selector: 'app-quiz',
@@ -13,6 +13,7 @@ import {QuizItemComponent} from "../quiz-item/quiz-item.component";
 export class QuizComponent implements OnInit {
 
     quiz: Quiz;
+    quizItem: QuizItem;
 
     constructor(private quizService: QuizService, private activatedRoute: ActivatedRoute, private modalService: NgbModal) {
     }
@@ -29,8 +30,7 @@ export class QuizComponent implements OnInit {
     }
 
     openQuizItem(quizItemId) {
-        const modalRef = this.modalService.open(QuizItemComponent, {size: 'lg'});
-        modalRef.componentInstance.quizItem = this.quiz.quizItems.find(quizItem => quizItem.quizItemId === quizItemId);
+        this.quizItem = this.quiz.quizItems.find(quizItem => quizItem.quizItemId === quizItemId);
 
     }
 

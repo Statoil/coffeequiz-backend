@@ -1,0 +1,23 @@
+<div class="wrapper">
+    <div *ngIf="quizItem" class="content">
+        <div class="row" style="color: #FFFFFF">
+            <div class="col text-center">{{quizItem.question}}</div>
+        </div>
+        <div class="row" style="flex:1">
+            <div class="col" style="padding:25px">
+                <div [style.background-image]="imageUrl" class="image-view"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4 text-center">
+                <voting-button [text]="quizItem.alternatives[0]"></voting-button>
+            </div>
+            <div class="col-4 text-center">
+                <voting-button [text]="quizItem.alternatives[1]"></voting-button>
+            </div>
+            <div class="col-4 text-center">
+                <voting-button [text]="quizItem.alternatives[2]"></voting-button>
+            </div>
+        </div>
+    </div>
+</div>
