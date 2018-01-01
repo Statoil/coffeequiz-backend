@@ -49,7 +49,6 @@ export class QuizComponent implements OnInit {
     }
 
     editMetadata() {
-        console.log("yo");
         const modalRef = this.modalService.open(QuizMetadataComponent);
         modalRef.componentInstance.quiz = this.quiz;
     }
