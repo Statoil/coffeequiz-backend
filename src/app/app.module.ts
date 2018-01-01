@@ -7,7 +7,6 @@ import {HttpClientModule} from "@angular/common/http";
 import { QuizComponent } from './quiz/quiz.component';
 import { AppRoutingModule } from './/app-routing.module';
 import { QuizListComponent } from './quiz-list/quiz-list.component';
-import { QuizItemComponent } from './quiz-item/quiz-item.component';
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {FormsModule} from "@angular/forms";
 import { QuizItemPreviewComponent } from './quiz-item-preview/quiz-item-preview.component';
@@ -20,7 +19,6 @@ import { QuizMetadataComponent } from './quiz-metadata/quiz-metadata.component';
         AppComponent,
         QuizComponent,
         QuizListComponent,
-        QuizItemComponent,
         QuizItemPreviewComponent,
         VotingButtonComponent,
         FileUploadComponent,
