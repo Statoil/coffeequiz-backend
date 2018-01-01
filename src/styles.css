@@ -3,3 +3,16 @@
 body {
     font-family: 'Statoil Display Medium', "Lucida Sans", "Lucida Sans Unicode", "Lucida Grande", Lucida, sans-serif;
 }
+
+/* TODO: decide on table styling
+.table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
+    background-color: lightblue;
+}
+
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+    background-color: lightgray;
+}*/
+
+.text-center {
+    text-align: center;
+}

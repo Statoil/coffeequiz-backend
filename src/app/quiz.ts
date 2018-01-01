@@ -5,11 +5,13 @@ export class Quiz {
     public _id: string;
     public name: string;
     public quizItems: QuizItem[];
+    public startTime: Date;
 
     constructor(rawQuiz: any) {
         this._id = rawQuiz._id;
         this.name = rawQuiz.name;
         this.quizItems = rawQuiz.quizItems;
+        this.startTime = new Date(rawQuiz.startTime);
     }
 
     deleteQuizItem(quizItemId: any): void {

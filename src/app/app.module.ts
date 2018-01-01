@@ -13,6 +13,7 @@ import {FormsModule} from "@angular/forms";
 import { QuizItemPreviewComponent } from './quiz-item-preview/quiz-item-preview.component';
 import { VotingButtonComponent } from './voting-button/voting-button.component';
 import { FileUploadComponent } from './file-upload/file-upload.component';
+import { QuizMetadataComponent } from './quiz-metadata/quiz-metadata.component';
 
 @NgModule({
     declarations: [
@@ -22,7 +23,8 @@ import { FileUploadComponent } from './file-upload/file-upload.component';
         QuizItemComponent,
         QuizItemPreviewComponent,
         VotingButtonComponent,
-        FileUploadComponent
+        FileUploadComponent,
+        QuizMetadataComponent
     ],
     imports: [
         BrowserModule,
@@ -33,7 +35,7 @@ import { FileUploadComponent } from './file-upload/file-upload.component';
     ],
     providers: [QuizService],
     bootstrap: [AppComponent],
-    entryComponents: [QuizItemComponent]
+    entryComponents: [QuizMetadataComponent]
 })
 export class AppModule {
 }

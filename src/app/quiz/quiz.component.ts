@@ -4,6 +4,7 @@ import {QuizService} from "../quiz.service";
 import {Quiz} from "../quiz";
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {QuizItem} from "../quizitem";
+import {QuizMetadataComponent} from "../quiz-metadata/quiz-metadata.component";
 
 @Component({
     selector: 'app-quiz',
@@ -15,7 +16,10 @@ export class QuizComponent implements OnInit {
     quiz: Quiz;
     quizItem: QuizItem;
 
-    constructor(private quizService: QuizService, private activatedRoute: ActivatedRoute, private modalService: NgbModal) {
+    constructor(
+        private quizService: QuizService,
+        private activatedRoute: ActivatedRoute,
+        private modalService: NgbModal) {
     }
 
     ngOnInit() {
@@ -42,5 +46,11 @@ export class QuizComponent implements OnInit {
     saveQuiz() {
         this.quizService.saveQuiz(this.quiz)
             .then(quiz => this.quiz = quiz);
+    }
+
+    editMetadata() {
+        console.log("yo");
+        const modalRef = this.modalService.open(QuizMetadataComponent);
+        modalRef.componentInstance.quiz = this.quiz;
     }
 }

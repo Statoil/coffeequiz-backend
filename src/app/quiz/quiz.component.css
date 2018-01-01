@@ -18,3 +18,17 @@ button {
     width:600px;
     margin: 0 auto;
 }
+
+a.quiz-title {
+    cursor: pointer;
+}
+
+a.quiz-title:link, a.quiz-title:visited {
+    text-decoration: none;
+}
+
+
+a.quiz-title:hover, a.quiz-title:active {
+    color: #007bff;
+    text-decoration: underline;
+}
