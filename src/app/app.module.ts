@@ -12,6 +12,7 @@ import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {FormsModule} from "@angular/forms";
 import { QuizItemPreviewComponent } from './quiz-item-preview/quiz-item-preview.component';
 import { VotingButtonComponent } from './voting-button/voting-button.component';
+import { FileUploadComponent } from './file-upload/file-upload.component';
 
 @NgModule({
     declarations: [
@@ -20,7 +21,8 @@ import { VotingButtonComponent } from './voting-button/voting-button.component';
         QuizListComponent,
         QuizItemComponent,
         QuizItemPreviewComponent,
-        VotingButtonComponent
+        VotingButtonComponent,
+        FileUploadComponent
     ],
     imports: [
         BrowserModule,

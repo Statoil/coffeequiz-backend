@@ -42,9 +42,10 @@
                             <input class="form-control" id="alt3" [(ngModel)]="quizItem.alternatives[2]" placeholder="Alternative 3">
                         </div>
                     </div>
+                    <file-upload [quizId]="quiz._id" [quizItem]="quizItem"></file-upload>
                 </div>
                 <div class="quiz-item-preview">
-                    <quiz-item-preview [quizItem]="quizItem"></quiz-item-preview>
+                    <quiz-item-preview [imageId]="quizItem.imageId" [quizId]="quiz._id" [quizItem]="quizItem"></quiz-item-preview>
                 </div>
             </div>
         </div>

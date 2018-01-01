@@ -1,0 +1,5 @@
+<div>
+    <input type="file" name="photo" class="inputfile" id="file" (change)="onFileChange($event)"/>
+    <label for="file" class="inputlabel btn-sm">Choose file..</label>
+    <div class="loader" *ngIf="isLoading"></div>
+</div>

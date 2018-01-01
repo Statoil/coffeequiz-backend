@@ -4,6 +4,7 @@ import {Observable} from "rxjs/Observable";
 import {Quiz} from "./quiz";
 import {QuizMetadata} from "./quizmetadata";
 import {catchError} from "rxjs/operators";
+import {QuizImage} from "./quiz-image";
 
 @Injectable()
 export class QuizService {
@@ -39,6 +40,16 @@ export class QuizService {
             .put(`${this.quizUrl}/${quiz._id}`, quiz)
             .toPromise()
             .then(rawQuiz => new Quiz(rawQuiz))
+            .catch(error => {
+                console.error(error);
+                return null;
+            })
+    }
+
+    uploadFile(quizImage: QuizImage): Promise<any> {
+        return this.http
+            .post('api/quiz/file', quizImage)
+            .toPromise()
             .catch(error => {
                 console.error(error);
                 return null;

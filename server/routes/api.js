@@ -33,6 +33,30 @@ mongo.connect()
                 });
         });
 
+        router.post('/quiz/file', (req, res) => {
+            const imageDocument = req.body;
+            const imageData = imageDocument.encodedFile.split(',')[1];
+            const buffer = new Buffer(imageData, 'base64');
+            mongo.saveImage(imageDocument.quizId, imageDocument.quizItemId, buffer)
+                .then(imageId => {
+                    if (!imageId) {
+                        res.sendStatus(500);
+                    }
+                    res.send({imageId});
+                });
+        });
+
+        router.get('/quiz/file/:imageId', (req, res) => {
+            res.type('png');
+            mongo.getImage(req.params.imageId)
+                .then(imageDocument => {
+                    if (!imageDocument) {
+                        res.sendStatus(404);
+                    }
+                    res.send(imageDocument.imageData.buffer);
+                });
+        });
+
     })
     .catch(error => {
         logger.error(error);

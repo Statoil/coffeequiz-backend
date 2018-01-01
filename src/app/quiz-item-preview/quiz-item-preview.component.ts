@@ -9,7 +9,9 @@ import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
 })
 export class QuizItemPreviewComponent implements OnInit {
 
+    @Input() imageId: string;
     @Input() quizItem: QuizItem;
+    @Input() quizId: string;
     imageUrl: SafeUrl;
 
     constructor(private sanitizer: DomSanitizer) {
@@ -20,7 +22,7 @@ export class QuizItemPreviewComponent implements OnInit {
 
     // noinspection JSUnusedGlobalSymbols
     ngOnChanges() {
-        this.imageUrl = this.sanitizer.bypassSecurityTrustStyle(`url(assets/img/${this.quizItem.image}`);
+        this.imageUrl = this.sanitizer.bypassSecurityTrustStyle(`url(/api/quiz/file/${this.imageId})`);
     }
 
 }
