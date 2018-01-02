@@ -34,7 +34,6 @@ export class QuizComponent implements OnInit {
 
     getQuiz() {
         const id = this.activatedRoute.snapshot.paramMap.get('id');
-        console.log("id: " + id);
         this.quizService.getQuiz(id)
             .then (quiz => {
                 this.quiz = quiz;
@@ -42,26 +41,34 @@ export class QuizComponent implements OnInit {
             });
     }
 
-    openQuizItem(quizItemId, modalContent) {
+    openQuizItem(quizItem, modalContent) {
         if (this.quizItemEditComponent && this.quizItemEditComponent.hasUnsavedData()) {
             this.modalService.open(modalContent).result.then((result) => {
                 console.log("result: " + result);
-                this.setCurrentQuizItem(quizItemId);
+                this.setCurrentQuizItem(quizItem);
             }, (reason) => {
                 console.log("reason: " + reason);
             });
         }
         else {
-            this.setCurrentQuizItem(quizItemId);
+            this.setCurrentQuizItem(quizItem);
         }
     }
 
-    setCurrentQuizItem(quizItemId) {
-        this.quizItem = this.quiz.quizItems.find(quizItem => quizItem.quizItemId === quizItemId);
+    setCurrentQuizItem(quizItem) {
+        this.quizItem = quizItem;
     }
 
     deleteQuizItem(quizItemId: any) {
+        if (this.quizItem && this.quizItem.quizItemId === quizItemId) {
+            this.quizItem = null;
+        }
         this.quiz.deleteQuizItem(quizItemId);
+        this.saveQuiz();
+    }
+
+    addQuizItem() {
+        this.setCurrentQuizItem(this.quiz.newQuizItem());
         this.saveQuiz();
     }
 

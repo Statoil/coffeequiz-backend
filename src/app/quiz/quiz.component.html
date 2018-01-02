@@ -35,12 +35,15 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let quizItem of quiz.quizItems; let idx = index" style="cursor: pointer">
-                            <td (click)="openQuizItem(quizItem.quizItemId, content)">{{getQuizItemDate(idx) | date: 'EEE d.MMM.yy'}}</td>
-                            <td (click)="openQuizItem(quizItem.quizItemId, content)">{{quizItem.question}}</td>
+                            <td (click)="openQuizItem(quizItem, content)">{{getQuizItemDate(idx) | date: 'EEE d.MMM.yy'}}</td>
+                            <td (click)="openQuizItem(quizItem, content)">{{quizItem.question}}</td>
                             <td><button type="button" class="btn btn-outline-primary btn-sm" (click)="deleteQuizItem(quizItem.quizItemId)">Delete</button></td>
                         </tr>
                     </tbody>
                 </table>
+            </div>
+            <div class="row">
+                <div class="col text-center"><button type="button" class="btn btn-outline-primary" (click)="addQuizItem()">Add quiz item</button></div>
             </div>
         </div>
         <div class="col-6" *ngIf="quizItem" style="overflow: auto; height: 100vh;">

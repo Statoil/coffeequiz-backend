@@ -1,20 +1,18 @@
 export class QuizItem {
-    quizItemId: number;
-    imageId: string;
-    question: string;
-    alternative1: string;
-    alternative2: string;
-    alternative3: string;
-    answer: string;
 
-    constructor(rawQuizItem: any) {
-        this.quizItemId = rawQuizItem.quizItemId;
-        this.imageId = rawQuizItem.imageId;
-        this.question = rawQuizItem.question;
-        this.alternative1 = rawQuizItem.alternative1;
-        this.alternative2 = rawQuizItem.alternative2;
-        this.alternative3 = rawQuizItem.alternative3;
-        this.answer = rawQuizItem.answer;
+    constructor(
+        public quizItemId: number,
+        public imageId: string,
+        public question: string,
+        public alternative1: string,
+        public alternative2: string,
+        public alternative3: string,
+        public answer: string,
+    ) {}
+
+    static fromObj(rawQuizItem: any) {
+        return new QuizItem(rawQuizItem.quizItemId, rawQuizItem.imageId, rawQuizItem.question, rawQuizItem.alternative1,
+            rawQuizItem.alternative2, rawQuizItem.alternative3, rawQuizItem.answer);
     }
 
     public equals(other: QuizItem) {
