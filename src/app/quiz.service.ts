@@ -28,18 +28,18 @@ export class QuizService {
     getQuiz(quizId): Promise<Quiz> {
         return this.http.get<Quiz[]>(`${this.quizUrl}/${quizId}`)
             .toPromise()
-            .then(rawQuiz => new Quiz(rawQuiz))
+            .then(rawQuiz => Quiz.fromObj(rawQuiz))
             .catch(error => {
                 console.error(error);
                 return null;
             })
     }
 
-    saveQuiz(quiz: Quiz): Promise<Quiz> {
+    saveQuiz(quiz: Quiz): Promise<string> {
         return this.http
-            .put(`${this.quizUrl}/${quiz._id}`, quiz)
+            .put<any>(`${this.quizUrl}/${quiz._id}`, quiz)
             .toPromise()
-            .then(rawQuiz => new Quiz(rawQuiz))
+            .then(result => result._id)
             .catch(error => {
                 console.error(error);
                 return null;

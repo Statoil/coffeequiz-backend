@@ -58,7 +58,16 @@ function getQuiz(id) {
     return db.collection('quiz').findOne({"_id": ObjectId(id)})
 }
 
+function insertQuiz(quiz) {
+    return db.collection('quiz').insertOne(quiz)
+        .then(writeResult => writeResult.insertedId)
+}
+
+//TODO: refactor image cleanup
 function saveQuiz(quiz) {
+    if (!quiz._id) {
+        return insertQuiz(quiz);
+    }
     const criteria = {_id: ObjectId(quiz._id)};
     quiz.quizItems.forEach(quizItem => {
         if (quizItem.imageId) {
@@ -72,7 +81,14 @@ function saveQuiz(quiz) {
     });
     quiz._id = ObjectId(quiz._id);
     return db.collection('quiz').updateOne(criteria, quiz)
-        .then(() => quiz);
+        .then((result) => {
+            if (result.modifiedCount !== 1) {
+                const message = "Could not save quiz with id: " + quiz._id;
+                logger.error(message);
+                throw new Error(message);
+            }
+            return quiz._id;
+        });
 }
 
 function saveImage(quizId, quizItemId, imageData) {

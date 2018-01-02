@@ -45,12 +45,27 @@ export class QuizComponent implements OnInit {
         this.loadIcons();
     }
 
-    getQuiz() {
+    createNewQuiz() {
+        const quiz = new Quiz(undefined, "New Quiz", [], moment().endOf('day').toDate(), 0);
+        return this.quizService.saveQuiz(quiz);
+    }
+
+    getQuizId() {
         const id = this.activatedRoute.snapshot.paramMap.get('id');
-        this.quizService.getQuiz(id)
-            .then (quiz => {
-                this.quiz = quiz;
-                this.startWeekDay = QuizComponent.getWeekDay(quiz.startTime);
+        if (id === 'create-new-quiz') {
+            return this.createNewQuiz()
+        }
+        return Promise.resolve(id);
+    }
+
+    getQuiz() {
+        this.getQuizId()
+            .then(id => {
+                this.quizService.getQuiz(id)
+                    .then (quiz => {
+                        this.quiz = quiz;
+                        this.startWeekDay = QuizComponent.getWeekDay(quiz.startTime);
+                    });
             });
     }
 

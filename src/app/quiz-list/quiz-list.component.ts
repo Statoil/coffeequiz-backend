@@ -23,8 +23,11 @@ export class QuizListComponent implements OnInit {
     }
 
     quizClicked(quizId) {
-        console.log("Quiz clicked: " + quizId);
         this.router.navigate(["quiz", quizId]);
+    }
+
+    createNewQuiz() {
+        this.router.navigate(["quiz", "create-new-quiz"])
     }
 
 }

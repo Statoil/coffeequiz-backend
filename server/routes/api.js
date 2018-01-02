@@ -28,9 +28,11 @@ mongo.connect()
 
         router.put('/quiz/:id', (req, res) => {
             mongo.saveQuiz(req.body)
-                .then(quiz => {
-                    res.send(quiz ? quiz : {})
-                });
+                .then(quizId => res.send({_id: quizId}))
+                .catch(error => {
+                    logger.error("Error when saving quiz: " + error);
+                    res.status(500).send(error);
+                })
         });
 
         router.post('/quiz/file', (req, res) => {

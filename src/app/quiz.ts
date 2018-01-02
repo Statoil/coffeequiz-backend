@@ -2,18 +2,17 @@ import {QuizItem} from "./quizitem";
 
 export class Quiz {
 
-    public _id: string;
-    public name: string;
-    public quizItems: QuizItem[];
-    public startTime: Date;
-    public sequenceNumber: number;
+    constructor(
+        public _id: string,
+        public name: string,
+        public quizItems: QuizItem[],
+        public startTime: Date,
+        public sequenceNumber: number
+    ) {}
 
-    constructor(rawQuiz: any) {
-        this._id = rawQuiz._id;
-        this.name = rawQuiz.name;
-        this.quizItems = rawQuiz.quizItems.map(rawQuizItems => QuizItem.fromObj(rawQuizItems));
-        this.startTime = new Date(rawQuiz.startTime);
-        this.sequenceNumber = rawQuiz.sequenceNumber;
+    static fromObj(rawQuiz: any) {
+        return new Quiz(rawQuiz._id, rawQuiz.name, rawQuiz.quizItems.map(rawQuizItems => QuizItem.fromObj(rawQuizItems)),
+            new Date(rawQuiz.startTime), rawQuiz.sequenceNumber);
     }
 
     deleteQuizItem(quizItem: QuizItem): void {
