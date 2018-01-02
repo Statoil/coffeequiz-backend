@@ -7,6 +7,8 @@ import {QuizItem} from "../quizitem";
 import {QuizMetadataComponent} from "../quiz-metadata/quiz-metadata.component";
 import * as moment from 'moment';
 import {QuizItemEditComponent} from "../quiz-item-edit/quiz-item-edit.component";
+import octicons from 'octicons';
+import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
 
 @Component({
     selector: 'app-quiz',
@@ -21,15 +23,21 @@ export class QuizComponent implements OnInit {
     quiz: Quiz;
     quizItem: QuizItem;
     private startWeekDay: number;
+    public upIcon: SafeHtml;
+    public downIcon: SafeHtml;
+    public deleteIcon: SafeHtml;
+
 
     constructor(
         private quizService: QuizService,
         private activatedRoute: ActivatedRoute,
-        private modalService: NgbModal) {
+        private modalService: NgbModal,
+        private sanitizer: DomSanitizer) {
     }
 
     ngOnInit() {
         this.getQuiz();
+        this.loadIcons();
     }
 
     getQuiz() {
@@ -59,11 +67,21 @@ export class QuizComponent implements OnInit {
         this.quizItem = quizItem;
     }
 
-    deleteQuizItem(quizItemId: any) {
-        if (this.quizItem && this.quizItem.quizItemId === quizItemId) {
+    deleteQuizItem(quizItem: QuizItem) {
+        if (this.quizItem && this.quizItem.quizItemId === quizItem.quizItemId) {
             this.quizItem = null;
         }
-        this.quiz.deleteQuizItem(quizItemId);
+        this.quiz.deleteQuizItem(quizItem);
+        this.saveQuiz();
+    }
+
+    moveUp(quizItem: QuizItem) {
+        this.quiz.moveUp(quizItem);
+        this.saveQuiz();
+    }
+
+    moveDown(quizItem: QuizItem) {
+        this.quiz.moveDown(quizItem);
         this.saveQuiz();
     }
 
@@ -73,8 +91,7 @@ export class QuizComponent implements OnInit {
     }
 
     saveQuiz() {
-        this.quizService.saveQuiz(this.quiz)
-            .then(quiz => this.quiz = quiz);
+        this.quizService.saveQuiz(this.quiz);
     }
 
     editMetadata() {
@@ -89,5 +106,11 @@ export class QuizComponent implements OnInit {
 
     static getWeekDay(date: Date): number {
         return (moment(date).day() + 6) % 7;
+    }
+
+    loadIcons() {
+        this.upIcon = this.sanitizer.bypassSecurityTrustHtml(octicons['chevron-up'].toSVG());
+        this.downIcon = this.sanitizer.bypassSecurityTrustHtml(octicons['chevron-down'].toSVG());
+        this.deleteIcon = this.sanitizer.bypassSecurityTrustHtml(octicons.trashcan.toSVG());
     }
 }

@@ -48,8 +48,8 @@ mongo.connect()
 
         router.get('/quiz/file/:imageId', (req, res) => {
             res.type('png');
-            if (!req.params.imageId || req.params.imageId === "null") {
-                res.send(404);
+            if (!req.params.imageId || req.params.imageId === "null" || req.params.imageId === "undefined") {
+                res.sendStatus(404);
             }
             else {
                 mongo.getImage(req.params.imageId)

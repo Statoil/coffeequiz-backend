@@ -19,3 +19,8 @@ a.quiz-title:hover, a.quiz-title:active {
     text-decoration: underline;
 }
 
+.octicon-button {
+    fill: #007bff;
+    font-size:1px;
+}
+

@@ -6,24 +6,41 @@ export class Quiz {
     public name: string;
     public quizItems: QuizItem[];
     public startTime: Date;
+    public sequenceNumber: number;
 
     constructor(rawQuiz: any) {
         this._id = rawQuiz._id;
         this.name = rawQuiz.name;
         this.quizItems = rawQuiz.quizItems.map(rawQuizItems => QuizItem.fromObj(rawQuizItems));
         this.startTime = new Date(rawQuiz.startTime);
+        this.sequenceNumber = rawQuiz.sequenceNumber;
     }
 
-    deleteQuizItem(quizItemId: any): void {
-        let index = this.quizItems.findIndex(quizItem => quizItem.quizItemId === quizItemId);
+    deleteQuizItem(quizItem: QuizItem): void {
+        let index = this.quizItems.findIndex(searchItem => searchItem.quizItemId === quizItem.quizItemId);
         this.quizItems.splice(index, 1);
     }
 
+    moveUp(quizItem: QuizItem): void {
+        let index = this.quizItems.findIndex(searchItem => searchItem.quizItemId === quizItem.quizItemId);
+        if (index > 0) {
+            this.quizItems.splice(index, 1);
+            this.quizItems.splice(index - 1, 0, quizItem);
+        }
+    }
+
+
+    moveDown(quizItem: QuizItem): void {
+        let index = this.quizItems.findIndex(searchItem => searchItem.quizItemId === quizItem.quizItemId);
+        if (index < this.quizItems.length - 1) {
+            this.quizItems.splice(index, 1);
+            this.quizItems.splice(index + 1, 0, quizItem);
+        }
+    }
+
     newQuizItem(): QuizItem {
-        const newQuizItemId = this.quizItems
-            .map(quizItem => quizItem.quizItemId)
-            .reduce((acc, curr) => Math.max(acc, curr), Number.MIN_VALUE) + 1;
-        const quizItem = new QuizItem(newQuizItemId, null, null, null, null, null, null);
+        const quizItemId = ++this.sequenceNumber;
+        const quizItem = new QuizItem(quizItemId, undefined, undefined, undefined, undefined, undefined, undefined);
         this.quizItems.push(quizItem);
         return quizItem;
     }

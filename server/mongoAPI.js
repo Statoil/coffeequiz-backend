@@ -47,10 +47,15 @@ function getQuiz(id) {
 
 function saveQuiz(quiz) {
     const criteria = {_id: ObjectId(quiz._id)};
-    quiz.quizItems.forEach((quizItem, index) => {
-        quizItem.quizItemId = index;
-        const imageObjId = ObjectId(quizItem.imageId);
-        db.collection('image').deleteMany({_id: {$ne: imageObjId}, quizId: quiz._id, quizItemId: quizItem.quizItemId}); //clean up unsaved, uploaded images
+    quiz.quizItems.forEach(quizItem => {
+        if (quizItem.imageId) {
+            const imageObjId = ObjectId(quizItem.imageId);
+            db.collection('image').deleteMany({
+                _id: {$ne: imageObjId},
+                quizId: quiz._id,
+                quizItemId: quizItem.quizItemId
+            }); //clean up unsaved, uploaded images
+        }
     });
     quiz._id = ObjectId(quiz._id);
     return db.collection('quiz').updateOne(criteria, quiz)
@@ -66,7 +71,8 @@ function saveImage(quizId, quizItemId, imageData) {
 
 function getImage(imageId) {
     const criteria = ObjectId(imageId);
-    return db.collection('image').findOne(criteria);
+    return db.collection('image').findOne(criteria)
+        .catch(error => logger.error(error));
 }
 
 function findQuizTimeExtent(quizData, minMax) {

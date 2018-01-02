@@ -7,7 +7,8 @@
         </button>
     </div>
     <div class="modal-body">
-        <p>You have not saved the changes to the current quiz item. Do you want to continue (your changes will be lost)?</p>
+        <p>You have not saved the changes to the current quiz item. Do you want to continue (your changes will be
+            lost)?</p>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-outline-primary" (click)="c('Ok click')">Ok</button>
@@ -20,30 +21,48 @@
 
     <div class="row">
         <div class="col-6" style="overflow: auto; height: 100vh">
-            <div>
-                <div class="text-center" style="padding: 15px">
-                    <a (click)="editMetadata()" class="quiz-title"> <span style="font-size: 2.5rem;">{{quiz.name}}</span><br>
-                    Start date: {{quiz.startTime | date: 'mediumDate'}}</a>
-                </div>
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th style="width:110px">Date</th>
-                            <th>Question</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let quizItem of quiz.quizItems; let idx = index" style="cursor: pointer">
-                            <td (click)="openQuizItem(quizItem, content)">{{getQuizItemDate(idx) | date: 'EEE d.MMM.yy'}}</td>
-                            <td (click)="openQuizItem(quizItem, content)">{{quizItem.question}}</td>
-                            <td><button type="button" class="btn btn-outline-primary btn-sm" (click)="deleteQuizItem(quizItem.quizItemId)">Delete</button></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
             <div class="row">
-                <div class="col text-center"><button type="button" class="btn btn-outline-primary" (click)="addQuizItem()">Add quiz item</button></div>
+
+                <div class="col-2"></div>
+                <div class="col-8 text-center">
+                    <H1>{{quiz.name}}</H1>
+                    Start date: {{quiz.startTime | date: 'mediumDate'}}
+                </div>
+                <div class="col-2">
+                    <button type="button" class="btn btn-outline-primary btn-sm" (click)="editMetadata()">Edit</button>
+                </div>
+            </div>
+
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th style="width:110px">Date</th>
+                    <th>Question</th>
+                    <th style="width:121px"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let quizItm of quiz.quizItems; let idx = index" style="cursor: pointer"
+                    [ngClass]="{'table-primary':quizItem && (quizItem.quizItemId === quizItm.quizItemId)}">
+                    <td (click)="openQuizItem(quizItm, content)">{{getQuizItemDate(idx) | date: 'EEE d.MMM.yy'}}</td>
+                    <td (click)="openQuizItem(quizItm, content)">{{quizItm.question}}</td>
+                    <td>
+                        <button type="button" class="btn btn-outline-primary btn-sm octicon-button"
+                                (click)="moveUp(quizItm)" [innerHTML]="upIcon"></button>
+
+                        <button type="button" class="btn btn-outline-primary btn-sm octicon-button"
+                                (click)="moveDown(quizItm)" [innerHTML]="downIcon"></button>
+
+                        <button type="button" class="btn btn-outline-primary btn-sm octicon-button"
+                                (click)="deleteQuizItem(quizItm)" [innerHTML]="deleteIcon"></button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="row">
+                <div class="col text-center">
+                    <button type="button" class="btn btn-outline-primary" (click)="addQuizItem()">Add quiz item</button>
+                </div>
             </div>
         </div>
         <div class="col-6" *ngIf="quizItem" style="overflow: auto; height: 100vh;">
