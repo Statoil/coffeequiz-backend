@@ -48,7 +48,7 @@
                 <tbody>
                 <tr *ngFor="let quizItm of quiz.quizItems; let idx = index" style="cursor: pointer"
                     [ngClass]="{'table-primary':quizItem && (quizItem.quizItemId === quizItm.quizItemId)}">
-                    <td (click)="openQuizItem(quizItm, content)">{{getQuizItemDate(idx) | date: 'EEE d.MMM.yy'}}</td>
+                    <td (click)="openQuizItem(quizItm, content)">{{getQuizItemDate(idx) | date: 'EEE dd.&nbsp;MMM yy'}}</td>
                     <td (click)="openQuizItem(quizItm, content)">{{quizItm.question}}</td>
                     <td>
                         <button type="button" class="btn btn-outline-primary btn-sm octicon-button"

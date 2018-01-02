@@ -4,6 +4,7 @@ const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
 const logger = require('./logger');
 const ObjectId = require('mongodb').ObjectId;
+const moment = require('moment');
 
 const url = process.env.DB_URL || 'mongodb://localhost:27018/statoilquiz';
 let db;
@@ -25,16 +26,28 @@ function saveQuizResponse(quizResponse) {
     });
 }
 
+function getWeekDay(date) {
+    return (moment(date).day() + 6) % 7;
+}
+
+function getEndDate(quiz) {
+    if (!quiz || !quiz.quizItems || quiz.quizItems.length === 0) {
+        return;
+    }
+    const startWeekDay = getWeekDay(quiz.startTime);
+    const endIndex = quiz.quizItems.length - 1;
+    const numberOfWeekEndsInRange = Math.floor((startWeekDay + endIndex) / 5);
+    return moment(quiz.startTime).add(endIndex + (numberOfWeekEndsInRange * 2), 'days').toDate();
+}
+
 function getQuizData() {
     return db.collection('quiz').find().toArray()
         .then(quizData => quizData.map(quiz => {
-            let startTime = findQuizTimeExtent(quiz.quizItems, Math.min);
-            let endTime = findQuizTimeExtent(quiz.quizItems, Math.max);
             return {
                 id: quiz._id,
                 name: quiz.name,
-                startTime: startTime,
-                endTime: endTime,
+                startTime: quiz.startTime,
+                endTime: getEndDate(quiz),
                 numberOfItems: quiz.quizItems ? quiz.quizItems.length : 0,
                 createdBy: quiz.createdBy
             }
@@ -73,16 +86,6 @@ function getImage(imageId) {
     const criteria = ObjectId(imageId);
     return db.collection('image').findOne(criteria)
         .catch(error => logger.error(error));
-}
-
-function findQuizTimeExtent(quizData, minMax) {
-    const initialValue = quizData.length > 0 ? new Date(quizData[0].startTime).getTime() : null;
-    const timeValue = quizData
-        .map(item => item.startTime)
-        .reduce(
-            (acc, curr) => minMax(acc, new Date(curr).getTime()),
-            initialValue);
-    return new Date(timeValue);
 }
 
 function errorHandler(error) {

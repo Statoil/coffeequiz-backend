@@ -18,8 +18,8 @@
                 <tbody>
                     <tr *ngFor="let quiz of quizes" style="cursor: pointer" (click)="quizClicked(quiz.id)">
                         <td>{{quiz.name}}</td>
-                        <td>{{quiz.startTime | date: 'mediumDate'}}</td>
-                        <td>{{quiz.endTime | date: 'mediumDate'}}</td>
+                        <td>{{quiz.startTime | date: 'EEE dd. MMM yy'}}</td>
+                        <td>{{quiz.endTime  | date: 'EEE dd. MMM yy'}}</td>
                         <td>{{quiz.numberOfItems}}</td>
                         <td>{{quiz.createdBy}}</td>
                     </tr>
