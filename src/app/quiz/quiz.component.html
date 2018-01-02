@@ -23,13 +23,17 @@
         <div class="col-6" style="overflow: auto; height: 100vh">
             <div class="row">
 
-                <div class="col-2"></div>
+                <div class="col-2">
+                    <button type="button" class="btn btn-outline-primary btn-sm octicon-button"
+                            (click)="router.navigate(['/'])" [innerHTML]="icons.back"></button>
+                </div>
                 <div class="col-8 text-center">
                     <H1>{{quiz.name}}</H1>
                     Start date: {{quiz.startTime | date: 'mediumDate'}}
                 </div>
-                <div class="col-2">
-                    <button type="button" class="btn btn-outline-primary btn-sm" (click)="editMetadata()">Edit</button>
+                <div class="col-2" style="display: flex;align-items: center;">
+                    <button type="button" class="btn btn-outline-primary btn-sm octicon-button"
+                            (click)="editMetadata()" [innerHTML]="icons.edit"></button>
                 </div>
             </div>
 
@@ -48,13 +52,13 @@
                     <td (click)="openQuizItem(quizItm, content)">{{quizItm.question}}</td>
                     <td>
                         <button type="button" class="btn btn-outline-primary btn-sm octicon-button"
-                                (click)="moveUp(quizItm)" [innerHTML]="upIcon"></button>
+                                (click)="moveUp(quizItm)" [innerHTML]="icons.up"></button>
 
                         <button type="button" class="btn btn-outline-primary btn-sm octicon-button"
-                                (click)="moveDown(quizItm)" [innerHTML]="downIcon"></button>
+                                (click)="moveDown(quizItm)" [innerHTML]="icons.down"></button>
 
                         <button type="button" class="btn btn-outline-primary btn-sm octicon-button"
-                                (click)="deleteQuizItem(quizItm)" [innerHTML]="deleteIcon"></button>
+                                (click)="deleteQuizItem(quizItm)" [innerHTML]="icons.remove"></button>
                     </td>
                 </tr>
                 </tbody>

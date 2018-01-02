@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {QuizService} from "../quiz.service";
 import {Quiz} from "../quiz";
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
@@ -8,7 +8,7 @@ import {QuizMetadataComponent} from "../quiz-metadata/quiz-metadata.component";
 import * as moment from 'moment';
 import {QuizItemEditComponent} from "../quiz-item-edit/quiz-item-edit.component";
 import octicons from 'octicons';
-import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
+import {DomSanitizer} from "@angular/platform-browser";
 
 @Component({
     selector: 'app-quiz',
@@ -23,16 +23,21 @@ export class QuizComponent implements OnInit {
     quiz: Quiz;
     quizItem: QuizItem;
     private startWeekDay: number;
-    public upIcon: SafeHtml;
-    public downIcon: SafeHtml;
-    public deleteIcon: SafeHtml;
+    icons = {
+        up: null,
+        down: null,
+        remove: null,
+        back: null,
+        edit: null
+    };
 
-
+    // noinspection JSUnusedLocalSymbols
     constructor(
         private quizService: QuizService,
         private activatedRoute: ActivatedRoute,
         private modalService: NgbModal,
-        private sanitizer: DomSanitizer) {
+        private sanitizer: DomSanitizer,
+        private router: Router) {
     }
 
     ngOnInit() {
@@ -109,8 +114,10 @@ export class QuizComponent implements OnInit {
     }
 
     loadIcons() {
-        this.upIcon = this.sanitizer.bypassSecurityTrustHtml(octicons['chevron-up'].toSVG());
-        this.downIcon = this.sanitizer.bypassSecurityTrustHtml(octicons['chevron-down'].toSVG());
-        this.deleteIcon = this.sanitizer.bypassSecurityTrustHtml(octicons.trashcan.toSVG());
+        this.icons.up = this.sanitizer.bypassSecurityTrustHtml(octicons['chevron-up'].toSVG());
+        this.icons.down = this.sanitizer.bypassSecurityTrustHtml(octicons['chevron-down'].toSVG());
+        this.icons.remove = this.sanitizer.bypassSecurityTrustHtml(octicons.trashcan.toSVG());
+        this.icons.back = this.sanitizer.bypassSecurityTrustHtml(octicons['arrow-left'].toSVG());
+        this.icons.edit = this.sanitizer.bypassSecurityTrustHtml(octicons['pencil'].toSVG());
     }
 }
