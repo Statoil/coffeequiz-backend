@@ -20,3 +20,8 @@
     align-content: stretch;
     height: 100%;
 }
+
+.alert-success {
+    border-radius: 0.2rem;
+    padding-left: 3px;
+}

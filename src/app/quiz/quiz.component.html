@@ -37,7 +37,7 @@
                         <tr *ngFor="let quizItem of quiz.quizItems; let idx = index" style="cursor: pointer">
                             <td (click)="openQuizItem(quizItem.quizItemId, content)">{{getQuizItemDate(idx) | date: 'EEE d.MMM.yy'}}</td>
                             <td (click)="openQuizItem(quizItem.quizItemId, content)">{{quizItem.question}}</td>
-                            <td><button type="button" class="btn btn-primary btn-sm" (click)="deleteQuizItem(quizItem.quizItemId)">Delete</button></td>
+                            <td><button type="button" class="btn btn-outline-primary btn-sm" (click)="deleteQuizItem(quizItem.quizItemId)">Delete</button></td>
                         </tr>
                     </tbody>
                 </table>
