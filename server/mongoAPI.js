@@ -59,27 +59,38 @@ function getQuiz(id) {
 }
 
 function insertQuiz(quiz) {
+    cleanUpUnusedImages();
     return db.collection('quiz').insertOne(quiz)
         .then(writeResult => writeResult.insertedId)
 }
 
-//TODO: refactor image cleanup
-function saveQuiz(quiz) {
-    if (!quiz._id) {
-        return insertQuiz(quiz);
-    }
-    const criteria = {_id: ObjectId(quiz._id)};
+
+function cleanUpUnusedImages() {
+    db.collection('quiz').find().toArray()
+        .then(quizes => quizes.forEach(quiz => cleanUpUnusedImagesInQuiz(quiz)));
+}
+
+function cleanUpUnusedImagesInQuiz(quiz) {
+    logger.info("cleaning up images in quiz: " + quiz.name);
     quiz.quizItems.forEach(quizItem => {
         if (quizItem.imageId) {
             const imageObjId = ObjectId(quizItem.imageId);
             db.collection('image').deleteMany({
                 _id: {$ne: imageObjId},
-                quizId: quiz._id,
+                quizId: quiz._id.toHexString(),
                 quizItemId: quizItem.quizItemId
-            }); //clean up unsaved, uploaded images
+            })
+                .then(deleteResult => logger.info(`${deleteResult.deletedCount} unused images deleted for quiz ${quiz._id}`));
         }
     });
+}
+
+function saveQuiz(quiz) {
+    if (!quiz._id) {
+        return insertQuiz(quiz);
+    }
     quiz._id = ObjectId(quiz._id);
+    const criteria = {_id: quiz._id};
     return db.collection('quiz').updateOne(criteria, quiz)
         .then((result) => {
             if (result.modifiedCount !== 1) {
