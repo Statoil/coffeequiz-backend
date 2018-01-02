@@ -13,8 +13,6 @@ export class QuizItemEditComponent implements OnInit {
 
     @Input() quizItem: QuizItem;
     @Input() quiz: Quiz;
-
-    answer: string;
     editQuizItem: QuizItem;
 
     constructor(private quizService: QuizService) {
@@ -29,16 +27,25 @@ export class QuizItemEditComponent implements OnInit {
 
     // noinspection JSUnusedGlobalSymbols
     ngOnChanges() {
-        this.editQuizItem = _.clone(this.quizItem);
-        this.answer = this.quizItem.answer.toString();
+        this.reload();
     }
 
     save() {
         this.quizItem.question = this.editQuizItem.question;
-        this.quizItem.alternatives = this.editQuizItem.alternatives;
-        this.quizItem.answer = parseInt(this.answer);
+        this.quizItem.alternative1 = this.editQuizItem.alternative1;
+        this.quizItem.alternative2 = this.editQuizItem.alternative2;
+        this.quizItem.alternative3 = this.editQuizItem.alternative3;
+        this.quizItem.answer = this.editQuizItem.answer;
         this.quizItem.imageId = this.editQuizItem.imageId;
         this.quizService.saveQuiz(this.quiz);
+    }
+
+    hasUnsavedData(): boolean {
+        return (!this.quizItem.equals(this.editQuizItem));
+    }
+
+    reload() {
+        this.editQuizItem = _.cloneDeep(this.quizItem);
     }
 
 }

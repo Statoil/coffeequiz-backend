@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {QuizService} from "../quiz.service";
 import {Quiz} from "../quiz";
@@ -6,6 +6,7 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {QuizItem} from "../quizitem";
 import {QuizMetadataComponent} from "../quiz-metadata/quiz-metadata.component";
 import * as moment from 'moment';
+import {QuizItemEditComponent} from "../quiz-item-edit/quiz-item-edit.component";
 
 @Component({
     selector: 'app-quiz',
@@ -13,6 +14,9 @@ import * as moment from 'moment';
     styleUrls: ['./quiz.component.css']
 })
 export class QuizComponent implements OnInit {
+
+    @ViewChild(QuizItemEditComponent)
+    private quizItemEditComponent: QuizItemEditComponent;
 
     quiz: Quiz;
     quizItem: QuizItem;
@@ -38,9 +42,22 @@ export class QuizComponent implements OnInit {
             });
     }
 
-    openQuizItem(quizItemId) {
-        this.quizItem = this.quiz.quizItems.find(quizItem => quizItem.quizItemId === quizItemId);
+    openQuizItem(quizItemId, modalContent) {
+        if (this.quizItemEditComponent && this.quizItemEditComponent.hasUnsavedData()) {
+            this.modalService.open(modalContent).result.then((result) => {
+                console.log("result: " + result);
+                this.setCurrentQuizItem(quizItemId);
+            }, (reason) => {
+                console.log("reason: " + reason);
+            });
+        }
+        else {
+            this.setCurrentQuizItem(quizItemId);
+        }
+    }
 
+    setCurrentQuizItem(quizItemId) {
+        this.quizItem = this.quiz.quizItems.find(quizItem => quizItem.quizItemId === quizItemId);
     }
 
     deleteQuizItem(quizItemId: any) {

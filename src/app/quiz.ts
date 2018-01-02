@@ -10,7 +10,7 @@ export class Quiz {
     constructor(rawQuiz: any) {
         this._id = rawQuiz._id;
         this.name = rawQuiz.name;
-        this.quizItems = rawQuiz.quizItems;
+        this.quizItems = rawQuiz.quizItems.map(rawQuizItems => new QuizItem(rawQuizItems));
         this.startTime = new Date(rawQuiz.startTime);
     }
 
