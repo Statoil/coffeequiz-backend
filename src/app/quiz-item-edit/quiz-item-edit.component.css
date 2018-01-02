@@ -1,0 +1,22 @@
+
+.radio-label {
+    padding-left: 0;
+    padding-right: 25px;
+}
+
+.quiz-item-preview {
+    width:600px;
+    margin: 0 auto;
+}
+
+.quiz-item-edit {
+    width: 100%;
+    flex: 1;
+}
+
+.right-content {
+    display: flex;
+    flex-direction: column;
+    align-content: stretch;
+    height: 100%;
+}

@@ -13,6 +13,7 @@ import { QuizItemPreviewComponent } from './quiz-item-preview/quiz-item-preview.
 import { VotingButtonComponent } from './voting-button/voting-button.component';
 import { FileUploadComponent } from './file-upload/file-upload.component';
 import { QuizMetadataComponent } from './quiz-metadata/quiz-metadata.component';
+import { QuizItemEditComponent } from './quiz-item-edit/quiz-item-edit.component';
 
 @NgModule({
     declarations: [
@@ -22,7 +23,8 @@ import { QuizMetadataComponent } from './quiz-metadata/quiz-metadata.component';
         QuizItemPreviewComponent,
         VotingButtonComponent,
         FileUploadComponent,
-        QuizMetadataComponent
+        QuizMetadataComponent,
+        QuizItemEditComponent
     ],
     imports: [
         BrowserModule,

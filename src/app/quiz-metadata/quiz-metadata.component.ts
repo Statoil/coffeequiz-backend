@@ -35,7 +35,7 @@ export class QuizMetadataComponent implements OnInit {
 
     constructor(
         public activeModal: NgbActiveModal,
-        private quizService: QuizService,) {
+        private quizService: QuizService) {
     }
 
     ngOnInit() {

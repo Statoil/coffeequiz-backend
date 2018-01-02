@@ -26,35 +26,7 @@
             </div>
         </div>
         <div class="col-6" *ngIf="quizItem" style="overflow: auto; height: 100vh;">
-            <div class="right-content">
-                <div class="quiz-item-edit">
-                    <div class="form-group">
-                        <label for="question">Question</label>
-                        <textarea class="form-control" id="question" [(ngModel)]="quizItem.question"></textarea>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group col-4">
-                            <label for="alt1">Alternative 1</label>
-                            <input class="form-control" id="alt1" [(ngModel)]="quizItem.alternatives[0]" placeholder="Alternative 1">
-                        </div>
-
-                        <div class="form-group col-4">
-                            <label for="alt2">Alternative 2</label>
-                            <input class="form-control" id="alt2" [(ngModel)]="quizItem.alternatives[1]" placeholder="Alternative 2">
-                        </div>
-
-                        <div class="form-group col-4">
-                            <label for="alt3">Alternative 2</label>
-                            <input class="form-control" id="alt3" [(ngModel)]="quizItem.alternatives[2]" placeholder="Alternative 3">
-                        </div>
-                    </div>
-                    <file-upload [quizId]="quiz._id" [quizItem]="quizItem"></file-upload>
-                </div>
-                <div class="quiz-item-preview">
-                    <quiz-item-preview [imageId]="quizItem.imageId" [quizId]="quiz._id" [quizItem]="quizItem"></quiz-item-preview>
-                </div>
-            </div>
+            <quiz-item-edit [quiz]="quiz" [quizItem]="quizItem"></quiz-item-edit>
         </div>
 
 

@@ -5,5 +5,4 @@ export class QuizItem {
     image: string;
     alternatives: string[];
     answer: number;
-    startTime: Date;
 }

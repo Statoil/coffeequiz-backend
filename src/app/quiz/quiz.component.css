@@ -2,22 +2,8 @@ button {
     cursor: pointer;
 }
 
-.right-content {
-    display: flex;
-    flex-direction: column;
-    align-content: stretch;
-    height: 100%;
-}
 
-.quiz-item-edit {
-    width: 100%;
-    flex: 1;
-}
 
-.quiz-item-preview {
-    width:600px;
-    margin: 0 auto;
-}
 
 a.quiz-title {
     cursor: pointer;
@@ -32,3 +18,4 @@ a.quiz-title:hover, a.quiz-title:active {
     color: #007bff;
     text-decoration: underline;
 }
+

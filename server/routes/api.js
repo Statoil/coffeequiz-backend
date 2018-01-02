@@ -27,7 +27,7 @@ mongo.connect()
         });
 
         router.put('/quiz/:id', (req, res) => {
-            mongo.updateQuiz(req.body)
+            mongo.saveQuiz(req.body)
                 .then(quiz => {
                     res.send(quiz ? quiz : {})
                 });

@@ -1,7 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {QuizService} from "../quiz.service";
 import {QuizImage} from "../quiz-image";
-import {QuizItem} from "../quizitem";
 
 @Component({
     selector: 'file-upload',
@@ -11,7 +10,10 @@ import {QuizItem} from "../quizitem";
 export class FileUploadComponent implements OnInit {
 
     @Input() quizId: string;
-    @Input() quizItem: QuizItem;
+    @Input() quizItemId: number;
+
+    @Output() change: EventEmitter<string> = new EventEmitter<string>();
+
     isLoading: boolean;
 
     constructor(private quizService: QuizService,) {
@@ -29,9 +31,9 @@ export class FileUploadComponent implements OnInit {
             reader.readAsDataURL(file);
             reader.onload = () => {
                 const encodedImage = reader.result;
-                this.quizService.uploadFile(new QuizImage(this.quizId, this.quizItem.quizItemId, encodedImage))
+                this.quizService.uploadFile(new QuizImage(this.quizId, this.quizItemId, encodedImage))
                     .then(result => {
-                        this.quizItem.imageId = result.imageId;
+                        this.change.emit(result.imageId);
                         this.isLoading = false;
                     })
                     .catch(error => {

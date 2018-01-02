@@ -45,36 +45,23 @@ function getQuiz(id) {
     return db.collection('quiz').findOne({"_id": ObjectId(id)})
 }
 
-function updateQuiz(quiz) {
-    quiz._id = ObjectId(quiz._id);
+function saveQuiz(quiz) {
     const criteria = {_id: ObjectId(quiz._id)};
-    quiz.quizItems.forEach((quizItem, index) => quizItem.quizItemId = index);
-    db.collection('quiz').updateOne(criteria, quiz); //todo: use promise
-    return Promise.resolve(quiz);
-}
-
-function updateImageInQuizItem(quizId, quizItemId, imageId) {
-    return getQuiz(quizId)
-        .then(quiz => {
-            const quizItem = quiz.quizItems.find(quizItem => quizItem.quizItemId === quizItemId);
-            quizItem.imageId = imageId;
-            return updateQuiz(quiz);
-        })
+    quiz.quizItems.forEach((quizItem, index) => {
+        quizItem.quizItemId = index;
+        const imageObjId = ObjectId(quizItem.imageId);
+        db.collection('image').deleteMany({_id: {$ne: imageObjId}, quizId: quiz._id, quizItemId: quizItem.quizItemId}); //clean up unsaved, uploaded images
+    });
+    quiz._id = ObjectId(quiz._id);
+    return db.collection('quiz').updateOne(criteria, quiz)
+        .then(() => quiz);
 }
 
 function saveImage(quizId, quizItemId, imageData) {
-    const criteria = {quizId, quizItemId};
     const document = {quizId, quizItemId, imageData};
-    return db.collection('image').deleteMany(criteria)
-        .then(() => {
-            return db.collection('image').insertOne(document)
-                .then(writeResult => {
-                    const insertedId = writeResult.insertedId.toHexString();
-                    updateImageInQuizItem(quizId, quizItemId, insertedId);
-                    return insertedId;
-                });
-        })
-        .catch(errorHandler);
+    return db.collection('image').insertOne(document)
+        .then(writeResult => writeResult.insertedId.toHexString())
+    .catch(errorHandler);
 }
 
 function getImage(imageId) {
@@ -105,7 +92,7 @@ const mongoAPI = {
     saveQuizResponse: saveQuizResponse,
     getQuizData: getQuizData,
     getQuiz: getQuiz,
-    updateQuiz: updateQuiz,
+    saveQuiz: saveQuiz,
     saveImage: saveImage,
     getImage: getImage
 };
