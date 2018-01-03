@@ -4,8 +4,8 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
     "build": "ng build",
+    "start": "node server/server.js",
     "lint": "ng lint",
     "postinstall": "ng build --aot -prod"
   },
