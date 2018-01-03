@@ -5,8 +5,11 @@
 }
 
 .quiz-item-preview {
-    width:600px;
+    width:100%;
     margin: 0 auto;
+    padding: 30px;
+    border: solid 1px black;
+    border-radius: 16px;
 }
 
 .quiz-item-edit {
