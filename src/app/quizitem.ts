@@ -7,7 +7,7 @@ export class QuizItem {
         public alternative1: string,
         public alternative2: string,
         public alternative3: string,
-        public answer: string,
+        public answer: number,
     ) {}
 
     static fromObj(rawQuizItem: any) {
