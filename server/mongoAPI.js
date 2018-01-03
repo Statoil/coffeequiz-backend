@@ -102,8 +102,8 @@ function saveQuiz(quiz) {
         });
 }
 
-function saveImage(quizId, quizItemId, imageData) {
-    const document = {quizId, quizItemId, imageData};
+function saveImage(quizId, quizItemId, imageData, fileType) {
+    const document = {quizId, quizItemId, imageData, fileType};
     return db.collection('image').insertOne(document)
         .then(writeResult => writeResult.insertedId.toHexString())
     .catch(errorHandler);

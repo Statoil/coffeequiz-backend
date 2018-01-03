@@ -31,7 +31,7 @@ export class FileUploadComponent implements OnInit {
             reader.readAsDataURL(file);
             reader.onload = () => {
                 const encodedImage = reader.result;
-                this.quizService.uploadFile(new QuizImage(this.quizId, this.quizItemId, encodedImage))
+                this.quizService.uploadFile(new QuizImage(this.quizId, this.quizItemId, encodedImage, file.type))
                     .then(result => {
                         this.change.emit(result.imageId);
                         this.isLoading = false;

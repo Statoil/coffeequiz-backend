@@ -38,8 +38,9 @@ mongo.connect()
         router.post('/quiz/file', (req, res) => {
             const imageDocument = req.body;
             const imageData = imageDocument.encodedFile.split(',')[1];
+            const fileType = imageDocument.fileType;
             const buffer = new Buffer(imageData, 'base64');
-            mongo.saveImage(imageDocument.quizId, imageDocument.quizItemId, buffer)
+            mongo.saveImage(imageDocument.quizId, imageDocument.quizItemId, buffer, fileType)
                 .then(imageId => {
                     if (!imageId) {
                         res.sendStatus(500);
@@ -49,7 +50,6 @@ mongo.connect()
         });
 
         router.get('/quiz/file/:imageId', (req, res) => {
-            res.type('png');
             if (!req.params.imageId || req.params.imageId === "null" || req.params.imageId === "undefined") {
                 res.sendStatus(404);
             }
@@ -59,6 +59,7 @@ mongo.connect()
                         if (!imageDocument) {
                             res.sendStatus(404);
                         }
+                        res.type(imageDocument.fileType);
                         res.send(imageDocument.imageData.buffer);
                     });
             }
