@@ -22,7 +22,7 @@ export class QuizItemPreviewComponent implements OnInit {
 
     // noinspection JSUnusedGlobalSymbols
     ngOnChanges() {
-        this.imageUrl = this.sanitizer.bypassSecurityTrustStyle(`url(/api/quiz/file/${this.imageId})`);
+        this.imageUrl = this.sanitizer.bypassSecurityTrustStyle(`url(/api/quiz/image/${this.imageId})`);
     }
 
 }

@@ -14,13 +14,21 @@ mongo.connect()
         });
 
         router.get('/quizes', (req, res) => {
-            mongo.getQuizData()
+            mongo.getQuizes()
                 .then(quizData => res.send(quizData));
         });
 
         router.get('/quiz/:id', (req, res) => {
             const id = req.params.id;
-            mongo.getQuiz(id)
+            mongo.getQuizData(id)
+                .then(quiz => {
+                    res.send(quiz ? quiz : {})
+                });
+        });
+
+        router.get('/app-quiz/:id', (req, res) => {
+            const id = req.params.id;
+            mongo.getQuizDataForApp(id)
                 .then(quiz => {
                     res.send(quiz ? quiz : {})
                 });
@@ -35,7 +43,7 @@ mongo.connect()
                 })
         });
 
-        router.post('/quiz/file', (req, res) => {
+        router.post('/quiz/image', (req, res) => {
             const imageDocument = req.body;
             const imageData = imageDocument.encodedFile.split(',')[1];
             const fileType = imageDocument.fileType;
@@ -49,7 +57,7 @@ mongo.connect()
                 });
         });
 
-        router.get('/quiz/file/:imageId', (req, res) => {
+        router.get('/quiz/image/:imageId', (req, res) => {
             if (!req.params.imageId || req.params.imageId === "null" || req.params.imageId === "undefined") {
                 res.sendStatus(404);
             }

@@ -16,7 +16,7 @@ export class QuizService {
     }
 
     getQuizes(): Observable<QuizMetadata[]> {
-        return this.http.get<Quiz[]>(this.quizesUrl)
+        return this.http.get<QuizMetadata[]>(this.quizesUrl)
             .pipe(
                 catchError(error => {
                     console.error(error);
@@ -48,7 +48,7 @@ export class QuizService {
 
     uploadFile(quizImage: QuizImage): Promise<any> {
         return this.http
-            .post('api/quiz/file', quizImage)
+            .post('api/quiz/image', quizImage)
             .toPromise()
             .catch(error => {
                 console.error(error);

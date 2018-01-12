@@ -34,13 +34,17 @@ function getEndDate(quiz) {
     if (!quiz || !quiz.quizItems || quiz.quizItems.length === 0) {
         return;
     }
-    const startWeekDay = getWeekDay(quiz.startTime);
     const endIndex = quiz.quizItems.length - 1;
-    const numberOfWeekEndsInRange = Math.floor((startWeekDay + endIndex) / 5);
-    return moment(quiz.startTime).add(endIndex + (numberOfWeekEndsInRange * 2), 'days').toDate();
+    return getQuizItemDate(quiz, endIndex);
 }
 
-function getQuizData() {
+function getQuizItemDate(quiz, index) {
+    const startWeekDay = getWeekDay(quiz.startTime);
+    const numberOfWeekEndsInRange = Math.floor((startWeekDay + index) / 5);
+    return moment(quiz.startTime).add(index + (numberOfWeekEndsInRange * 2), 'days').toDate();
+}
+
+function getQuizes() {
     return db.collection('quiz').find().toArray()
         .then(quizData => quizData.map(quiz => {
             return {
@@ -54,8 +58,16 @@ function getQuizData() {
         }));
 }
 
-function getQuiz(id) {
+function getQuizData(id) {
     return db.collection('quiz').findOne({"_id": ObjectId(id)})
+}
+
+function getQuizDataForApp(id) {
+    return getQuizData(id)
+        .then(quizData => {
+            quizData.quizItems.forEach((quizItem, index) => quizItem.startTime = getQuizItemDate(quizData, index));
+            return quizData.quizItems;
+        })
 }
 
 function insertQuiz(quiz) {
@@ -126,8 +138,9 @@ function errorHandler(error) {
 const mongoAPI = {
     connect: connect,
     saveQuizResponse: saveQuizResponse,
+    getQuizes: getQuizes,
     getQuizData: getQuizData,
-    getQuiz: getQuiz,
+    getQuizDataForApp: getQuizDataForApp,
     saveQuiz: saveQuiz,
     saveImage: saveImage,
     getImage: getImage
