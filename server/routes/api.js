@@ -5,7 +5,7 @@ const logger = require("../logger");
 
 mongo.connect()
     .then(() => {
-        router.post('/quizResponse', (req, res) => {
+        router.post('/quiz-response', (req, res) => {
             const quizResponse = req.body;
             quizResponse.timestamp = new Date();
             logger.info("quiz response: ", quizResponse);
@@ -18,6 +18,11 @@ mongo.connect()
                 .then(quizData => res.send(quizData));
         });
 
+        router.get('/quizes/app', (req, res) => {
+            mongo.getQuizesForApp()
+                .then(quizData => res.send(quizData));
+        });
+
         router.get('/quiz/:id', (req, res) => {
             const id = req.params.id;
             mongo.getQuizData(id)
@@ -26,7 +31,7 @@ mongo.connect()
                 });
         });
 
-        router.get('/app-quiz/:id', (req, res) => {
+        router.get('/quiz/app/:id', (req, res) => {
             const id = req.params.id;
             mongo.getQuizDataForApp(id)
                 .then(quiz => {

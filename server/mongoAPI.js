@@ -5,6 +5,7 @@ const assert = require('assert');
 const logger = require('./logger');
 const ObjectId = require('mongodb').ObjectId;
 const moment = require('moment');
+const _ = require('lodash');
 
 const url = process.env.DB_URL || 'mongodb://localhost:27018/statoilquiz';
 let db;
@@ -46,16 +47,24 @@ function getQuizItemDate(quiz, index) {
 
 function getQuizes() {
     return db.collection('quiz').find().toArray()
-        .then(quizData => quizData.map(quiz => {
-            return {
-                id: quiz._id,
-                name: quiz.name,
-                startTime: quiz.startTime,
-                endTime: getEndDate(quiz),
-                numberOfItems: quiz.quizItems ? quiz.quizItems.length : 0,
-                createdBy: quiz.createdBy
-            }
-        }));
+        .then(quizData => {
+            const mappedQuizData = quizData.map(quiz => {
+                return {
+                    id: quiz._id,
+                    name: quiz.name,
+                    startTime: quiz.startTime,
+                    endTime: getEndDate(quiz),
+                    numberOfItems: quiz.quizItems ? quiz.quizItems.length : 0,
+                    createdBy: quiz.createdBy
+                }
+            });
+            return _.sortBy(mappedQuizData, quiz => quiz.startTime);
+        });
+}
+
+function getQuizesForApp() {
+    return getQuizes()
+        .then(quizes => quizes.filter(quiz => moment(quiz.endTime).isSameOrAfter(moment().startOf('day'))));
 }
 
 function getQuizData(id) {
@@ -139,6 +148,7 @@ const mongoAPI = {
     connect: connect,
     saveQuizResponse: saveQuizResponse,
     getQuizes: getQuizes,
+    getQuizesForApp: getQuizesForApp,
     getQuizData: getQuizData,
     getQuizDataForApp: getQuizDataForApp,
     saveQuiz: saveQuiz,
