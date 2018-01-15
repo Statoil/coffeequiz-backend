@@ -8,7 +8,7 @@ mongo.connect()
         router.post('/quiz-response', (req, res) => {
             const quizResponse = req.body;
             quizResponse.timestamp = new Date();
-            logger.info("quiz response: ", quizResponse);
+            logger.debug("quiz response: ", quizResponse);
             mongo.saveQuizResponse(quizResponse);
             res.send({});
         });
@@ -76,6 +76,11 @@ mongo.connect()
                         res.send(imageDocument.imageData.buffer);
                     });
             }
+        });
+
+        router.use((req, res) => {
+            logger.error("Non existing API route: " + req.originalUrl);
+            res.status(400).send({error: "Bad request"});
         });
 
     })
