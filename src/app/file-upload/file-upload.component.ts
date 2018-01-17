@@ -1,6 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {QuizService} from "../quiz.service";
-import {QuizImage} from "../quiz-image";
 
 @Component({
     selector: 'file-upload',
@@ -22,25 +21,23 @@ export class FileUploadComponent implements OnInit {
     ngOnInit() {
     }
 
-
     onFileChange(event) {
-        this.isLoading = true;
-        let reader = new FileReader();
-        if (event.target.files && event.target.files.length > 0) {
+        if(event.target.files.length > 0) {
             let file = event.target.files[0];
-            reader.readAsDataURL(file);
-            reader.onload = () => {
-                const encodedImage = reader.result;
-                this.quizService.uploadFile(new QuizImage(this.quizId, this.quizItemId, encodedImage, file.type))
-                    .then(result => {
-                        this.change.emit(result.imageId);
-                        this.isLoading = false;
-                    })
-                    .catch(error => {
-                        console.error(error);
-                        this.isLoading = false;
-                    })
-            };
+            const formData = new FormData();
+            formData.append('quizId', this.quizId);
+            formData.append('quizItemId', this.quizItemId.toString());
+            formData.append('imageFile', file);
+            formData.append('fileType', file.type);
+            this.quizService.uploadFile(formData)
+                .then(response => {
+                    this.change.emit(response.imageUrl);
+                    this.isLoading = false;
+                })
+                .catch(error => {
+                    console.error(error);
+                    this.isLoading = false;
+                })
         }
     }
 }

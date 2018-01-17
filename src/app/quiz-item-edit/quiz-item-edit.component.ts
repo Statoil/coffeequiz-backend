@@ -21,8 +21,8 @@ export class QuizItemEditComponent implements OnInit {
     ngOnInit() {
     }
 
-    setNewImageId(event) {
-        this.editQuizItem.imageId = event;
+    setNewImageUrl(event) {
+        this.editQuizItem.imageUrl = event;
     }
 
     // noinspection JSUnusedGlobalSymbols
@@ -36,7 +36,7 @@ export class QuizItemEditComponent implements OnInit {
         this.quizItem.alternative2 = this.editQuizItem.alternative2;
         this.quizItem.alternative3 = this.editQuizItem.alternative3;
         this.quizItem.answer = this.editQuizItem.answer;
-        this.quizItem.imageId = this.editQuizItem.imageId;
+        this.quizItem.imageUrl = this.editQuizItem.imageUrl;
         this.quizService.saveQuiz(this.quiz);
     }
 

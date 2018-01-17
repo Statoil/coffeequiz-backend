@@ -12,6 +12,7 @@ const http = require("http");
 const port = process.env.PORT || 3000;
 
 app.use(express.static(path.join(__dirname, '../dist')));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use(bodyParser.urlencoded({limit: '10mb', extended: false}));
 app.use(bodyParser.json({limit: '10mb'}));
 app.use(cors());

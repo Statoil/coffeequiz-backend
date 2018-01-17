@@ -4,8 +4,10 @@ const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
 const logger = require('./logger');
 const ObjectId = require('mongodb').ObjectId;
+const Binary = require('mongodb').Binary;
 const moment = require('moment');
 const _ = require('lodash');
+const fs = require('fs');
 
 const url = process.env.DB_URL || 'mongodb://localhost:27018/statoilquiz';
 let db;
@@ -80,30 +82,8 @@ function getQuizDataForApp(id) {
 }
 
 function insertQuiz(quiz) {
-    cleanUpUnusedImages();
     return db.collection('quiz').insertOne(quiz)
         .then(writeResult => writeResult.insertedId)
-}
-
-
-function cleanUpUnusedImages() {
-    db.collection('quiz').find().toArray()
-        .then(quizes => quizes.forEach(quiz => cleanUpUnusedImagesInQuiz(quiz)));
-}
-
-function cleanUpUnusedImagesInQuiz(quiz) {
-    logger.info("cleaning up images in quiz: " + quiz.name);
-    quiz.quizItems.forEach(quizItem => {
-        if (quizItem.imageId) {
-            const imageObjId = ObjectId(quizItem.imageId);
-            db.collection('image').deleteMany({
-                _id: {$ne: imageObjId},
-                quizId: quiz._id.toHexString(),
-                quizItemId: quizItem.quizItemId
-            })
-                .then(deleteResult => logger.info(`${deleteResult.deletedCount} unused images deleted for quiz ${quiz._id}`));
-        }
-    });
 }
 
 function saveQuiz(quiz) {
@@ -123,17 +103,12 @@ function saveQuiz(quiz) {
         });
 }
 
-function saveImage(quizId, quizItemId, imageData, fileType) {
-    const document = {quizId, quizItemId, imageData, fileType};
+function saveImage(quizId, quizItemId, fileType, imageFile) {
+    const imageData = imageFile ? Binary(fs.readFileSync(imageFile.path)) : null;
+    const document = {quizId, quizItemId, fileType, imageData};
     return db.collection('image').insertOne(document)
         .then(writeResult => writeResult.insertedId.toHexString())
     .catch(errorHandler);
-}
-
-function getImage(imageId) {
-    const criteria = ObjectId(imageId);
-    return db.collection('image').findOne(criteria)
-        .catch(error => logger.error(error));
 }
 
 function errorHandler(error) {
@@ -152,8 +127,7 @@ const mongoAPI = {
     getQuizData: getQuizData,
     getQuizDataForApp: getQuizDataForApp,
     saveQuiz: saveQuiz,
-    saveImage: saveImage,
-    getImage: getImage
+    saveImage: saveImage
 };
 
 module.exports = mongoAPI;
