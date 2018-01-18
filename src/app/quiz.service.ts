@@ -47,7 +47,7 @@ export class QuizService {
 
     uploadFile(formData: FormData): Promise<any> {
         return this.http
-            .post('api/quiz/image2', formData)
+            .post('api/quiz/image', formData)
             .toPromise()
     }
 

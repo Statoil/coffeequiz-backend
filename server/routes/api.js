@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const mongo = require("../mongoAPI");
-const azure = require("../azureAPI");
+const azure = require("../fileStorage");
 const logger = require("../logger");
-const isAzure = process.env.AZURE || true;
+const isAzure = process.env.BLOB_URL || false;
 const multer  = require('multer');
-const upload = multer({ dest: 'uploads/' });
+const upload = multer({ dest: 'server/uploads/' });
 
 mongo.connect()
     .then(() => {
@@ -52,7 +52,7 @@ mongo.connect()
                 })
         });
 
-        router.post('/quiz/image2', upload.single('imageFile'), (req, res) => {
+        router.post('/quiz/image', upload.single('imageFile'), (req, res) => {
             const imageFile = req.file;
             saveImage(req.body.quizId, req.body.quizItemId, req.body.fileType, imageFile)
                 .then(imageUrl => res.send({imageUrl}))

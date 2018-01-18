@@ -4,10 +4,8 @@ const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
 const logger = require('./logger');
 const ObjectId = require('mongodb').ObjectId;
-const Binary = require('mongodb').Binary;
 const moment = require('moment');
 const _ = require('lodash');
-const fs = require('fs');
 
 const url = process.env.DB_URL || 'mongodb://localhost:27018/statoilquiz';
 let db;
@@ -103,21 +101,6 @@ function saveQuiz(quiz) {
         });
 }
 
-function saveImage(quizId, quizItemId, fileType, imageFile) {
-    const imageData = imageFile ? Binary(fs.readFileSync(imageFile.path)) : null;
-    const document = {quizId, quizItemId, fileType, imageData};
-    return db.collection('image').insertOne(document)
-        .then(writeResult => writeResult.insertedId.toHexString())
-    .catch(errorHandler);
-}
-
-function errorHandler(error) {
-    if (!error) {
-        return;
-    }
-    logger.error(error);
-}
-
 
 const mongoAPI = {
     connect: connect,
@@ -126,8 +109,7 @@ const mongoAPI = {
     getQuizesForApp: getQuizesForApp,
     getQuizData: getQuizData,
     getQuizDataForApp: getQuizDataForApp,
-    saveQuiz: saveQuiz,
-    saveImage: saveImage
+    saveQuiz: saveQuiz
 };
 
 module.exports = mongoAPI;

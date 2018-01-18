@@ -2,7 +2,8 @@
 
 const azure = require('azure-storage');
 const logger = require("./logger");
-const blobService = azure.createBlobService('DefaultEndpointsProtocol=https;AccountName=coffequiz;AccountKey=+AljOizU8v++SW5d4dY1zHT2f/P63hXBwN58rYm3kzgbxTwWDD1ev/5rw1FwjY7Jscv8Ylz4UfEAX7nDBtcXBw==;EndpointSuffix=core.windows.net');
+const blobService = process.env.BLOB_CONNECTION_STRING ? azure.createBlobService(process.env.BLOB_CONNECTION_STRING) : null;
+const azureStorageUrl = process.env.BLOB_URL;
 const containerName = 'images';
 const fs = require('fs');
 const uploadPath = 'server/uploads';
@@ -19,7 +20,7 @@ function saveImage(quizId, quizItemId, fileType, imageFile) {
                 logger.debug("Creating blob: " + fileName);
                 blobService.createBlockBlobFromLocalFile(containerName, fileName, imageFile.path, (error) => {
                     if (!error) {
-                        resolve(getUrl(fileName));
+                        resolve(`${azureStorageUrl}/${containerName}/${fileName}`);
                     }
                     else {
                         reject(error);
@@ -31,11 +32,12 @@ function saveImage(quizId, quizItemId, fileType, imageFile) {
 
 function saveImageFileSystem(quizId, quizItemId, fileType, imageFile) {
     const uploadDir = path.join(uploadPath, quizId);
+    if (!fs.existsSync(uploadDir)) {
+        logger.debug("Creating upload directory: " + uploadDir);
+        fs.mkdirSync(uploadDir);
+    }
     return getExistingFilesInUploadDir(uploadDir)
         .then(files => {
-            if (!fs.existsSync(uploadDir)) {
-                fs.mkdirSync(uploadDir);
-            }
             let fileName = getFileName(quizId, quizItemId, fileType, files);
             fs.renameSync(imageFile.path, path.join(uploadPath, fileName));
             return path.join(clientUploadPath, fileName);
@@ -81,10 +83,6 @@ function getExistingFilesInAzureUploadDir(quizId) {
     });
 }
 
-function getUrl(fileName) {
-    return `https://coffequiz.blob.core.windows.net/images/${fileName}`;
-}
-
 function extractExtension(fileType) {
     const match = fileType.match(/image\/(\w+)/);
     if (match && match.length > 1) {
@@ -94,9 +92,9 @@ function extractExtension(fileType) {
 }
 
 
-const fileAPI = {
+const fileStorage = {
     saveImage: saveImage,
     saveImageFileSystem: saveImageFileSystem
 };
 
-module.exports = fileAPI;
+module.exports = fileStorage;
