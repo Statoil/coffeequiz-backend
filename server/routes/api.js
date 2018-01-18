@@ -1,7 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const mongo = require("../mongoAPI");
+const azure = require("../fileStorage");
 const logger = require("../logger");
+const isAzure = process.env.BLOB_URL || false;
+const multer  = require('multer');
+const upload = multer({ dest: 'server/uploads/' });
 
 mongo.connect()
     .then(() => {
@@ -48,35 +52,22 @@ mongo.connect()
                 })
         });
 
-        router.post('/quiz/image', (req, res) => {
-            const imageDocument = req.body;
-            const imageData = imageDocument.encodedFile.split(',')[1];
-            const fileType = imageDocument.fileType;
-            const buffer = new Buffer(imageData, 'base64');
-            mongo.saveImage(imageDocument.quizId, imageDocument.quizItemId, buffer, fileType)
-                .then(imageId => {
-                    if (!imageId) {
-                        res.sendStatus(500);
-                    }
-                    res.send({imageId});
+        router.post('/quiz/image', upload.single('imageFile'), (req, res) => {
+            const imageFile = req.file;
+            saveImage(req.body.quizId, req.body.quizItemId, req.body.fileType, imageFile)
+                .then(imageUrl => res.send({imageUrl}))
+                .catch(error => {
+                    logger.error("Error when uploading image: " + error);
+                    res.status(500).send(error);
                 });
         });
 
-        router.get('/quiz/image/:imageId', (req, res) => {
-            if (!req.params.imageId || req.params.imageId === "null" || req.params.imageId === "undefined") {
-                res.sendStatus(404);
+        function saveImage(quizId, quizItemId, fileType, imageFile) {
+            if (isAzure) {
+                return azure.saveImage(quizId, quizItemId, fileType, imageFile);
             }
-            else {
-                mongo.getImage(req.params.imageId)
-                    .then(imageDocument => {
-                        if (!imageDocument) {
-                            res.sendStatus(404);
-                        }
-                        res.type(imageDocument.fileType);
-                        res.send(imageDocument.imageData.buffer);
-                    });
-            }
-        });
+            return azure.saveImageFileSystem(quizId, quizItemId, fileType, imageFile);
+        }
 
         router.use((req, res) => {
             logger.error("Non existing API route: " + req.originalUrl);

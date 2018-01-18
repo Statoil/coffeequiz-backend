@@ -80,30 +80,8 @@ function getQuizDataForApp(id) {
 }
 
 function insertQuiz(quiz) {
-    cleanUpUnusedImages();
     return db.collection('quiz').insertOne(quiz)
         .then(writeResult => writeResult.insertedId)
-}
-
-
-function cleanUpUnusedImages() {
-    db.collection('quiz').find().toArray()
-        .then(quizes => quizes.forEach(quiz => cleanUpUnusedImagesInQuiz(quiz)));
-}
-
-function cleanUpUnusedImagesInQuiz(quiz) {
-    logger.info("cleaning up images in quiz: " + quiz.name);
-    quiz.quizItems.forEach(quizItem => {
-        if (quizItem.imageId) {
-            const imageObjId = ObjectId(quizItem.imageId);
-            db.collection('image').deleteMany({
-                _id: {$ne: imageObjId},
-                quizId: quiz._id.toHexString(),
-                quizItemId: quizItem.quizItemId
-            })
-                .then(deleteResult => logger.info(`${deleteResult.deletedCount} unused images deleted for quiz ${quiz._id}`));
-        }
-    });
 }
 
 function saveQuiz(quiz) {
@@ -123,26 +101,6 @@ function saveQuiz(quiz) {
         });
 }
 
-function saveImage(quizId, quizItemId, imageData, fileType) {
-    const document = {quizId, quizItemId, imageData, fileType};
-    return db.collection('image').insertOne(document)
-        .then(writeResult => writeResult.insertedId.toHexString())
-    .catch(errorHandler);
-}
-
-function getImage(imageId) {
-    const criteria = ObjectId(imageId);
-    return db.collection('image').findOne(criteria)
-        .catch(error => logger.error(error));
-}
-
-function errorHandler(error) {
-    if (!error) {
-        return;
-    }
-    logger.error(error);
-}
-
 
 const mongoAPI = {
     connect: connect,
@@ -151,9 +109,7 @@ const mongoAPI = {
     getQuizesForApp: getQuizesForApp,
     getQuizData: getQuizData,
     getQuizDataForApp: getQuizDataForApp,
-    saveQuiz: saveQuiz,
-    saveImage: saveImage,
-    getImage: getImage
+    saveQuiz: saveQuiz
 };
 
 module.exports = mongoAPI;

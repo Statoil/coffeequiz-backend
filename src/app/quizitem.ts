@@ -2,7 +2,7 @@ export class QuizItem {
 
     constructor(
         public quizItemId: number,
-        public imageId: string,
+        public imageUrl: string,
         public question: string,
         public alternative1: string,
         public alternative2: string,
@@ -11,14 +11,14 @@ export class QuizItem {
     ) {}
 
     static fromObj(rawQuizItem: any) {
-        return new QuizItem(rawQuizItem.quizItemId, rawQuizItem.imageId, rawQuizItem.question, rawQuizItem.alternative1,
+        return new QuizItem(rawQuizItem.quizItemId, rawQuizItem.imageUrl, rawQuizItem.question, rawQuizItem.alternative1,
             rawQuizItem.alternative2, rawQuizItem.alternative3, rawQuizItem.answer);
     }
 
     public equals(other: QuizItem) {
         return (
             this.quizItemId === other.quizItemId &&
-            this.imageId === other.imageId &&
+            this.imageUrl === other.imageUrl &&
             this.question === other.question &&
             this.alternative1 === other.alternative1 &&
             this.alternative2 === other.alternative2 &&

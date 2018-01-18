@@ -33,7 +33,7 @@
             </div>
         </div>
         <span class="form-check-label" style="padding-left: 0">Image file</span>
-        <file-upload [quizId]="quiz._id" [quizItemId]="editQuizItem.quizItemId" (change)="setNewImageId($event)"></file-upload>
+        <file-upload [quizId]="quiz._id" [quizItemId]="editQuizItem.quizItemId" (change)="setNewImageUrl($event)"></file-upload>
         <div class="row justify-content-end">
             <div class="col" style="text-align: right">
                 <button type="button" class="btn btn-primary" (click)="save()" [disabled]="!hasUnsavedData()">Save</button>
@@ -43,6 +43,6 @@
     </div>
 
     <div class="quiz-item-preview">
-        <quiz-item-preview [imageId]="editQuizItem.imageId" [quizId]="quiz._id" [quizItem]="editQuizItem"></quiz-item-preview>
+        <quiz-item-preview [imageUrl]="editQuizItem.imageUrl" [quizId]="quiz._id" [quizItem]="editQuizItem"></quiz-item-preview>
     </div>
 </div>
