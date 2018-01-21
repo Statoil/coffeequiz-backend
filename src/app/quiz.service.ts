@@ -34,14 +34,23 @@ export class QuizService {
             })
     }
 
-    saveQuiz(quiz: Quiz): Promise<string> {
+    saveQuiz(quiz: any): Promise<string> {
         return this.http
-            .put<any>(`${this.quizUrl}/${quiz._id}`, quiz)
+            .put<any>(`${this.quizUrl}/${quiz.id}`, quiz)
             .toPromise()
             .then(result => result._id)
             .catch(error => {
                 console.error(error);
                 return null;
+            })
+    }
+
+    deleteQuiz(quiz: any): Promise<void> {
+        return this.http
+            .delete<any>(`${this.quizUrl}/${quiz.id}`)
+            .toPromise()
+            .catch(error => {
+                console.error(error);
             })
     }
 

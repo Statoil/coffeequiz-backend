@@ -35,6 +35,18 @@ mongo.connect()
                 });
         });
 
+        router.delete('/quiz/:id', (req, res) => {
+            const id = req.params.id;
+            mongo.deleteQuiz(id)
+                .then(() => {
+                    res.status(200).send({ok: true});
+                })
+                .catch((error) => {
+                    logger.error("Error when deleting quiz: " + error);
+                    res.status(500).send(error);
+                });
+        });
+
         router.get('/quiz/app/:id', (req, res) => {
             const id = req.params.id;
             mongo.getQuizDataForApp(id)

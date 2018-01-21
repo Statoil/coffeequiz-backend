@@ -68,7 +68,11 @@ function getQuizesForApp() {
 }
 
 function getQuizData(id) {
-    return db.collection('quiz').findOne({"_id": ObjectId(id)})
+    return db.collection('quiz').findOne({"_id": ObjectId(id)});
+}
+
+function deleteQuiz(id) {
+    return db.collection('quiz').deleteOne({"_id": ObjectId(id)});
 }
 
 function getQuizDataForApp(id) {
@@ -108,6 +112,7 @@ const mongoAPI = {
     getQuizes: getQuizes,
     getQuizesForApp: getQuizesForApp,
     getQuizData: getQuizData,
+    deleteQuiz: deleteQuiz,
     getQuizDataForApp: getQuizDataForApp,
     saveQuiz: saveQuiz
 };

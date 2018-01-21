@@ -1,3 +1,22 @@
+<!-- Modal template start -->
+<ng-template #confirmDeleteContent let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Confirm delete</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <p>Are you sure you want to delete the quiz?</p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-primary" (click)="c('Ok click')">Ok</button>
+        <button type="button" class="btn btn-outline-dark" (click)="d('Cancel click')">Cancel</button>
+    </div>
+</ng-template>
+<!-- Modal template end -->
+
+
 <div class="container-fluid">
 
     <h1 style="text-align: center">Quiz Admin</h1>
@@ -13,15 +32,18 @@
                         <th>End time</th>
                         <th>Question count</th>
                         <th>Created by</th>
+                        <th *ngIf="isDeleteColumnVisible()"></th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let quiz of quizes" style="cursor: pointer" (click)="quizClicked(quiz.id)">
-                        <td>{{quiz.name}}</td>
-                        <td>{{quiz.startTime | date: 'EEE dd. MMM yy'}}</td>
-                        <td>{{quiz.endTime  | date: 'EEE dd. MMM yy'}}</td>
-                        <td>{{quiz.numberOfItems}}</td>
-                        <td>{{quiz.createdBy}}</td>
+                    <tr *ngFor="let quiz of quizes" style="cursor: pointer">
+                        <td (click)="quizClicked(quiz.id)">{{quiz.name}}</td>
+                        <td (click)="quizClicked(quiz.id)">{{quiz.startTime | date: 'EEE dd. MMM yy'}}</td>
+                        <td (click)="quizClicked(quiz.id)">{{quiz.endTime  | date: 'EEE dd. MMM yy'}}</td>
+                        <td (click)="quizClicked(quiz.id)">{{quiz.numberOfItems}}</td>
+                        <td (click)="quizClicked(quiz.id)">{{quiz.createdBy}}</td>
+                        <td *ngIf="isDeleteColumnVisible()"><button type="button" *ngIf="quiz.numberOfItems === 0" class="btn btn-outline-primary btn-sm octicon-button"
+                                (click)="deleteQuiz(quiz, confirmDeleteContent)" [innerHTML]="removeIcon" style="z-index: -1"></button></td>
                     </tr>
                 </tbody>
             </table>

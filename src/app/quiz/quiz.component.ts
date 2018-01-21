@@ -91,7 +91,7 @@ export class QuizComponent implements OnInit {
             }
             this.quiz.deleteQuizItem(quizItem);
             this.saveQuiz();
-        });
+        }, () => {});
     }
 
     moveUp(quizItem: QuizItem) {
