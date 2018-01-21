@@ -8,9 +8,12 @@ import {QuizService} from "./quiz.service";
 })
 export class AppComponent {
 
+    isAuthenticated: boolean;
+
     constructor(private quizService: QuizService) {
         this.quizService.userInfo()
             .then(userInfo => {
+                this.isAuthenticated = userInfo.isAuthenticated;
                 if (!userInfo || !userInfo.isAuthenticated) {
                     window.location.href = userInfo.loginUrl;
                 }
