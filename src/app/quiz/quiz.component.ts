@@ -15,7 +15,7 @@ import {DomSanitizer} from "@angular/platform-browser";
     templateUrl: './quiz.component.html',
     styleUrls: ['./quiz.component.css']
 })
-export class QuizComponent implements OnInit {
+export class QuizComponent {
 
     @ViewChild(QuizItemEditComponent)
     private quizItemEditComponent: QuizItemEditComponent;
@@ -37,36 +37,28 @@ export class QuizComponent implements OnInit {
         private activatedRoute: ActivatedRoute,
         private modalService: NgbModal,
         private sanitizer: DomSanitizer,
-        private router: Router) {
-    }
+        private router: Router)
+    {
+        this.activatedRoute.params.subscribe((params) => {
+            const id = params.id;
+            if (id === 'create-new-quiz') {
+                this.createNewQuiz()
+                    .then(quizId => this.router.navigate(['quiz', quizId]));
+            } else {
+                this.quizService.getQuiz(id)
+                    .then(quiz => {
+                        this.quiz = quiz;
+                        this.startWeekDay = QuizComponent.getWeekDay(quiz.startTime);
+                    });
+                this.loadIcons();
+            }
 
-    ngOnInit() {
-        this.getQuiz();
-        this.loadIcons();
+        })
     }
 
     createNewQuiz() {
         const quiz = new Quiz(undefined, "New Quiz", [], moment().endOf('day').toDate(), 0);
         return this.quizService.saveQuiz(quiz);
-    }
-
-    getQuizId() {
-        const id = this.activatedRoute.snapshot.paramMap.get('id');
-        if (id === 'create-new-quiz') {
-            return this.createNewQuiz()
-        }
-        return Promise.resolve(id);
-    }
-
-    getQuiz() {
-        this.getQuizId()
-            .then(id => {
-                this.quizService.getQuiz(id)
-                    .then (quiz => {
-                        this.quiz = quiz;
-                        this.startWeekDay = QuizComponent.getWeekDay(quiz.startTime);
-                    });
-            });
     }
 
     openQuizItem(quizItem, modalContent) {
