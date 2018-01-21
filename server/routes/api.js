@@ -6,9 +6,18 @@ const logger = require("../logger");
 const isAzure = process.env.BLOB_URL || false;
 const multer  = require('multer');
 const upload = multer({ dest: 'server/uploads/' });
+const _ = require('lodash');
 
 mongo.connect()
     .then(() => {
+
+        router.all('/auth/*', (req, res, next) => {
+            if (isAzure && !req.get('X-MS-CLIENT-PRINCIPAL-NAME')) {
+                res.status(401).send({error: 'Unauthorized'});
+            }
+            next();
+        });
+
         router.post('/quiz-response', (req, res) => {
             const quizResponse = req.body;
             quizResponse.timestamp = new Date();
@@ -18,16 +27,30 @@ mongo.connect()
         });
 
         router.get('/quizes', (req, res) => {
-            mongo.getQuizes()
-                .then(quizData => res.send(quizData));
-        });
-
-        router.get('/quizes/app', (req, res) => {
             mongo.getQuizesForApp()
                 .then(quizData => res.send(quizData));
         });
 
         router.get('/quiz/:id', (req, res) => {
+            const id = req.params.id;
+            mongo.getQuizDataForApp(id)
+                .then(quiz => {
+                    res.send(quiz ? quiz : {})
+                });
+        });
+
+        router.get('/userinfo', (req, res) => {
+            let principalName = req.get('X-MS-CLIENT-PRINCIPAL-NAME');
+            const isAuthenticated = !_.isNil(principalName) || !isAzure;
+            res.send({principalName, isAuthenticated});
+        });
+
+        router.get('/auth/quizes', (req, res) => {
+            mongo.getQuizes()
+                .then(quizData => res.send(quizData));
+        });
+
+        router.get('/auth/quiz/:id', (req, res) => {
             const id = req.params.id;
             mongo.getQuizData(id)
                 .then(quiz => {
@@ -35,7 +58,7 @@ mongo.connect()
                 });
         });
 
-        router.delete('/quiz/:id', (req, res) => {
+        router.delete('/auth/quiz/:id', (req, res) => {
             const id = req.params.id;
             mongo.deleteQuiz(id)
                 .then(() => {
@@ -47,15 +70,8 @@ mongo.connect()
                 });
         });
 
-        router.get('/quiz/app/:id', (req, res) => {
-            const id = req.params.id;
-            mongo.getQuizDataForApp(id)
-                .then(quiz => {
-                    res.send(quiz ? quiz : {})
-                });
-        });
 
-        router.put('/quiz/:id', (req, res) => {
+        router.put('/auth/quiz/:id', (req, res) => {
             mongo.saveQuiz(req.body)
                 .then(quizId => res.send({_id: quizId}))
                 .catch(error => {
@@ -64,7 +80,7 @@ mongo.connect()
                 })
         });
 
-        router.post('/quiz/image', upload.single('imageFile'), (req, res) => {
+        router.post('/auth/quiz/image', upload.single('imageFile'), (req, res) => {
             const imageFile = req.file;
             saveImage(req.body.quizId, req.body.quizItemId, req.body.fileType, imageFile)
                 .then(imageUrl => res.send({imageUrl}))
@@ -72,10 +88,6 @@ mongo.connect()
                     logger.error("Error when uploading image: " + error);
                     res.status(500).send(error);
                 });
-        });
-
-        router.get('/userinfo', (req, res) => {
-           res.send({principalName: req.get('X-MS-CLIENT-PRINCIPAL-NAME'), clientPrincipalId: req.get('X-MS-CLIENT-PRINCIPAL-ID')});
         });
 
         function saveImage(quizId, quizItemId, fileType, imageFile) {

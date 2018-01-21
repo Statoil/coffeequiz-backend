@@ -7,8 +7,8 @@ import {catchError} from "rxjs/operators";
 
 @Injectable()
 export class QuizService {
-    private quizesUrl = 'api/quizes';
-    private quizUrl = 'api/quiz';
+    private quizesUrl = 'api/auth/quizes';
+    private quizUrl = 'api/auth/quiz';
 
 
     constructor(private http: HttpClient) {
@@ -56,8 +56,17 @@ export class QuizService {
 
     uploadFile(formData: FormData): Promise<any> {
         return this.http
-            .post('api/quiz/image', formData)
+            .post('api/auth/quiz/image', formData)
             .toPromise()
+    }
+
+    userInfo() : Promise<any> {
+        return this.http
+            .get<any>('api/userinfo')
+            .toPromise()
+            .catch(error => {
+                console.error(error);
+            })
     }
 
 }
