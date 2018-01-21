@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {QuizService} from "../quiz.service";
 import {Quiz} from "../quiz";
@@ -57,8 +57,12 @@ export class QuizComponent {
     }
 
     createNewQuiz() {
-        const quiz = new Quiz(undefined, "New Quiz", [], moment().endOf('day').toDate(), 0);
-        return this.quizService.saveQuiz(quiz);
+        return this.quizService.userInfo()
+            .then(userInfo => {
+                const userName = userInfo ? userInfo.principalName.split('@')[0] : null;
+                const quiz = new Quiz(undefined, "New Quiz", [], moment().endOf('day').toDate(), 0, userName);
+                return this.quizService.saveQuiz(quiz);
+            })
     }
 
     openQuizItem(quizItem, modalContent) {
