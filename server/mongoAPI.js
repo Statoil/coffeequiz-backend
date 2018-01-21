@@ -7,7 +7,7 @@ const ObjectId = require('mongodb').ObjectId;
 const moment = require('moment');
 const _ = require('lodash');
 
-const url = process.env.DB_URL || 'mongodb://localhost:27018/statoilquiz';
+const url = process.env.DB_URL || 'mongodb://localhost:27018/coffeequiz';
 let db;
 
 function connect() {
