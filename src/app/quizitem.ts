@@ -1,3 +1,5 @@
+import * as _ from 'lodash';
+
 export class QuizItem {
 
     constructor(
@@ -25,6 +27,16 @@ export class QuizItem {
             this.alternative3 === other.alternative3 &&
             this.answer === other.answer
         );
+    }
+
+    public isComplete() {
+        return !_.isNil(this.quizItemId) &&
+            !_.isNil(this.imageUrl) &&
+            !_.isNil(this.question) &&
+            !_.isNil(this.alternative1) &&
+            !_.isNil(this.alternative2) &&
+            !_.isNil(this.alternative3) &&
+            !_.isNil(this.answer);
     }
 
 }

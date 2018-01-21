@@ -1,5 +1,5 @@
 <!-- Modal template start -->
-<ng-template #content let-c="close" let-d="dismiss">
+<ng-template #unsavedQuizItemContent let-c="close" let-d="dismiss">
     <div class="modal-header">
         <h4 class="modal-title">Unsaved changes</h4>
         <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
@@ -16,6 +16,26 @@
     </div>
 </ng-template>
 <!-- Modal template end -->
+
+
+<!-- Modal template start -->
+<ng-template #confirmDeleteContent let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Confirm delete</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <p>Are you sure you want to delete the quiz item?</p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-primary" (click)="c('Ok click')">Ok</button>
+        <button type="button" class="btn btn-outline-dark" (click)="d('Cancel click')">Cancel</button>
+    </div>
+</ng-template>
+<!-- Modal template end -->
+
 
 <div class="container-fluid" *ngIf="quiz">
 
@@ -48,8 +68,8 @@
                 <tbody>
                 <tr *ngFor="let quizItm of quiz.quizItems; let idx = index" style="cursor: pointer"
                     [ngClass]="{'table-primary':quizItem && (quizItem.quizItemId === quizItm.quizItemId)}">
-                    <td (click)="openQuizItem(quizItm, content)">{{getQuizItemDate(idx) | date: 'EEE dd.&nbsp;MMM yy'}}</td>
-                    <td (click)="openQuizItem(quizItm, content)">{{quizItm.question}}</td>
+                    <td (click)="openQuizItem(quizItm, unsavedQuizItemContent)">{{getQuizItemDate(idx) | date: 'EEE dd.&nbsp;MMM yy'}}</td>
+                    <td (click)="openQuizItem(quizItm, unsavedQuizItemContent)">{{quizItm.question}}</td>
                     <td>
                         <button type="button" class="btn btn-outline-primary btn-sm octicon-button"
                                 (click)="moveUp(quizItm)" [innerHTML]="icons.up"></button>
@@ -58,7 +78,7 @@
                                 (click)="moveDown(quizItm)" [innerHTML]="icons.down"></button>
 
                         <button type="button" class="btn btn-outline-primary btn-sm octicon-button"
-                                (click)="deleteQuizItem(quizItm)" [innerHTML]="icons.remove"></button>
+                                (click)="deleteQuizItem(quizItm, confirmDeleteContent)" [innerHTML]="icons.remove"></button>
                     </td>
                 </tr>
                 </tbody>

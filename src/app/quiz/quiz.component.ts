@@ -71,11 +71,8 @@ export class QuizComponent implements OnInit {
 
     openQuizItem(quizItem, modalContent) {
         if (this.quizItemEditComponent && this.quizItemEditComponent.hasUnsavedData()) {
-            this.modalService.open(modalContent).result.then((result) => {
-                console.log("result: " + result);
+            this.modalService.open(modalContent).result.then(() => {
                 this.setCurrentQuizItem(quizItem);
-            }, (reason) => {
-                console.log("reason: " + reason);
             });
         }
         else {
@@ -87,12 +84,14 @@ export class QuizComponent implements OnInit {
         this.quizItem = quizItem;
     }
 
-    deleteQuizItem(quizItem: QuizItem) {
-        if (this.quizItem && this.quizItem.quizItemId === quizItem.quizItemId) {
-            this.quizItem = null;
-        }
-        this.quiz.deleteQuizItem(quizItem);
-        this.saveQuiz();
+    deleteQuizItem(quizItem: QuizItem, confirmModalContent) {
+        this.modalService.open(confirmModalContent).result.then(() => {
+            if (this.quizItem && this.quizItem.quizItemId === quizItem.quizItemId) {
+                this.quizItem = null;
+            }
+            this.quiz.deleteQuizItem(quizItem);
+            this.saveQuiz();
+        });
     }
 
     moveUp(quizItem: QuizItem) {
