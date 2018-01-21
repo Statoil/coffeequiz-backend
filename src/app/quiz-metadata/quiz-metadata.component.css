@@ -1,0 +1,6 @@
+.btn-primary.disabled, .btn-primary:disabled {
+    background-color: lightgray;
+    border-color: gray;
+    cursor: default;
+    color: darkgray;
+}

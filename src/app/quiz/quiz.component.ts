@@ -49,6 +49,9 @@ export class QuizComponent {
                     .then(quiz => {
                         this.quiz = quiz;
                         this.startWeekDay = QuizComponent.getWeekDay(quiz.startTime);
+                        if (!this.quiz.name) {
+                            this.editMetadata();
+                        }
                     });
                 this.loadIcons();
             }
@@ -59,8 +62,8 @@ export class QuizComponent {
     createNewQuiz() {
         return this.quizService.userInfo()
             .then(userInfo => {
-                const userName = userInfo ? userInfo.principalName.split('@')[0] : null;
-                const quiz = new Quiz(undefined, "New Quiz", [], moment().endOf('day').toDate(), 0, userName);
+                const userName = (userInfo && userInfo.principalName) ? userInfo.principalName.split('@')[0] : null;
+                const quiz = new Quiz(undefined, null, [], moment().endOf('day').toDate(), 0, userName);
                 return this.quizService.saveQuiz(quiz);
             })
     }

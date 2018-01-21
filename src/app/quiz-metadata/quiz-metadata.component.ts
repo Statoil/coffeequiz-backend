@@ -32,6 +32,7 @@ export class QuizMetadataComponent implements OnInit {
     @Input() quiz: Quiz;
     name: string;
     startTime: any;
+    createMode: boolean;
 
     constructor(
         public activeModal: NgbActiveModal,
@@ -41,6 +42,7 @@ export class QuizMetadataComponent implements OnInit {
     ngOnInit() {
         this.name = this.quiz.name;
         this.startTime = DatePickerDate.fromDate(this.quiz.startTime);
+        this.createMode = !this.quiz.name;
     }
 
     // noinspection JSUnusedGlobalSymbols
