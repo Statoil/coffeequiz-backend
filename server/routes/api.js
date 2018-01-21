@@ -62,6 +62,10 @@ mongo.connect()
                 });
         });
 
+        router.get('/userinfo', (req, res) => {
+           res.send({principalName: req.get('X-MS-CLIENT-PRINCIPAL-NAME'), clientPrincipalId: req.get('X-MS-CLIENT-PRINCIPAL-ID')});
+        });
+
         function saveImage(quizId, quizItemId, fileType, imageFile) {
             if (isAzure) {
                 return azure.saveImage(quizId, quizItemId, fileType, imageFile);
