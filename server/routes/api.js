@@ -42,7 +42,8 @@ mongo.connect()
         router.get('/userinfo', (req, res) => {
             let principalName = req.get('X-MS-CLIENT-PRINCIPAL-NAME');
             const isAuthenticated = !_.isNil(principalName) || !isAzure;
-            res.send({principalName, isAuthenticated});
+            const loginUrl = process.env.LOGIN_URL;
+            res.send({principalName, isAuthenticated, loginUrl});
         });
 
         router.get('/auth/quizes', (req, res) => {
