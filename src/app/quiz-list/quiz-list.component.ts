@@ -5,6 +5,7 @@ import {QuizMetadata} from "../quizmetadata";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import octicons from 'octicons';
 import {DomSanitizer} from "@angular/platform-browser";
+import {QuizMetadataComponent} from "../quiz-metadata/quiz-metadata.component";
 
 @Component({
     selector: 'app-quiz-list',
@@ -39,7 +40,7 @@ export class QuizListComponent implements OnInit {
     }
 
     createNewQuiz() {
-        this.router.navigate(["quiz", "create-new-quiz"])
+        this.modalService.open(QuizMetadataComponent);
     }
 
     isDeleteColumnVisible(): boolean {

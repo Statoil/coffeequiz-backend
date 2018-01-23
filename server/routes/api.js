@@ -40,11 +40,16 @@ mongo.connect()
         });
 
         router.get('/userinfo', (req, res) => {
-            let principalName = req.get('X-MS-CLIENT-PRINCIPAL-NAME');
-            const isAuthenticated = !_.isNil(principalName) || !isAzure;
+            let userId = getUserIdFromRequest(req);
+            const isAuthenticated = !_.isNil(userId) || !isAzure;
             const loginUrl = process.env.LOGIN_URL;
-            res.send({principalName, isAuthenticated, loginUrl});
+            res.send({userId, isAuthenticated, loginUrl});
         });
+
+        function getUserIdFromRequest(req) {
+            let principalName = req.get('X-MS-CLIENT-PRINCIPAL-NAME');
+            return principalName ? principalName.split('@')[0] : null;
+        }
 
         router.get('/auth/quizes', (req, res) => {
             mongo.getQuizes()
@@ -73,13 +78,21 @@ mongo.connect()
 
 
         router.put('/auth/quiz/:id', (req, res) => {
-            mongo.saveQuiz(req.body)
+            saveQuiz(req.body, getUserIdFromRequest(req))
                 .then(quizId => res.send({_id: quizId}))
                 .catch(error => {
                     logger.error("Error when saving quiz: " + error);
                     res.status(500).send(error);
                 })
         });
+
+        function saveQuiz(quiz, userId) {
+            if (!quiz._id) {
+                quiz.createdBy = userId;
+                return mongo.createQuiz(quiz);
+            }
+            return mongo.saveQuiz(quiz);
+        }
 
         router.post('/auth/quiz/image', upload.single('imageFile'), (req, res) => {
             const imageFile = req.file;

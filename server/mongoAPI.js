@@ -83,15 +83,12 @@ function getQuizDataForApp(id) {
         })
 }
 
-function insertQuiz(quiz) {
+function createQuiz(quiz) {
     return db.collection('quiz').insertOne(quiz)
         .then(writeResult => writeResult.insertedId)
 }
 
 function saveQuiz(quiz) {
-    if (!quiz._id) {
-        return insertQuiz(quiz);
-    }
     quiz._id = ObjectId(quiz._id);
     const criteria = {_id: quiz._id};
     return db.collection('quiz').updateOne(criteria, quiz)
@@ -114,7 +111,8 @@ const mongoAPI = {
     getQuizData: getQuizData,
     deleteQuiz: deleteQuiz,
     getQuizDataForApp: getQuizDataForApp,
-    saveQuiz: saveQuiz
+    saveQuiz: saveQuiz,
+    createQuiz: createQuiz
 };
 
 module.exports = mongoAPI;

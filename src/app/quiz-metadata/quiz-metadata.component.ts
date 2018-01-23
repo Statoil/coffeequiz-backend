@@ -2,6 +2,7 @@ import {Component, OnInit, Input} from '@angular/core';
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {Quiz} from "../quiz";
 import {QuizService} from "../quiz.service";
+import {Router} from "@angular/router";
 
 class DatePickerDate {
     constructor(
@@ -36,23 +37,48 @@ export class QuizMetadataComponent implements OnInit {
 
     constructor(
         public activeModal: NgbActiveModal,
-        private quizService: QuizService) {
-    }
+        private quizService: QuizService,
+        private router: Router)
+    { }
 
     ngOnInit() {
-        this.name = this.quiz.name;
-        this.startTime = DatePickerDate.fromDate(this.quiz.startTime);
-        this.createMode = !this.quiz.name;
+        if (!this.quiz) {
+            this.createMode = true;
+            this.startTime = DatePickerDate.fromDate(new Date());
+        }
+        else {
+            this.name = this.quiz.name;
+            this.startTime = DatePickerDate.fromDate(this.quiz.startTime);
+            this.createMode = !this.quiz.name;
+        }
     }
 
     // noinspection JSUnusedGlobalSymbols
     save() {
-        this.quiz.name = this.name;
-        this.quiz.startTime = DatePickerDate.fromObject(this.startTime).toDate();
-        this.quizService.saveQuiz(this.quiz);
+        if (this.createMode) {
+            this.createNewQuiz();
+        } else {
+            this.quiz.name = this.name;
+            this.quiz.startTime = this.getDatePickerDate();
+            this.quizService.saveQuiz(this.quiz);
+        }
         this.activeModal.close('saved');
     }
 
+    saveButtonDisabled(): boolean {
+        return !this.name || (this.quiz && (this.quiz.name === this.name && this.quiz.startTime.getTime() === this.getDatePickerDate().getTime()));
+    }
+
+    createNewQuiz() {
+        const quiz = new Quiz(undefined, this.name, [], this.getDatePickerDate(), 0, null);
+        this.quizService.saveQuiz(quiz)
+            .then(quizId => this.router.navigate(['quiz', quizId]))
+            .catch((error) => console.error(error));
+    }
+
+    getDatePickerDate(): Date {
+        return DatePickerDate.fromObject(this.startTime).toDate();
+    }
 
 
 }

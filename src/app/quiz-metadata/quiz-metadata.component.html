@@ -5,8 +5,7 @@
     </button>
 </div>
 <div class="modal-body">
-    <div *ngIf="quiz">
-
+    <div>
         <div class="form-group">
             <label for="title">Quiz title</label>
             <input class="form-control" id="title" [(ngModel)]="name">
@@ -27,6 +26,6 @@
     </div>
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn btn-primary" (click)="save()" [disabled]="!name || !startTime">Save</button>
-    <button type="button" *ngIf="!createMode" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Cancel</button>
+    <button type="button" class="btn btn-primary" (click)="save()" [disabled]="saveButtonDisabled()">Save</button>
+    <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Cancel</button>
 </div>
