@@ -28,12 +28,7 @@ function saveQuizResponse(quizResponse) {
 }
 
 function getWeekDay(date) {
-    logger.debug("date: " + date + " moment(date).day(): " + moment(date).day());
-    const newWeekDay = moment(date).tz("Europe/Oslo").isoWeekday() - 1;
-    const oldWeekDay = (moment(date).day() + 6) % 7;
-    logger.debug("oldWeekDay: " + oldWeekDay);
-    logger.debug("newWeekDay: " + newWeekDay);
-    return newWeekDay;
+    return moment(date).tz("Europe/Oslo").isoWeekday() - 1;
 }
 
 function getEndDate(quiz) {
@@ -46,12 +41,8 @@ function getEndDate(quiz) {
 
 function getQuizItemDate(quiz, index) {
     const startWeekDay = getWeekDay(quiz.startTime);
-    logger.debug("startWeekDay: " + startWeekDay);
     const numberOfWeekEndsInRange = Math.floor((startWeekDay + index) / 5);
-    logger.debug("numberOfWekkEndsInRange: " + numberOfWeekEndsInRange);
-    const quizItemDate = moment(quiz.startTime).add(index + (numberOfWeekEndsInRange * 2), 'days').toDate();
-    logger.debug("quizItemDate: " + quizItemDate);
-    return quizItemDate;
+    return moment(quiz.startTime).add(index + (numberOfWeekEndsInRange * 2), 'days').toDate();
 }
 
 function getQuizes() {
