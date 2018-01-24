@@ -28,6 +28,7 @@ function saveQuizResponse(quizResponse) {
 }
 
 function getWeekDay(date) {
+    logger.debug("date: " + date + " moment(date).day(): " + moment(date).day());
     return (moment(date).day() + 6) % 7;
 }
 
