@@ -4,7 +4,7 @@ const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
 const logger = require('./logger');
 const ObjectId = require('mongodb').ObjectId;
-const moment = require('moment');
+const moment = require('moment-timezone');
 const _ = require('lodash');
 
 const url = process.env.DB_URL || 'mongodb://localhost:27018/coffeequiz';
@@ -29,7 +29,11 @@ function saveQuizResponse(quizResponse) {
 
 function getWeekDay(date) {
     logger.debug("date: " + date + " moment(date).day(): " + moment(date).day());
-    return (moment(date).day() + 6) % 7;
+    const newWeekDay = moment(date).tz("Europe/Oslo").isoWeekday() - 1;
+    const oldWeekDay = (moment(date).day() + 6) % 7;
+    logger.debug("oldWeekDay: " + oldWeekDay);
+    logger.debug("newWeekDay: " + newWeekDay);
+    return newWeekDay;
 }
 
 function getEndDate(quiz) {
