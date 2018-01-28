@@ -8,12 +8,13 @@ export class Quiz {
         public quizItems: QuizItem[],
         public startTime: Date,
         public sequenceNumber: number,
-        public createdBy: string
+        public createdBy: string,
+        public isStarted: boolean
     ) {}
 
     static fromObj(rawQuiz: any) {
         return new Quiz(rawQuiz._id, rawQuiz.name, rawQuiz.quizItems.map(rawQuizItems => QuizItem.fromObj(rawQuizItems)),
-            new Date(rawQuiz.startTime), rawQuiz.sequenceNumber, rawQuiz.createdBy);
+            new Date(rawQuiz.startTime), rawQuiz.sequenceNumber, rawQuiz.createdBy, rawQuiz.isStarted);
     }
 
     deleteQuizItem(quizItem: QuizItem): void {

@@ -14,6 +14,7 @@ import { VotingButtonComponent } from './voting-button/voting-button.component';
 import { FileUploadComponent } from './file-upload/file-upload.component';
 import { QuizMetadataComponent } from './quiz-metadata/quiz-metadata.component';
 import { QuizItemEditComponent } from './quiz-item-edit/quiz-item-edit.component';
+import { QuizStatusComponent } from './quiz-status/quiz-status.component';
 
 @NgModule({
     declarations: [
@@ -24,7 +25,8 @@ import { QuizItemEditComponent } from './quiz-item-edit/quiz-item-edit.component
         VotingButtonComponent,
         FileUploadComponent,
         QuizMetadataComponent,
-        QuizItemEditComponent
+        QuizItemEditComponent,
+        QuizStatusComponent
     ],
     imports: [
         BrowserModule,

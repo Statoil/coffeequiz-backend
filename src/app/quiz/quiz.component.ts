@@ -22,7 +22,6 @@ export class QuizComponent {
 
     quiz: Quiz;
     quizItem: QuizItem;
-    private startWeekDay: number;
     icons = {
         up: null,
         down: null,
@@ -45,25 +44,28 @@ export class QuizComponent {
                 this.createNewQuiz()
                     .then(quizId => this.router.navigate(['quiz', quizId]));
             } else {
-                this.quizService.getQuiz(id)
-                    .then(quiz => {
-                        this.quiz = quiz;
-                        this.startWeekDay = QuizComponent.getWeekDay(quiz.startTime);
-                        if (!this.quiz.name) {
-                            this.editMetadata();
-                        }
-                    });
-                this.loadIcons();
+                this.loadQuiz(id);
             }
-
         })
+    }
+
+    loadQuiz(quizId: string) {
+        this.quizService.getQuiz(quizId)
+            .then(quiz => {
+                this.quiz = quiz;
+
+                if (!this.quiz.name) {
+                    this.editMetadata();
+                }
+            });
+        this.loadIcons();
     }
 
     createNewQuiz() {
         return this.quizService.userInfo()
             .then(userInfo => {
                 const userName = (userInfo && userInfo.principalName) ? userInfo.principalName.split('@')[0] : null;
-                const quiz = new Quiz(undefined, null, [], moment().endOf('day').toDate(), 0, userName);
+                const quiz = new Quiz(undefined, null, [], moment().endOf('day').toDate(), 0, userName, false);
                 return this.quizService.saveQuiz(quiz);
             })
     }
@@ -118,7 +120,8 @@ export class QuizComponent {
     }
 
     getQuizItemDate(index) {
-        const numberOfWeekEndsInRange = Math.floor((this.startWeekDay + index) / 5);
+        const startWeekDay = QuizComponent.getWeekDay(this.quiz.startTime);
+        const numberOfWeekEndsInRange = Math.floor((startWeekDay + index) / 5);
         return moment(this.quiz.startTime).add(index + (numberOfWeekEndsInRange * 2), 'days').toDate();
     }
 

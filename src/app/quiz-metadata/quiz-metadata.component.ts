@@ -70,7 +70,7 @@ export class QuizMetadataComponent implements OnInit {
     }
 
     createNewQuiz() {
-        const quiz = new Quiz(undefined, this.name, [], this.getDatePickerDate(), 0, null);
+        const quiz = new Quiz(undefined, this.name, [], this.getDatePickerDate(), 0, null, false);
         this.quizService.saveQuiz(quiz)
             .then(quizId => this.router.navigate(['quiz', quizId]))
             .catch((error) => console.error(error));

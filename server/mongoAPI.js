@@ -24,7 +24,19 @@ function saveQuizResponse(quizResponse) {
         assert.equal(null, err);
         assert.equal(1, r.insertedCount);
         logger.debug("Document inserted successfully", quizResponse);
+        setQuizToStarted(quizResponse.quizId);
     });
+}
+
+function setQuizToStarted(quizId) {
+    getQuizData(quizId)
+        .then(quiz => {
+            if (!quiz.isStarted) {
+                quiz.isStarted = true;
+                logger.info(`Quiz ${quiz.name} started`);
+                saveQuiz(quiz);
+            }
+        })
 }
 
 function getWeekDay(date) {
@@ -55,7 +67,8 @@ function getQuizes() {
                     startTime: quiz.startTime,
                     endTime: getEndDate(quiz),
                     numberOfItems: quiz.quizItems ? quiz.quizItems.length : 0,
-                    createdBy: quiz.createdBy
+                    createdBy: quiz.createdBy,
+                    isStarted: quiz.isStarted
                 }
             });
             return _.sortBy(mappedQuizData, quiz => quiz.startTime);
@@ -78,7 +91,10 @@ function deleteQuiz(id) {
 function getQuizDataForApp(id) {
     return getQuizData(id)
         .then(quizData => {
-            quizData.quizItems.forEach((quizItem, index) => quizItem.startTime = getQuizItemDate(quizData, index));
+            quizData.quizItems.forEach((quizItem, index) => {
+                quizItem.startTime = getQuizItemDate(quizData, index);
+                quizItem.quizId = quizData._id;
+            });
             return quizData.quizItems;
         })
 }
@@ -93,9 +109,8 @@ function saveQuiz(quiz) {
     const criteria = {_id: quiz._id};
     return db.collection('quiz').updateOne(criteria, quiz)
         .then((result) => {
-            if (result.modifiedCount !== 1) {
+            if (result.result.ok !== 1) {
                 const message = "Could not save quiz with id: " + quiz._id;
-                logger.error(message);
                 throw new Error(message);
             }
             return quiz._id;

@@ -89,6 +89,7 @@ mongo.connect()
         function saveQuiz(quiz, userId) {
             if (!quiz._id) {
                 quiz.createdBy = userId;
+                logger.info(`User ${userId} creating new quiz: "${quiz.name}"`);
                 return mongo.createQuiz(quiz);
             }
             return mongo.saveQuiz(quiz);
