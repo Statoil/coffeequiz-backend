@@ -1,6 +1,5 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {QuizItem} from "../quizitem";
-import {QuizService} from "../quiz.service";
 import {Quiz} from "../quiz";
 import * as _ from "lodash";
 
@@ -14,8 +13,9 @@ export class QuizItemEditComponent implements OnInit {
     @Input() quizItem: QuizItem;
     @Input() quiz: Quiz;
     editQuizItem: QuizItem;
+    @Output() saveEvent = new EventEmitter();
 
-    constructor(private quizService: QuizService) {
+    constructor() {
     }
 
     ngOnInit() {
@@ -37,7 +37,7 @@ export class QuizItemEditComponent implements OnInit {
         this.quizItem.alternative3 = this.editQuizItem.alternative3;
         this.quizItem.answer = this.editQuizItem.answer;
         this.quizItem.imageUrl = this.editQuizItem.imageUrl;
-        this.quizService.saveQuiz(this.quiz);
+        this.saveEvent.emit();
     }
 
     hasUnsavedData(): boolean {

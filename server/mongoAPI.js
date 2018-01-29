@@ -29,7 +29,7 @@ function saveQuizResponse(quizResponse) {
 }
 
 function setQuizToStarted(quizId) {
-    getQuizData(quizId)
+    getQuiz(quizId)
         .then(quiz => {
             if (!quiz.isStarted) {
                 quiz.isStarted = true;
@@ -80,19 +80,24 @@ function getQuizesForApp() {
         .then(quizes => quizes.filter(quiz => moment(quiz.endTime).isSameOrAfter(moment().startOf('day'))));
 }
 
-function getQuizData(id) {
-    return db.collection('quiz').findOne({"_id": ObjectId(id)});
+function getQuiz(quizId) {
+    return db.collection('quiz').findOne({"_id": ObjectId(quizId)})
+        .then(quiz => {
+            quiz.quizItems.forEach((quizItem, index) => {
+                quizItem.date = getQuizItemDate(quiz, index);
+            });
+            return quiz;
+        });
 }
 
-function deleteQuiz(id) {
-    return db.collection('quiz').deleteOne({"_id": ObjectId(id)});
+function deleteQuiz(quizId) {
+    return db.collection('quiz').deleteOne({"_id": ObjectId(quizId)});
 }
 
-function getQuizDataForApp(id) {
-    return getQuizData(id)
+function getQuizItems(quizId) {
+    return getQuiz(quizId)
         .then(quizData => {
-            quizData.quizItems.forEach((quizItem, index) => {
-                quizItem.startTime = getQuizItemDate(quizData, index);
+            quizData.quizItems.forEach((quizItem) => {
                 quizItem.quizId = quizData._id;
             });
             return quizData.quizItems;
@@ -123,9 +128,9 @@ const mongoAPI = {
     saveQuizResponse: saveQuizResponse,
     getQuizes: getQuizes,
     getQuizesForApp: getQuizesForApp,
-    getQuizData: getQuizData,
+    getQuiz: getQuiz,
     deleteQuiz: deleteQuiz,
-    getQuizDataForApp: getQuizDataForApp,
+    getQuizItems: getQuizItems,
     saveQuiz: saveQuiz,
     createQuiz: createQuiz
 };

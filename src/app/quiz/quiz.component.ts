@@ -42,7 +42,7 @@ export class QuizComponent {
             const id = params.id;
             if (id === 'create-new-quiz') {
                 this.createNewQuiz()
-                    .then(quizId => this.router.navigate(['quiz', quizId]));
+                    .then(quiz => this.router.navigate(['quiz', quiz._id]));
             } else {
                 this.loadQuiz(id);
             }
@@ -97,12 +97,12 @@ export class QuizComponent {
 
     moveUp(quizItem: QuizItem) {
         this.quiz.moveUp(quizItem);
-        this.saveQuiz();
+        this.saveAndLoadQuiz();
     }
 
     moveDown(quizItem: QuizItem) {
         this.quiz.moveDown(quizItem);
-        this.saveQuiz();
+        this.saveAndLoadQuiz();
     }
 
     addQuizItem() {
@@ -110,23 +110,18 @@ export class QuizComponent {
         this.saveQuiz();
     }
 
-    saveQuiz() {
-        this.quizService.saveQuiz(this.quiz);
+    saveQuiz(): Promise<Quiz> {
+        return this.quizService.saveQuiz(this.quiz);
+    }
+
+    saveAndLoadQuiz() {
+        this.saveQuiz()
+            .then(quiz => this.quiz = quiz);
     }
 
     editMetadata() {
         const modalRef = this.modalService.open(QuizMetadataComponent);
         modalRef.componentInstance.quiz = this.quiz;
-    }
-
-    getQuizItemDate(index) {
-        const startWeekDay = QuizComponent.getWeekDay(this.quiz.startTime);
-        const numberOfWeekEndsInRange = Math.floor((startWeekDay + index) / 5);
-        return moment(this.quiz.startTime).add(index + (numberOfWeekEndsInRange * 2), 'days').toDate();
-    }
-
-    static getWeekDay(date: Date): number {
-        return (moment(date).day() + 6) % 7;
     }
 
     loadIcons() {

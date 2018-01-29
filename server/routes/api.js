@@ -33,7 +33,7 @@ mongo.connect()
 
         router.get('/quiz/:id', (req, res) => {
             const id = req.params.id;
-            mongo.getQuizDataForApp(id)
+            mongo.getQuizItems(id)
                 .then(quiz => {
                     res.send(quiz ? quiz : {})
                 });
@@ -58,9 +58,13 @@ mongo.connect()
 
         router.get('/auth/quiz/:id', (req, res) => {
             const id = req.params.id;
-            mongo.getQuizData(id)
+            mongo.getQuiz(id)
                 .then(quiz => {
                     res.send(quiz ? quiz : {})
+                })
+                .catch((error) => {
+                    logger.error("Error when getting quiz: " + error);
+                    res.status(500).send(error);
                 });
         });
 
@@ -77,9 +81,10 @@ mongo.connect()
         });
 
 
-        router.put('/auth/quiz/:id', (req, res) => {
+        router.put('/auth/quiz', (req, res) => {
             saveQuiz(req.body, getUserIdFromRequest(req))
-                .then(quizId => res.send({_id: quizId}))
+                .then(quizId => mongo.getQuiz(quizId))
+                .then(quiz => res.send(quiz))
                 .catch(error => {
                     logger.error("Error when saving quiz: " + error);
                     res.status(500).send(error);

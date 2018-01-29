@@ -34,11 +34,11 @@ export class QuizService {
             })
     }
 
-    saveQuiz(quiz: any): Promise<string> {
+    saveQuiz(quiz: any): Promise<Quiz> {
         return this.http
-            .put<any>(`${this.quizUrl}/${quiz.id}`, quiz)
+            .put<any>(`${this.quizUrl}`, quiz)
             .toPromise()
-            .then(result => result._id)
+            .then(rawQuiz => Quiz.fromObj(rawQuiz))
             .catch(error => {
                 console.error(error);
                 return null;
