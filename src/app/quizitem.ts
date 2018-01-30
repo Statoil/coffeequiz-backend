@@ -46,7 +46,7 @@ export class QuizItem {
     }
 
     public isActiveToday(): boolean {
-        return moment().isSame(this.date, 'day');
+        return this.date && moment().isSame(this.date, 'day');
     }
 
 }

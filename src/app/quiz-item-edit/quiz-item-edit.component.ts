@@ -13,7 +13,7 @@ export class QuizItemEditComponent implements OnInit {
     @Input() quizItem: QuizItem;
     @Input() quiz: Quiz;
     editQuizItem: QuizItem;
-    @Output() saveEvent = new EventEmitter();
+    @Output() saveEvent = new EventEmitter<QuizItem>();
 
     constructor() {
     }
@@ -31,13 +31,7 @@ export class QuizItemEditComponent implements OnInit {
     }
 
     save() {
-        this.quizItem.question = this.editQuizItem.question;
-        this.quizItem.alternative1 = this.editQuizItem.alternative1;
-        this.quizItem.alternative2 = this.editQuizItem.alternative2;
-        this.quizItem.alternative3 = this.editQuizItem.alternative3;
-        this.quizItem.answer = this.editQuizItem.answer;
-        this.quizItem.imageUrl = this.editQuizItem.imageUrl;
-        this.saveEvent.emit();
+        this.saveEvent.emit(this.editQuizItem);
     }
 
     hasUnsavedData(): boolean {

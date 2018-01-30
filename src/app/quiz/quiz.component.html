@@ -91,7 +91,7 @@
             </div>
         </div>
         <div class="col-6" *ngIf="quizItem" style="overflow: auto; height: 100vh; padding-bottom: 18px">
-            <quiz-item-edit [quiz]="quiz" [quizItem]="quizItem" (saveEvent)="saveAndLoadQuiz()"></quiz-item-edit>
+            <quiz-item-edit [quiz]="quiz" [quizItem]="quizItem" (saveEvent)="saveQuizItem($event)"></quiz-item-edit>
         </div>
 
 

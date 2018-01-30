@@ -91,11 +91,16 @@ export class QuizComponent {
 
     addQuizItem() {
         this.setCurrentQuizItem(this.quiz.newQuizItem());
-        this.saveQuiz();
     }
 
     saveQuiz(): Promise<Quiz> {
         return this.quizService.saveQuiz(this.quiz);
+    }
+
+    saveQuizItem(quizItem: QuizItem) {
+        this.quiz.addQuizItem(quizItem);
+        this.setCurrentQuizItem(quizItem);
+        this.saveAndLoadQuiz();
     }
 
     saveAndLoadQuiz() {

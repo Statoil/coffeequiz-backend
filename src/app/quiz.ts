@@ -39,10 +39,13 @@ export class Quiz {
         }
     }
 
+    //New quiz items are not implicitly added to list of quizItems. This must be done through addQuizItem()
     newQuizItem(): QuizItem {
         const quizItemId = ++this.sequenceNumber;
-        const quizItem = new QuizItem(quizItemId, undefined, undefined, undefined, undefined, undefined, undefined, undefined);
+        return new QuizItem(quizItemId, undefined, undefined, undefined, undefined, undefined, undefined, undefined);
+    }
+
+    addQuizItem(quizItem: QuizItem) {
         this.quizItems.push(quizItem);
-        return quizItem;
     }
 }
