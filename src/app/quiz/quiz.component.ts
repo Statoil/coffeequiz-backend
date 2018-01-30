@@ -116,6 +116,7 @@ export class QuizComponent {
     editMetadata() {
         const modalRef = this.modalService.open(QuizMetadataComponent);
         modalRef.componentInstance.quiz = this.quiz;
+        modalRef.result.then(() => this.saveAndLoadQuiz());
     }
 
     loadIcons() {

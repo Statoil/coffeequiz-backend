@@ -66,7 +66,6 @@ export class QuizMetadataComponent implements OnInit {
         } else {
             this.quiz.name = this.name;
             this.quiz.startTime = this.getDatePickerDate();
-            this.quizService.saveQuiz(this.quiz);
         }
         this.activeModal.close('saved');
     }

@@ -67,10 +67,10 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr *ngFor="let quizItm of quiz.quizItems" style="cursor: pointer"
+                <tr *ngFor="let quizItm of quiz.quizItems" style="cursor: pointer" (click)="openQuizItem(quizItm, unsavedQuizItemContent)"
                     [ngClass]="{'table-primary':quizItem && (quizItem.quizItemId === quizItm.quizItemId)}">
-                    <td (click)="openQuizItem(quizItm, unsavedQuizItemContent)">{{quizItm.date | date: 'EEE dd.&nbsp;MMM yy'}}</td>
-                    <td (click)="openQuizItem(quizItm, unsavedQuizItemContent)">{{quizItm.question}}</td>
+                    <td>{{quizItm.date | date: 'EEE dd.&nbsp;MMM yy'}}</td>
+                    <td>{{quizItm.question}}</td>
                     <td>
                         <button type="button" class="btn btn-outline-primary btn-sm octicon-button"
                                 (click)="moveUp(quizItm)" [innerHTML]="icons.up" *ngIf="!quizItm.isHistoric()" [disabled]="quizItm.isActiveToday()"></button>
