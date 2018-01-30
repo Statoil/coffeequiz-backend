@@ -5,7 +5,6 @@ import {Quiz} from "../quiz";
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {QuizItem} from "../quizitem";
 import {QuizMetadataComponent} from "../quiz-metadata/quiz-metadata.component";
-import * as moment from 'moment';
 import {QuizItemEditComponent} from "../quiz-item-edit/quiz-item-edit.component";
 import octicons from 'octicons';
 import {DomSanitizer} from "@angular/platform-browser";
@@ -39,13 +38,7 @@ export class QuizComponent {
         private router: Router)
     {
         this.activatedRoute.params.subscribe((params) => {
-            const id = params.id;
-            if (id === 'create-new-quiz') {
-                this.createNewQuiz()
-                    .then(quiz => this.router.navigate(['quiz', quiz._id]));
-            } else {
-                this.loadQuiz(id);
-            }
+            this.loadQuiz(params.id);
         })
     }
 
@@ -59,15 +52,6 @@ export class QuizComponent {
                 }
             });
         this.loadIcons();
-    }
-
-    createNewQuiz() {
-        return this.quizService.userInfo()
-            .then(userInfo => {
-                const userName = (userInfo && userInfo.principalName) ? userInfo.principalName.split('@')[0] : null;
-                const quiz = new Quiz(undefined, null, [], moment().endOf('day').toDate(), 0, userName, false);
-                return this.quizService.saveQuiz(quiz);
-            })
     }
 
     openQuizItem(quizItem, modalContent) {

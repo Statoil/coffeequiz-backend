@@ -50,7 +50,7 @@
                 <div class="col-8 text-center">
                     <H1>{{quiz.name}}</H1>
                     Start date: {{quiz.startTime | date: 'mediumDate'}}<br>
-                    <quiz-status [isStarted]="quiz.isStarted"></quiz-status>
+                    <quiz-status [isStarted]="quiz.isStarted" placement="bottom"></quiz-status>
                 </div>
                 <div class="col-2" style="display: flex;align-items: center;">
                     <button type="button" class="btn btn-outline-primary btn-sm octicon-button"
@@ -67,19 +67,19 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr *ngFor="let quizItm of quiz.quizItems; let idx = index" style="cursor: pointer"
+                <tr *ngFor="let quizItm of quiz.quizItems" style="cursor: pointer"
                     [ngClass]="{'table-primary':quizItem && (quizItem.quizItemId === quizItm.quizItemId)}">
                     <td (click)="openQuizItem(quizItm, unsavedQuizItemContent)">{{quizItm.date | date: 'EEE dd.&nbsp;MMM yy'}}</td>
                     <td (click)="openQuizItem(quizItm, unsavedQuizItemContent)">{{quizItm.question}}</td>
                     <td>
                         <button type="button" class="btn btn-outline-primary btn-sm octicon-button"
-                                (click)="moveUp(quizItm)" [innerHTML]="icons.up" *ngIf="!quizItm.isHistoric()"></button>
+                                (click)="moveUp(quizItm)" [innerHTML]="icons.up" *ngIf="!quizItm.isHistoric() && !quizItm.isActiveToday()"></button>
 
                         <button type="button" class="btn btn-outline-primary btn-sm octicon-button"
-                                (click)="moveDown(quizItm)" [innerHTML]="icons.down" *ngIf="!quizItm.isHistoric()"></button>
+                                (click)="moveDown(quizItm)" [innerHTML]="icons.down" *ngIf="!quizItm.isHistoric() && !quizItm.isActiveToday()"></button>
 
                         <button type="button" class="btn btn-outline-primary btn-sm octicon-button"
-                                (click)="deleteQuizItem(quizItm, confirmDeleteContent)" [innerHTML]="icons.remove" *ngIf="!quizItm.isHistoric()"></button>
+                                (click)="deleteQuizItem(quizItm, confirmDeleteContent)" [innerHTML]="icons.remove" *ngIf="!quizItm.isHistoric() && !quizItm.isActiveToday()"></button>
                     </td>
                 </tr>
                 </tbody>

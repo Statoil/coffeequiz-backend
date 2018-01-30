@@ -2,6 +2,8 @@
     <div class="quiz-item-edit">
         <div class="form-group">
             <label for="question">Question</label>
+            <span class="badge badge-primary" *ngIf="editQuizItem.isHistoric()" style="float: right">This quiz item was active in the past, and cannot be edited.</span>
+            <span class="badge badge-warning" *ngIf="editQuizItem.isActiveToday()" style="float: right">This quiz item is active today. Be careful when editing.</span>
             <textarea class="form-control" id="question" [(ngModel)]="editQuizItem.question" rows="3" [disabled]="editQuizItem.isHistoric()"></textarea>
         </div>
         <div class="form-row">

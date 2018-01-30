@@ -41,7 +41,7 @@ export class Quiz {
 
     newQuizItem(): QuizItem {
         const quizItemId = ++this.sequenceNumber;
-        const quizItem = new QuizItem(quizItemId, undefined, undefined, undefined, undefined, undefined, undefined);
+        const quizItem = new QuizItem(quizItemId, undefined, undefined, undefined, undefined, undefined, undefined, undefined);
         this.quizItems.push(quizItem);
         return quizItem;
     }
