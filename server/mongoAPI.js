@@ -54,7 +54,11 @@ function getEndDate(quiz) {
 function getQuizItemDate(quiz, index) {
     const startWeekDay = getWeekDay(quiz.startTime);
     const numberOfWeekEndsInRange = Math.floor((startWeekDay + index) / 5);
-    return moment(quiz.startTime).add(index + (numberOfWeekEndsInRange * 2), 'days').toDate();
+    const tentativeDate = moment(quiz.startTime).add(index + (numberOfWeekEndsInRange * 2), 'days');
+    if (startWeekDay === 6) {
+        return tentativeDate.subtract(1, 'day').toDate();
+    }
+    return tentativeDate.toDate();
 }
 
 function getQuizes() {
