@@ -1,8 +1,9 @@
 import {Component, OnInit, Input} from '@angular/core';
-import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
+import {NgbActiveModal, NgbDatepickerConfig, NgbDateStruct} from "@ng-bootstrap/ng-bootstrap";
 import {Quiz} from "../quiz";
 import {QuizService} from "../quiz.service";
 import {Router} from "@angular/router";
+import * as moment from 'moment';
 
 class DatePickerDate {
     constructor(
@@ -38,8 +39,13 @@ export class QuizMetadataComponent implements OnInit {
     constructor(
         public activeModal: NgbActiveModal,
         private quizService: QuizService,
-        private router: Router)
-    { }
+        private router: Router,
+        private config: NgbDatepickerConfig)
+    {
+        config.markDisabled = (dateStruct: NgbDateStruct) => {
+            return moment([dateStruct.year, dateStruct.month - 1, dateStruct.day]).isBefore(moment().startOf('day'));
+        };
+    }
 
     ngOnInit() {
         if (!this.quiz) {

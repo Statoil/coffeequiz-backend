@@ -44,7 +44,7 @@
         <div class="row justify-content-end" *ngIf="!editQuizItem.isHistoric()">
             <div class="col" style="text-align: right">
                 <button type="button" class="btn btn-primary" (click)="save()" [disabled]="!hasUnsavedData() || !editQuizItem.isComplete()">Save</button>
-                <button type="button" class="btn btn-outline-dark" (click)="reload()">Cancel</button>
+                <button type="button" class="btn btn-outline-dark" (click)="cancel()">Cancel</button>
             </div>
         </div>
     </div>

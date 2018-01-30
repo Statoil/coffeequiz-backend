@@ -14,6 +14,7 @@ export class QuizItemEditComponent implements OnInit {
     @Input() quiz: Quiz;
     editQuizItem: QuizItem;
     @Output() saveEvent = new EventEmitter<QuizItem>();
+    @Output() cancelEvent = new EventEmitter();
 
     constructor() {
     }
@@ -27,19 +28,19 @@ export class QuizItemEditComponent implements OnInit {
 
     // noinspection JSUnusedGlobalSymbols
     ngOnChanges() {
-        this.reload();
+        this.editQuizItem = _.cloneDeep(this.quizItem);
     }
 
     save() {
         this.saveEvent.emit(this.editQuizItem);
     }
 
-    hasUnsavedData(): boolean {
-        return (!this.quizItem.equals(this.editQuizItem));
+    cancel() {
+        this.cancelEvent.emit();
     }
 
-    reload() {
-        this.editQuizItem = _.cloneDeep(this.quizItem);
+    hasUnsavedData(): boolean {
+        return (!this.quizItem.equals(this.editQuizItem));
     }
 
 }

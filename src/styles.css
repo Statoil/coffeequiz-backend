@@ -12,11 +12,15 @@ button {
     cursor: pointer;
 }
 
-.octicon-button {
+.octicon-button, .octicon-symbol {
     fill: #007bff;
     font-size:1px;
 }
 
 .octicon-button:hover {
     fill: white;
+}
+
+.octicon-button:hover:disabled {
+    fill: #007bff;
 }

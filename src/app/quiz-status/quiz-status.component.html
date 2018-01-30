@@ -1,5 +1,9 @@
-<ng-template #popContent>This quiz has started (quiz results has been received).<br>
+<ng-template #started>This quiz has started, i.e. quiz responses has been registered.<br>
     Start dates and quiz items in the past cannot be changed.</ng-template>
+
+<ng-template #planned>This quiz is planned, but has not yet started.</ng-template>
+
 <!--suppress HtmlUnknownAttribute -->
-<span *ngIf="isStarted" class="badge badge-success" [ngbPopover]="popContent">STARTED</span>
-<span *ngIf="!isStarted" class="badge badge-primary">PLANNED</span>
+<span *ngIf="isStarted" class="badge badge-success pointer" [ngbPopover]="started" popoverTitle="Started Quiz">STARTED</span>
+<!--suppress HtmlUnknownAttribute -->
+<span *ngIf="!isStarted" class="badge badge-primary" [ngbPopover]="planned" popoverTitle="Planned Quiz">PLANNED</span>

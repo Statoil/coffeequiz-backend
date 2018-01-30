@@ -73,13 +73,14 @@
                     <td (click)="openQuizItem(quizItm, unsavedQuizItemContent)">{{quizItm.question}}</td>
                     <td>
                         <button type="button" class="btn btn-outline-primary btn-sm octicon-button"
-                                (click)="moveUp(quizItm)" [innerHTML]="icons.up" *ngIf="!quizItm.isHistoric() && !quizItm.isActiveToday()"></button>
+                                (click)="moveUp(quizItm)" [innerHTML]="icons.up" *ngIf="!quizItm.isHistoric()" [disabled]="quizItm.isActiveToday()"></button>
 
                         <button type="button" class="btn btn-outline-primary btn-sm octicon-button"
-                                (click)="moveDown(quizItm)" [innerHTML]="icons.down" *ngIf="!quizItm.isHistoric() && !quizItm.isActiveToday()"></button>
+                                (click)="moveDown(quizItm)" [innerHTML]="icons.down" *ngIf="!quizItm.isHistoric()" [disabled]="quizItm.isActiveToday()"></button>
 
                         <button type="button" class="btn btn-outline-primary btn-sm octicon-button"
-                                (click)="deleteQuizItem(quizItm, confirmDeleteContent)" [innerHTML]="icons.remove" *ngIf="!quizItm.isHistoric() && !quizItm.isActiveToday()"></button>
+                                (click)="deleteQuizItem(quizItm, confirmDeleteContent)" [innerHTML]="icons.remove" *ngIf="!quizItm.isHistoric()" [disabled]="quizItm.isActiveToday()"></button>
+                        <span [innerHtml]="icons.lock" *ngIf="quizItm.isHistoric()" class="octicon-symbol" style="float:right" ngbPopover="Quiz items in the past are not editable" triggers="mouseenter:mouseleave" placement="left"></span>
                     </td>
                 </tr>
                 </tbody>
@@ -91,7 +92,7 @@
             </div>
         </div>
         <div class="col-6" *ngIf="quizItem" style="overflow: auto; height: 100vh; padding-bottom: 18px">
-            <quiz-item-edit [quiz]="quiz" [quizItem]="quizItem" (saveEvent)="saveQuizItem($event)"></quiz-item-edit>
+            <quiz-item-edit [quiz]="quiz" [quizItem]="quizItem" (saveEvent)="saveQuizItem($event)" (cancelEvent)="cancelEditQuizItem()"></quiz-item-edit>
         </div>
 
 

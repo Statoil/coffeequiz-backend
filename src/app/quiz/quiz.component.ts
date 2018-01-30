@@ -26,7 +26,8 @@ export class QuizComponent {
         down: null,
         remove: null,
         back: null,
-        edit: null
+        edit: null,
+        lock: null
     };
 
     // noinspection JSUnusedLocalSymbols
@@ -103,6 +104,10 @@ export class QuizComponent {
         this.saveAndLoadQuiz();
     }
 
+    cancelEditQuizItem() {
+        this.setCurrentQuizItem(null);
+    }
+
     saveAndLoadQuiz() {
         this.saveQuiz()
             .then(quiz => this.quiz = quiz);
@@ -119,5 +124,6 @@ export class QuizComponent {
         this.icons.remove = this.sanitizer.bypassSecurityTrustHtml(octicons.trashcan.toSVG());
         this.icons.back = this.sanitizer.bypassSecurityTrustHtml(octicons['arrow-left'].toSVG());
         this.icons.edit = this.sanitizer.bypassSecurityTrustHtml(octicons['pencil'].toSVG());
+        this.icons.lock = this.sanitizer.bypassSecurityTrustHtml(octicons['lock'].toSVG());
     }
 }
