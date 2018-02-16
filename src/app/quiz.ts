@@ -45,7 +45,13 @@ export class Quiz {
         return new QuizItem(quizItemId, undefined, undefined, undefined, undefined, undefined, undefined, undefined);
     }
 
-    addQuizItem(quizItem: QuizItem) {
-        this.quizItems.push(quizItem);
+    addOrUpdateQuizItem(quizItem: QuizItem) {
+        const existingIndex = this.quizItems.findIndex((item) => item.quizItemId === quizItem.quizItemId);
+        if (existingIndex === -1) {
+            this.quizItems.push(quizItem);
+        }
+        else {
+            this.quizItems.splice(existingIndex, 1, quizItem);
+        }
     }
 }

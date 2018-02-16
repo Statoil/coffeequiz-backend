@@ -99,7 +99,7 @@ export class QuizComponent {
     }
 
     saveQuizItem(quizItem: QuizItem) {
-        this.quiz.addQuizItem(quizItem);
+        this.quiz.addOrUpdateQuizItem(quizItem);
         this.setCurrentQuizItem(quizItem);
         this.saveAndLoadQuiz();
     }
