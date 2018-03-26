@@ -3,7 +3,7 @@ import {NgbActiveModal, NgbDatepickerConfig, NgbDateStruct} from "@ng-bootstrap/
 import {Quiz} from "../quiz";
 import {QuizService} from "../quiz.service";
 import {Router} from "@angular/router";
-import * as moment from 'moment';
+import * as moment from 'moment-timezone';
 
 class DatePickerDate {
     constructor(
@@ -42,9 +42,15 @@ export class QuizMetadataComponent implements OnInit {
         private router: Router,
         private config: NgbDatepickerConfig)
     {
-        config.markDisabled = (dateStruct: NgbDateStruct) => {
-            return moment([dateStruct.year, dateStruct.month - 1, dateStruct.day]).isBefore(moment().startOf('day'));
-        };
+        this.quizService.publicHolidays()
+            .then(publicHolidays => {
+                config.markDisabled = (dateStruct: NgbDateStruct) => {
+                    const date = moment([dateStruct.year, dateStruct.month - 1, dateStruct.day]);
+                    return date.isBefore(moment().startOf('day')) ||
+                        date.tz("Europe/Oslo").isoWeekday() > 5 ||
+                        this.isPublicHoliday(date, publicHolidays);
+                };
+            })
     }
 
     ngOnInit() {
@@ -57,6 +63,16 @@ export class QuizMetadataComponent implements OnInit {
             this.startTime = DatePickerDate.fromDate(this.quiz.startTime);
             this.createMode = !this.quiz.name;
         }
+    }
+
+    isPublicHoliday(date, publicHolidays): boolean {
+        const holidayMoments = publicHolidays.map(holiday => moment(holiday));
+        for (let i = 0; i < holidayMoments.length; i++) {
+            if (date.isSame(holidayMoments[i], 'day')) {
+                return true;
+            }
+        }
+        return false;
     }
 
     // noinspection JSUnusedGlobalSymbols

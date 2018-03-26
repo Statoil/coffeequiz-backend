@@ -175,6 +175,7 @@ const mongoAPI = {
     getQuizItems: getQuizItems,
     saveQuiz: saveQuiz,
     createQuiz: createQuiz,
+    getPublicHolidays:getPublicHolidays,
     populateEndDate: populateEndDate //for testing
 };
 
