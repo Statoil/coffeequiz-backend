@@ -61,7 +61,7 @@ function isWeekEnd(date) {
 
 function isPublicHoliday(date, publicHolidays) {
     for (let i = 0; i < publicHolidays.length; i++) {
-        if (date.isSame(publicHolidays[i], 'day')) {
+        if (date.tz("Europe/Oslo").isSame(publicHolidays[i], 'day')) {
             return true;
         }
     }
