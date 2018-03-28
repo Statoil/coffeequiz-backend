@@ -68,6 +68,11 @@ mongo.connect()
                 });
         });
 
+        router.get('/auth/publicholidays', (req, res) => {
+            mongo.getPublicHolidays()
+                .then(publicHolidays => res.send(publicHolidays));
+        });
+
         router.delete('/auth/quiz/:id', (req, res) => {
             const id = req.params.id;
             mongo.deleteQuiz(id)

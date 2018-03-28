@@ -69,4 +69,13 @@ export class QuizService {
             })
     }
 
+    publicHolidays() : Promise<any> {
+        return this.http
+            .get<any>('api/auth/publicholidays')
+            .toPromise()
+            .catch(error => {
+            console.error(error);
+        })
+    }
+
 }

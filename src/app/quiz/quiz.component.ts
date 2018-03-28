@@ -6,7 +6,7 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {QuizItem} from "../quizitem";
 import {QuizMetadataComponent} from "../quiz-metadata/quiz-metadata.component";
 import {QuizItemEditComponent} from "../quiz-item-edit/quiz-item-edit.component";
-import octicons from 'octicons';
+import * as octicons from 'octicons';
 import {DomSanitizer} from "@angular/platform-browser";
 
 @Component({

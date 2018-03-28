@@ -39,44 +39,63 @@ function setQuizToStarted(quizId) {
         })
 }
 
-function getWeekDay(date) {
-    return moment(date).tz("Europe/Oslo").isoWeekday() - 1;
+
+function populateEndDate(quiz, publicHolidays) {
+    let candidateDate = moment(quiz.startTime);
+    quiz.quizItems.forEach((quizItem) => {
+        while(!validDate(candidateDate, publicHolidays)) {
+            candidateDate = candidateDate.add(1, 'days');
+        }
+        quizItem.date = candidateDate.toDate();
+        candidateDate.add(1, 'days');
+    })
 }
 
-function getEndDate(quiz) {
-    if (!quiz || !quiz.quizItems || quiz.quizItems.length === 0) {
-        return;
-    }
-    const endIndex = quiz.quizItems.length - 1;
-    return getQuizItemDate(quiz, endIndex);
+function validDate(date, publicHolidays) {
+    return !(isWeekEnd(date) || isPublicHoliday(date, publicHolidays));
 }
 
-function getQuizItemDate(quiz, index) {
-    const startWeekDay = getWeekDay(quiz.startTime);
-    const numberOfWeekEndsInRange = Math.floor((startWeekDay + index) / 5);
-    const tentativeDate = moment(quiz.startTime).add(index + (numberOfWeekEndsInRange * 2), 'days');
-    if (startWeekDay === 6) {
-        return tentativeDate.subtract(1, 'day').toDate();
+function isWeekEnd(date) {
+    return moment(date).tz("Europe/Oslo").isoWeekday() > 5;
+}
+
+function isPublicHoliday(date, publicHolidays) {
+    for (let i = 0; i < publicHolidays.length; i++) {
+        if (date.isSame(publicHolidays[i], 'day')) {
+            return true;
+        }
     }
-    return tentativeDate.toDate();
+    return false;
 }
 
 function getQuizes() {
-    return db.collection('quiz').find().toArray()
-        .then(quizData => {
-            const mappedQuizData = quizData.map(quiz => {
-                return {
-                    id: quiz._id,
-                    name: quiz.name,
-                    startTime: quiz.startTime,
-                    endTime: getEndDate(quiz),
-                    numberOfItems: quiz.quizItems ? quiz.quizItems.length : 0,
-                    createdBy: quiz.createdBy,
-                    isStarted: quiz.isStarted
-                }
-            });
-            return _.sortBy(mappedQuizData, quiz => quiz.startTime);
+    return getPublicHolidays()
+        .then(publicHolidays => {
+            return db.collection('quiz').find().toArray()
+                .then(quizData => {
+                    const mappedQuizData = quizData.map(quiz => {
+                        return {
+                            id: quiz._id,
+                            name: quiz.name,
+                            startTime: quiz.startTime,
+                            endTime: getEndDateForQuiz(quiz, publicHolidays),
+                            numberOfItems: quiz.quizItems ? quiz.quizItems.length : 0,
+                            createdBy: quiz.createdBy,
+                            isStarted: quiz.isStarted
+                        }
+                    });
+                    return _.sortBy(mappedQuizData, quiz => quiz.startTime);
+                });
         });
+
+}
+
+function getEndDateForQuiz(quiz, publicHolidays) {
+    if (!quiz.quizItems || quiz.quizItems.length === 0) {
+        return;
+    }
+    populateEndDate(quiz, publicHolidays);
+    return quiz.quizItems[quiz.quizItems.length - 1].date;
 }
 
 function getQuizesForApp() {
@@ -86,12 +105,31 @@ function getQuizesForApp() {
 
 function getQuiz(quizId) {
     return db.collection('quiz').findOne({"_id": ObjectId(quizId)})
-        .then(quiz => {
-            quiz.quizItems.forEach((quizItem, index) => {
-                quizItem.date = getQuizItemDate(quiz, index);
-            });
-            return quiz;
-        });
+        .then(quiz => getPublicHolidays()
+            .then(publicHolidays => {
+                populateEndDate(quiz, publicHolidays);
+                return quiz;
+            })
+        );
+}
+
+function getPublicHolidays() {
+    return db.collection('config').findOne({"_id": 1})
+        .then(config => {
+            if (!config) {
+                logger.error("Could not find config object!");
+                return [];
+            }
+            if (!config.publicHolidays) {
+                logger.error("Config object does not contain publicHolidays array");
+                return [];
+            }
+            return config.publicHolidays.map(item => moment({day: item.day, month: item.month - 1, year: item.year})); //month is zero-indexed
+        })
+        .catch(error => {
+            logger.error(error);
+            return [];
+        })
 }
 
 function deleteQuiz(quizId) {
@@ -136,7 +174,9 @@ const mongoAPI = {
     deleteQuiz: deleteQuiz,
     getQuizItems: getQuizItems,
     saveQuiz: saveQuiz,
-    createQuiz: createQuiz
+    createQuiz: createQuiz,
+    getPublicHolidays:getPublicHolidays,
+    populateEndDate: populateEndDate //for testing
 };
 
 module.exports = mongoAPI;
