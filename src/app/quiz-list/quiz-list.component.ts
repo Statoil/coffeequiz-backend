@@ -3,7 +3,7 @@ import {QuizService} from "../quiz.service";
 import {Router} from "@angular/router";
 import {QuizMetadata} from "../quizmetadata";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import octicons from 'octicons';
+import * as octicons from 'octicons';
 import {DomSanitizer} from "@angular/platform-browser";
 import {QuizMetadataComponent} from "../quiz-metadata/quiz-metadata.component";
 
