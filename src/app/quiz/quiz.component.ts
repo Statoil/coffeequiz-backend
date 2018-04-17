@@ -21,6 +21,7 @@ export class QuizComponent {
 
     quiz: Quiz;
     quizItem: QuizItem;
+    publicHolidays: string[];
     icons = {
         up: null,
         down: null,
@@ -40,6 +41,8 @@ export class QuizComponent {
     {
         this.activatedRoute.params.subscribe((params) => {
             this.loadQuiz(params.id);
+            this.quizService.publicHolidays()
+                .then(publicHolidays => this.publicHolidays = publicHolidays.map(holiday => new Date(holiday)));
         })
     }
 

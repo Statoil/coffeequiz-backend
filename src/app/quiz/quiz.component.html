@@ -90,6 +90,16 @@
                     <button type="button" class="btn btn-outline-primary" (click)="addQuizItem()">Add quiz item</button>
                 </div>
             </div>
+            <div class="row">
+                <div class="col text-center footnote">
+                    <br><br>
+                    Quiz items will not be displayed on <b>public holidays</b> in Norway:
+                    <ul style="list-style-type: none; margin:0; padding:0">
+                        <li *ngFor="let holiday of publicHolidays">{{ holiday | date: 'EEE dd. MMM yy'}}</li>
+                    </ul>
+
+                </div>
+            </div>
         </div>
         <div class="col-6" *ngIf="quizItem" style="overflow: auto; height: 100vh; padding-bottom: 18px">
             <quiz-item-edit [quiz]="quiz" [quizItem]="quizItem" (saveEvent)="saveQuizItem($event)" (cancelEvent)="cancelEditQuizItem()"></quiz-item-edit>
