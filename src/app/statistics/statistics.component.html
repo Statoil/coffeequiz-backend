@@ -1,0 +1,47 @@
+<div class="container-fluid">
+
+    <h1 style="text-align: center">Statistics</h1>
+
+    <div *ngIf="quiz" class="row">
+        <div class="col-0 col-lg-1"></div>
+        <div class="col-12 col-lg-10">
+            <table>
+                <tr>
+                    <td>Quiz title:</td>
+                    <td>{{quiz.name}}</td>
+                </tr>
+
+                <tr>
+                    <td>Start date:</td>
+                    <td>{{quiz.startTime | date: 'EEE dd. MMM yy'}}</td>
+                </tr>
+
+            </table>
+
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Question</th>
+                    <th>Result count</th>
+                    <th>Correctness</th>
+                    <th>Alt 1s</th>
+                    <th>Alt 2s</th>
+                    <th>Alt 3s</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let stat of statistics">
+                    <td>{{stat.quizItem.question}}</td>
+                    <td>{{stat.correct + stat.incorrect}}</td>
+                    <td>{{(stat.correct * 100 / (stat.correct + stat.incorrect)) | number: '0.0-1' }} %</td>
+                    <td>{{stat[1]}}</td>
+                    <td>{{stat[2]}}</td>
+                    <td>{{stat[3]}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-0 col-lg-1"></div>
+    </div>
+</div>
+

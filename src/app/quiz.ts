@@ -63,5 +63,9 @@ export class Quiz {
         return this.phase === 'completed';
     }
 
+    getQuizItem(quizItemId: number): QuizItem {
+        return this.quizItems.filter(quizItem => quizItem.quizItemId === quizItemId)[0];
+    }
+
 
 }

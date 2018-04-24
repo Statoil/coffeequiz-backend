@@ -78,4 +78,13 @@ export class QuizService {
         })
     }
 
+    statistics(quizId) : Promise<any> {
+        return this.http
+            .get<any>(`api/auth/stats/${quizId}`)
+            .toPromise()
+            .catch(error => {
+            console.error(error);
+        })
+    }
+
 }

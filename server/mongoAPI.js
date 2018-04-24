@@ -164,6 +164,10 @@ function saveQuiz(quiz) {
         });
 }
 
+function getStatistics(quizId) {
+    return db.collection('quizResponse').find({quizId, mode: "dev", platform: "web"}).toArray();
+}
+
 
 const mongoAPI = {
     connect: connect,
@@ -176,7 +180,8 @@ const mongoAPI = {
     saveQuiz: saveQuiz,
     createQuiz: createQuiz,
     getPublicHolidays:getPublicHolidays,
-    populateEndDate: populateEndDate //for testing
+    populateEndDate: populateEndDate, //for testing
+    getStatistics: getStatistics
 };
 
 module.exports = mongoAPI;

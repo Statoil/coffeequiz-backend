@@ -122,6 +122,11 @@ mongo.connect()
             return azure.saveImageFileSystem(quizId, quizItemId, fileType, imageFile);
         }
 
+        router.get('/auth/stats/:quizId', (req, res) => {
+            mongo.getStatistics(req.params.quizId)
+                .then(response => res.send(response));
+        });
+
         router.use((req, res) => {
             logger.error("Non existing API route: " + req.originalUrl);
             res.status(400).send({error: "Bad request"});
