@@ -1,7 +1,12 @@
+<ng-template #planned>This quiz is planned, but has not yet started.</ng-template>
+
 <ng-template #started>This quiz has started, i.e. quiz responses has been registered.<br>
     Start dates and quiz items in the past cannot be changed.</ng-template>
 
-<ng-template #planned>This quiz is planned, but has not yet started.</ng-template>
+<ng-template #completed>This quiz has been completed<br>
+    (at least a day has passed since the last question).<br>
+    A completed quiz cannot be changed.</ng-template>
+
 
 <!--suppress HtmlUnknownAttribute -->
 <span *ngIf="phase === 'planned'" class="badge badge-primary" [ngbPopover]="planned" popoverTitle="Planned Quiz">PLANNED</span>
@@ -10,4 +15,4 @@
 <span *ngIf="phase === 'started'" class="badge badge-success pointer" [ngbPopover]="started" popoverTitle="Started Quiz">STARTED</span>
 
 <!--suppress HtmlUnknownAttribute -->
-<span *ngIf="phase === 'completed'" class="badge badge-secondary" [ngbPopover]="planned" popoverTitle="Completed Quiz">COMPLETED</span>
+<span *ngIf="phase === 'completed'" class="badge badge-secondary" [ngbPopover]="completed" popoverTitle="Completed Quiz">COMPLETED</span>

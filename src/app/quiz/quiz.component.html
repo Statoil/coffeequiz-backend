@@ -85,7 +85,7 @@
                 </tr>
                 </tbody>
             </table>
-            <div class="row">
+            <div *ngIf="!quiz.isCompleted()" class="row">
                 <div class="col text-center">
                     <button type="button" class="btn btn-outline-primary" (click)="addQuizItem()">Add quiz item</button>
                 </div>
