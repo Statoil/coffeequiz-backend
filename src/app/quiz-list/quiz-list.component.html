@@ -43,7 +43,7 @@
                         <td (click)="quizClicked(quiz.id)">{{quiz.endTime  | date: 'EEE dd. MMM yy'}}</td>
                         <td (click)="quizClicked(quiz.id)">{{quiz.numberOfItems}}</td>
                         <td (click)="quizClicked(quiz.id)">{{quiz.createdBy}}</td>
-                        <td (click)="quizClicked(quiz.id)"><quiz-status [isStarted]="quiz.isStarted" placement="left"></quiz-status></td>
+                        <td (click)="quizClicked(quiz.id)"><quiz-status [phase]="quiz.phase" placement="left"></quiz-status></td>
                         <td *ngIf="isDeleteColumnVisible()"><button type="button" *ngIf="quiz.numberOfItems === 0" class="btn btn-outline-primary btn-sm octicon-button"
                                 (click)="deleteQuiz(quiz, confirmDeleteContent)" [innerHTML]="removeIcon" style="z-index: -1"></button></td>
                     </tr>

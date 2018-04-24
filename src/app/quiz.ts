@@ -9,12 +9,12 @@ export class Quiz {
         public startTime: Date,
         public sequenceNumber: number,
         public createdBy: string,
-        public isStarted: boolean
+        public phase: string
     ) {}
 
     static fromObj(rawQuiz: any) {
         return new Quiz(rawQuiz._id, rawQuiz.name, rawQuiz.quizItems.map(rawQuizItems => QuizItem.fromObj(rawQuizItems)),
-            new Date(rawQuiz.startTime), rawQuiz.sequenceNumber, rawQuiz.createdBy, rawQuiz.isStarted);
+            new Date(rawQuiz.startTime), rawQuiz.sequenceNumber, rawQuiz.createdBy, rawQuiz.phase);
     }
 
     deleteQuizItem(quizItem: QuizItem): void {
@@ -54,4 +54,14 @@ export class Quiz {
             this.quizItems.splice(existingIndex, 1, quizItem);
         }
     }
+
+    isStarted(): boolean {
+        return this.phase === 'started';
+    }
+
+    isCompleted(): boolean {
+        return this.phase === 'completed';
+    }
+
+
 }

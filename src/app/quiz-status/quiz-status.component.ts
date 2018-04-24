@@ -17,9 +17,7 @@ enum Placement {
 })
 export class QuizStatusComponent implements OnInit {
 
-
-
-    @Input() isStarted: boolean;
+    @Input() phase: string;
     @Input() placement: string;
 
     constructor(private config: NgbPopoverConfig) {

@@ -31,8 +31,8 @@ function saveQuizResponse(quizResponse) {
 function setQuizToStarted(quizId) {
     getQuiz(quizId)
         .then(quiz => {
-            if (!quiz.isStarted) {
-                quiz.isStarted = true;
+            if (quiz.phase === 'planned') {
+                quiz.phase = 'started';
                 logger.info(`Quiz ${quiz.name} started`);
                 saveQuiz(quiz);
             }
@@ -81,7 +81,7 @@ function getQuizes() {
                             endTime: getEndDateForQuiz(quiz, publicHolidays),
                             numberOfItems: quiz.quizItems ? quiz.quizItems.length : 0,
                             createdBy: quiz.createdBy,
-                            isStarted: quiz.isStarted
+                            phase: quiz.phase
                         }
                     });
                     return _.sortBy(mappedQuizData, quiz => quiz.startTime);

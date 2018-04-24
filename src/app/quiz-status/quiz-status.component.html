@@ -4,6 +4,10 @@
 <ng-template #planned>This quiz is planned, but has not yet started.</ng-template>
 
 <!--suppress HtmlUnknownAttribute -->
-<span *ngIf="isStarted" class="badge badge-success pointer" [ngbPopover]="started" popoverTitle="Started Quiz">STARTED</span>
+<span *ngIf="phase === 'planned'" class="badge badge-primary" [ngbPopover]="planned" popoverTitle="Planned Quiz">PLANNED</span>
+
 <!--suppress HtmlUnknownAttribute -->
-<span *ngIf="!isStarted" class="badge badge-primary" [ngbPopover]="planned" popoverTitle="Planned Quiz">PLANNED</span>
+<span *ngIf="phase === 'started'" class="badge badge-success pointer" [ngbPopover]="started" popoverTitle="Started Quiz">STARTED</span>
+
+<!--suppress HtmlUnknownAttribute -->
+<span *ngIf="phase === 'completed'" class="badge badge-secondary" [ngbPopover]="planned" popoverTitle="Completed Quiz">COMPLETED</span>

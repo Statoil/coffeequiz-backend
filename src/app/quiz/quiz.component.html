@@ -50,9 +50,9 @@
                 <div class="col-8 text-center">
                     <H1>{{quiz.name}}</H1>
                     Start date: {{quiz.startTime | date: 'mediumDate'}}<br>
-                    <quiz-status [isStarted]="quiz.isStarted" placement="bottom"></quiz-status>
+                    <quiz-status [phase]="quiz.phase" placement="bottom"></quiz-status>
                 </div>
-                <div class="col-2" style="display: flex;align-items: center;">
+                <div *ngIf="!quiz.isCompleted()" class="col-2" style="display: flex;align-items: center;">
                     <button type="button" class="btn btn-outline-primary btn-sm octicon-button"
                             (click)="editMetadata()" [innerHTML]="icons.edit"></button>
                 </div>

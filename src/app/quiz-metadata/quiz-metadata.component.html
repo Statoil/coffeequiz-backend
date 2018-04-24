@@ -15,8 +15,8 @@
             <label for="date">Start date</label>
             <div class="input-group">
                 <input class="form-control" placeholder="yyyy-mm-dd" id="date"
-                       name="dp" [(ngModel)]="startTime" ngbDatepicker #d="ngbDatepicker" [disabled]="quiz && quiz.isStarted">
-                <button class="input-group-addon" (click)="d.toggle()" type="button" [disabled]="quiz && quiz.isStarted">
+                       name="dp" [(ngModel)]="startTime" ngbDatepicker #d="ngbDatepicker" [disabled]="quiz && quiz.isStarted()">
+                <button class="input-group-addon" (click)="d.toggle()" type="button" [disabled]="quiz && quiz.isStarted()">
                     <!--suppress HtmlUnknownTarget -->
                     <img src="assets/img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
                 </button>
