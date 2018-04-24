@@ -20,25 +20,30 @@
     <div *ngIf="quiz" class="row">
         <div class="col-0 col-lg-1"></div>
         <div class="col-12 col-lg-10">
-            <table class="table">
+            <table class="table table-sm">
                 <thead>
                 <tr>
                     <th>Question</th>
-                    <th>Result count</th>
-                    <th>Correctness</th>
-                    <th>Alt 1s</th>
-                    <th>Alt 2s</th>
-                    <th>Alt 3s</th>
+                    <th class="middle">Result count</th>
+                    <th class="middle">Correctness</th>
+                    <th class="middle">Results</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr *ngFor="let stat of statistics">
                     <td>{{stat.quizItem.question}}</td>
-                    <td>{{stat.correct + stat.incorrect}}</td>
-                    <td>{{(stat.correct * 100 / (stat.correct + stat.incorrect)) | number: '0.0-1' }} %</td>
-                    <td>{{stat[1]}}</td>
-                    <td>{{stat[2]}}</td>
-                    <td>{{stat[3]}}</td>
+                    <td class="middle">{{stat.correct + stat.incorrect}}</td>
+                    <td class="middle">{{(stat.correct * 100 / (stat.correct + stat.incorrect)) | number: '0.0-1' }} %</td>
+                    <td class="middle">
+                        <div style="display: block; width: 160px; margin: auto">
+                            <canvas baseChart
+                                    [data]="stat.pieChartData.data"
+                                    [labels]="stat.pieChartData.labels"
+                                    [chartType]="'pie'"
+                                    [options]="chartOptions"
+                                    [style.height]= "'80px'"></canvas>
+                        </div>
+                    </td>
                 </tr>
                 </tbody>
             </table>

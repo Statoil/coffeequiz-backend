@@ -15,6 +15,13 @@ export class StatisticsComponent implements OnInit {
     private quiz: Quiz;
     private statistics: any;
     private backIcon: any;
+    chartOptions = {
+        responsive: true,
+        //maintainAspectRatio: false,
+        legend: {
+            display: false
+        }
+    };
 
     // noinspection JSUnusedLocalSymbols
     constructor(
@@ -28,7 +35,9 @@ export class StatisticsComponent implements OnInit {
                 .then(quizData => {
                     this.quiz = quizData;
                     this.quizService.statistics(params.quizId)
-                        .then(statistics => this.statistics = this.processStatistics(statistics, quizData));
+                        .then(statistics => {
+                            this.statistics = this.processStatistics(statistics, quizData);
+                        });
                 });
 
 
@@ -51,7 +60,12 @@ export class StatisticsComponent implements OnInit {
                 accumulator[currentValue.answerIndex]++;
                 return accumulator;
             }, {correct:0, incorrect:0, 1:0, 2:0, 3:0});
-            accumulatedStats.quizItem = quizData.getQuizItem(Number(quizItemId));
+            let quizItem = quizData.getQuizItem(Number(quizItemId));
+            accumulatedStats.quizItem = quizItem;
+            accumulatedStats.pieChartData = {
+                labels: [quizItem.alternative1, quizItem.alternative2, quizItem.alternative3],
+                data: [accumulatedStats[1], accumulatedStats[2], accumulatedStats[3]]
+            };
             processedStatistics.push(accumulatedStats);
         });
         return processedStatistics;

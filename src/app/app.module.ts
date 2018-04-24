@@ -16,6 +16,7 @@ import { QuizMetadataComponent } from './quiz-metadata/quiz-metadata.component';
 import { QuizItemEditComponent } from './quiz-item-edit/quiz-item-edit.component';
 import { QuizStatusComponent } from './quiz-status/quiz-status.component';
 import { StatisticsComponent } from './statistics/statistics.component';
+import {ChartsModule} from "ng2-charts";
 
 @NgModule({
     declarations: [
@@ -35,7 +36,8 @@ import { StatisticsComponent } from './statistics/statistics.component';
         FormsModule,
         HttpClientModule,
         AppRoutingModule,
-        NgbModule.forRoot()
+        NgbModule.forRoot(),
+        ChartsModule
     ],
     providers: [QuizService],
     bootstrap: [AppComponent],
