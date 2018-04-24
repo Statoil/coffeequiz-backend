@@ -12,9 +12,9 @@ import * as octicons from 'octicons';
 })
 export class StatisticsComponent implements OnInit {
 
-    private quiz: Quiz;
-    private statistics: any;
-    private backIcon: any;
+    quiz: Quiz;
+    statistics: any;
+    backIcon: any;
     chartOptions = {
         responsive: true,
         //maintainAspectRatio: false,
@@ -28,7 +28,7 @@ export class StatisticsComponent implements OnInit {
         private activatedRoute: ActivatedRoute,
         private quizService: QuizService,
         private sanitizer: DomSanitizer,
-        private router: Router)
+        public router: Router)
     {
         this.activatedRoute.params.subscribe((params) => {
             this.quizService.getQuiz(params.quizId)
