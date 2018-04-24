@@ -1,23 +1,25 @@
 <div class="container-fluid">
 
-    <h1 style="text-align: center">Statistics</h1>
+    <div class="row">
+
+        <div class="col-2">
+            <button type="button" class="btn btn-outline-primary btn-sm octicon-button"
+                    (click)="router.navigate(['/'])" [innerHTML]="backIcon"></button>
+        </div>
+        <div class="col-8 text-center">
+            <H1>Statistics</H1>
+            <H3>{{quiz.name}}</H3>
+            Start date: {{quiz.startTime | date: 'mediumDate'}}<br>
+            <quiz-status [phase]="quiz.phase" placement="bottom"></quiz-status>
+            <br>
+            <br>
+        </div>
+    </div>
+
 
     <div *ngIf="quiz" class="row">
         <div class="col-0 col-lg-1"></div>
         <div class="col-12 col-lg-10">
-            <table>
-                <tr>
-                    <td>Quiz title:</td>
-                    <td>{{quiz.name}}</td>
-                </tr>
-
-                <tr>
-                    <td>Start date:</td>
-                    <td>{{quiz.startTime | date: 'EEE dd. MMM yy'}}</td>
-                </tr>
-
-            </table>
-
             <table class="table">
                 <thead>
                 <tr>

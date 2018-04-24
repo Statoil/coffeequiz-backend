@@ -28,8 +28,7 @@ export class QuizComponent {
         remove: null,
         back: null,
         edit: null,
-        lock: null,
-        graph: null
+        lock: null
     };
 
     // noinspection JSUnusedLocalSymbols
@@ -130,6 +129,5 @@ export class QuizComponent {
         this.icons.back = this.sanitizer.bypassSecurityTrustHtml(octicons['arrow-left'].toSVG());
         this.icons.edit = this.sanitizer.bypassSecurityTrustHtml(octicons['pencil'].toSVG());
         this.icons.lock = this.sanitizer.bypassSecurityTrustHtml(octicons['lock'].toSVG());
-        this.icons.graph = this.sanitizer.bypassSecurityTrustHtml(octicons['graph'].toSVG());
     }
 }

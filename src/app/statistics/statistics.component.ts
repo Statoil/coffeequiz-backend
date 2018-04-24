@@ -1,7 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {QuizService} from "../quiz.service";
 import {Quiz} from "../quiz";
+import {DomSanitizer} from "@angular/platform-browser";
+import * as octicons from 'octicons';
 
 @Component({
     selector: 'app-statistics',
@@ -12,9 +14,15 @@ export class StatisticsComponent implements OnInit {
 
     private quiz: Quiz;
     private statistics: any;
+    private backIcon: any;
 
-    constructor(private activatedRoute: ActivatedRoute,
-                private quizService: QuizService) {
+    // noinspection JSUnusedLocalSymbols
+    constructor(
+        private activatedRoute: ActivatedRoute,
+        private quizService: QuizService,
+        private sanitizer: DomSanitizer,
+        private router: Router)
+    {
         this.activatedRoute.params.subscribe((params) => {
             this.quizService.getQuiz(params.quizId)
                 .then(quizData => {
@@ -50,7 +58,7 @@ export class StatisticsComponent implements OnInit {
     }
 
     ngOnInit() {
-
+        this.backIcon = this.sanitizer.bypassSecurityTrustHtml(octicons['arrow-left'].toSVG());
     }
 
 }
