@@ -16,6 +16,7 @@ export class QuizListComponent implements OnInit {
 
     quizes: QuizMetadata[];
     removeIcon: any;
+    graphIcon: any;
 
     constructor(
         private quizService: QuizService,
@@ -28,6 +29,7 @@ export class QuizListComponent implements OnInit {
     ngOnInit() {
         this.getData();
         this.removeIcon = this.sanitizer.bypassSecurityTrustHtml(octicons.trashcan.toSVG());
+        this.graphIcon = this.sanitizer.bypassSecurityTrustHtml(octicons.graph.toSVG());
     }
 
     getData() {

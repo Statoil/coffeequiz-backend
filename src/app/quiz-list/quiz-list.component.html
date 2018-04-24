@@ -33,6 +33,7 @@
                         <th>Question count</th>
                         <th>Created by</th>
                         <th>Status</th>
+                        <th></th>
                         <th *ngIf="isDeleteColumnVisible()"></th>
                     </tr>
                 </thead>
@@ -44,6 +45,8 @@
                         <td (click)="quizClicked(quiz.id)">{{quiz.numberOfItems}}</td>
                         <td (click)="quizClicked(quiz.id)">{{quiz.createdBy}}</td>
                         <td (click)="quizClicked(quiz.id)"><quiz-status [phase]="quiz.phase" placement="left"></quiz-status></td>
+                        <td><button type="button" *ngIf="quiz.phase !== 'planned'" class="btn btn-outline-primary btn-sm octicon-button"
+                                    (click)="router.navigate(['/stats/' + quiz.id])" [innerHTML]="graphIcon" style="z-index: -1"></button></td>
                         <td *ngIf="isDeleteColumnVisible()"><button type="button" *ngIf="quiz.numberOfItems === 0" class="btn btn-outline-primary btn-sm octicon-button"
                                 (click)="deleteQuiz(quiz, confirmDeleteContent)" [innerHTML]="removeIcon" style="z-index: -1"></button></td>
                     </tr>
