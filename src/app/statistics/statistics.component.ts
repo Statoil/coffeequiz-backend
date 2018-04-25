@@ -77,7 +77,10 @@ export class StatisticsComponent implements OnInit {
             let quizItem = quizData.getQuizItem(Number(quizItemId));
             accumulatedStats.quizItem = quizItem;
             accumulatedStats.pieChartData = {
-                labels: [quizItem.alternative1, quizItem.alternative2, quizItem.alternative3],
+                labels: [
+                    StatisticsComponent.truncate(quizItem.alternative1),
+                    StatisticsComponent.truncate(quizItem.alternative2),
+                    StatisticsComponent.truncate(quizItem.alternative3)],
                 data: [accumulatedStats[1], accumulatedStats[2], accumulatedStats[3]],
                 colors: StatisticsComponent.getChartColors(quizItem.answer)
             };
@@ -97,6 +100,13 @@ export class StatisticsComponent implements OnInit {
         if (answer === 3) {
             return [{backgroundColor: ["lightsalmon", "khaki", "lightgreen"]}]
         }
+    }
+
+    private static truncate(text: string): string {
+        return _.truncate(text, {
+            'length': 24,
+            'separator': ' '
+        });
     }
 
     ngOnInit() {
