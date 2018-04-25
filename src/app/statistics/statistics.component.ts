@@ -77,11 +77,7 @@ export class StatisticsComponent implements OnInit {
             let quizItem = quizData.getQuizItem(Number(quizItemId));
             accumulatedStats.quizItem = quizItem;
             accumulatedStats.pieChartData = {
-                labels: [
-                    quizItem.alternative1 + (quizItem.answer === 1 ? " (correct)" : ""),
-                    quizItem.alternative2 + (quizItem.answer === 2 ? " (correct)" : ""),
-                    quizItem.alternative3 + (quizItem.answer === 3 ? " (correct)" : "")
-                ],
+                labels: [quizItem.alternative1, quizItem.alternative2, quizItem.alternative3],
                 data: [accumulatedStats[1], accumulatedStats[2], accumulatedStats[3]],
                 colors: StatisticsComponent.getChartColors(quizItem.answer)
             };
