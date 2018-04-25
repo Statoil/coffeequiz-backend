@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div *ngIf="quiz" class="container-fluid">
 
     <div class="row">
 
@@ -17,7 +17,7 @@
     </div>
 
 
-    <div *ngIf="quiz" class="row">
+    <div class="row">
         <div class="col-0 col-lg-1"></div>
         <div class="col-12 col-lg-10">
             <table class="table table-sm">
@@ -41,6 +41,7 @@
                                     [labels]="stat.pieChartData.labels"
                                     [chartType]="'pie'"
                                     [options]="chartOptions"
+                                    [colors]="stat.pieChartData.colors"
                                     [style.height]= "'80px'"></canvas>
                         </div>
                     </td>

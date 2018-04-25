@@ -60,19 +60,37 @@ export class StatisticsComponent implements OnInit {
                 accumulator[currentValue.answerIndex]++;
                 return accumulator;
             }, {correct:0, incorrect:0, 1:0, 2:0, 3:0});
+
             let quizItem = quizData.getQuizItem(Number(quizItemId));
             accumulatedStats.quizItem = quizItem;
             accumulatedStats.pieChartData = {
-                labels: [quizItem.alternative1, quizItem.alternative2, quizItem.alternative3],
-                data: [accumulatedStats[1], accumulatedStats[2], accumulatedStats[3]]
+                labels: [
+                    quizItem.alternative1 + (quizItem.answer === 1 ? " (correct)" : ""),
+                    quizItem.alternative2 + (quizItem.answer === 2 ? " (correct)" : ""),
+                    quizItem.alternative3 + (quizItem.answer === 3 ? " (correct)" : "")
+                ],
+                data: [accumulatedStats[1], accumulatedStats[2], accumulatedStats[3]],
+                colors: StatisticsComponent.getChartColors(quizItem.answer)
             };
             processedStatistics.push(accumulatedStats);
         });
+
         return processedStatistics;
+    }
+
+    private static getChartColors(answer: number):any {
+        if (answer === 1) {
+            return [{backgroundColor: ["lightgreen", "lightsalmon", "khaki"]}]
+        }
+        if (answer === 2) {
+            return [{backgroundColor: ["lightsalmon", "lightgreen", "khaki"]}]
+        }
+        if (answer === 3) {
+            return [{backgroundColor: ["lightsalmon", "khaki", "lightgreen"]}]
+        }
     }
 
     ngOnInit() {
         this.backIcon = this.sanitizer.bypassSecurityTrustHtml(octicons['arrow-left'].toSVG());
     }
-
 }
