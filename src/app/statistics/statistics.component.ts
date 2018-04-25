@@ -4,6 +4,7 @@ import {QuizService} from "../quiz.service";
 import {Quiz} from "../quiz";
 import {DomSanitizer} from "@angular/platform-browser";
 import * as octicons from 'octicons';
+import * as _ from 'lodash';
 
 @Component({
     selector: 'app-statistics',
@@ -13,7 +14,8 @@ import * as octicons from 'octicons';
 export class StatisticsComponent implements OnInit {
 
     quiz: Quiz;
-    statistics: any;
+    statsPrQuestion: any;
+    overallStats: any;
     backIcon: any;
     chartOptions = {
         responsive: true,
@@ -36,7 +38,8 @@ export class StatisticsComponent implements OnInit {
                     this.quiz = quizData;
                     this.quizService.statistics(params.quizId)
                         .then(statistics => {
-                            this.statistics = this.processStatistics(statistics, quizData);
+                            this.statsPrQuestion = this.statisticsPrQuestion(statistics, quizData);
+                            this.overallStats = StatisticsComponent.overallStatistics(statistics, quizData)
                         });
                 });
 
@@ -44,14 +47,24 @@ export class StatisticsComponent implements OnInit {
         });
     }
 
-    private processStatistics(statistics: any, quizData: Quiz): any {
+    private static overallStatistics(statistics: any, quizData: Quiz): any {
+        const resultsWithResponse = _.uniq(statistics.map(statItem => statItem.quizItemId)).length;
+        return {
+            numberOfQuestions: quizData.quizItems.length,
+            numberOfQuestionsWithResponse: resultsWithResponse,
+            totalNumberOfResponses: statistics.length,
+            totalCorrectness: statistics.filter(statItem => statItem.isCorrect).length * 100 / statistics.length
+        }
+    }
+
+    private statisticsPrQuestion(statistics: any, quizData: Quiz): any {
         const prQuizItem = statistics.reduce((accumulator, currentValue) => {
             const quizItemId = currentValue.quizItemId;
             (accumulator[quizItemId] = accumulator[quizItemId] || []).push(currentValue);
             return accumulator;
         }, {});
 
-        const processedStatistics = [];
+        const statsPrQuestion = [];
 
         Object.keys(prQuizItem).forEach(quizItemId => {
             const quizGroup = prQuizItem[quizItemId];
@@ -72,10 +85,10 @@ export class StatisticsComponent implements OnInit {
                 data: [accumulatedStats[1], accumulatedStats[2], accumulatedStats[3]],
                 colors: StatisticsComponent.getChartColors(quizItem.answer)
             };
-            processedStatistics.push(accumulatedStats);
+            statsPrQuestion.push(accumulatedStats);
         });
 
-        return processedStatistics;
+        return statsPrQuestion;
     }
 
     private static getChartColors(answer: number):any {

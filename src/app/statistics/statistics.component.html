@@ -16,6 +16,32 @@
         </div>
     </div>
 
+    <div class="row">
+        <div class="col-0 col-lg-1"></div>
+        <div class="col-12 col-lg-10">
+            <table class="table table-sm">
+                <thead>
+                <tr>
+                    <th class="middle">Number of questions</th>
+                    <th class="middle">Questions with responses</th>
+                    <th class="middle">Total number of responses</th>
+                    <th class="middle">Total correctness</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td class="middle">{{quiz.quizItems.length}}</td>
+                    <td class="middle">{{overallStats.numberOfQuestionsWithResponse}}</td>
+                    <td class="middle">{{overallStats.totalNumberOfResponses}}</td>
+                    <td class="middle">{{overallStats.totalCorrectness | number: '0.0-1'}} %</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-0 col-lg-1"></div>
+    </div>
+
+    <br>
 
     <div class="row">
         <div class="col-0 col-lg-1"></div>
@@ -24,13 +50,12 @@
                 <thead>
                 <tr>
                     <th>Question</th>
-                    <th class="middle">Result count</th>
+                    <th class="middle">Number of responses</th>
                     <th class="middle">Correctness</th>
-                    <th class="middle">Results</th>
-                </tr>
+                    <th class="middle">Result distribution
                 </thead>
                 <tbody>
-                <tr *ngFor="let stat of statistics">
+                <tr *ngFor="let stat of statsPrQuestion">
                     <td>{{stat.quizItem.question}}</td>
                     <td class="middle">{{stat.correct + stat.incorrect}}</td>
                     <td class="middle">{{(stat.correct * 100 / (stat.correct + stat.incorrect)) | number: '0.0-1' }} %</td>

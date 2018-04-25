@@ -165,7 +165,7 @@ function saveQuiz(quiz) {
 }
 
 function getStatistics(quizId) {
-    return db.collection('quizResponse').find({quizId, mode: "prod", platform: "ios"}).toArray();
+    return db.collection('quizResponse').find({quizId, mode: "dev", platform: "web"}).toArray();
 }
 
 
