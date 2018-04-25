@@ -104,7 +104,7 @@ export class StatisticsComponent implements OnInit {
 
     private static truncate(text: string): string {
         return _.truncate(text, {
-            'length': 24,
+            'length': 20,
             'separator': ' '
         });
     }
