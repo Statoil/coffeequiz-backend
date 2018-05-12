@@ -127,6 +127,12 @@ mongo.connect()
                 .then(response => res.send(response));
         });
 
+        //Endpoint to mark completed quizes
+        router.get('/auth/complete', (req, res) => {
+            mongo.markComplete();
+            res.send('ok');
+        });
+
         router.use((req, res) => {
             logger.error("Non existing API route: " + req.originalUrl);
             res.status(400).send({error: "Bad request"});

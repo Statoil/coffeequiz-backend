@@ -8,6 +8,8 @@ const moment = require('moment-timezone');
 const _ = require('lodash');
 
 const url = process.env.DB_URL || 'mongodb://localhost:27018/coffeequiz';
+const mode = process.env.MODE || 'dev';
+const platform = process.env.PLATFORM || 'web';
 let db;
 
 function connect() {
@@ -165,7 +167,21 @@ function saveQuiz(quiz) {
 }
 
 function getStatistics(quizId) {
-    return db.collection('quizResponse').find({quizId, mode: "prod", platform: "ios"}).toArray();
+    return db.collection('quizResponse').find({quizId, mode, platform}).toArray();
+}
+
+function markQuizComplete(quizId) {
+    db.collection('quiz').updateOne({_id: quizId}, {$set: {phase: 'completed'}});
+    logger.info(`Quiz ${quizId} marked as completed`);
+}
+
+function markCompletedQuizes() {
+    getQuizes()
+        .then(quizes => quizes.forEach(quiz => {
+            if (moment(quiz.endTime).add(1, 'days').isBefore()) {
+                markQuizComplete(quiz.id);
+            }
+        }));
 }
 
 
@@ -181,7 +197,8 @@ const mongoAPI = {
     createQuiz: createQuiz,
     getPublicHolidays:getPublicHolidays,
     populateEndDate: populateEndDate, //for testing
-    getStatistics: getStatistics
+    getStatistics: getStatistics,
+    markComplete: markCompletedQuizes
 };
 
 module.exports = mongoAPI;
