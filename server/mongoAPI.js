@@ -176,9 +176,9 @@ function markQuizComplete(quizId) {
 }
 
 function markCompletedQuizes() {
-    getQuizes()
-        .then(quizes => quizes.forEach(quiz => {
-            if (moment(quiz.endTime).add(1, 'days').isBefore()) {
+    return getQuizes()
+        .then(quizes => quizes.filter(quiz => quiz.phase === 'started').forEach(quiz => {
+            if (moment().startOf('day').isSameOrAfter(moment(quiz.endTime).startOf('day').add(1, 'days'))) {
                 markQuizComplete(quiz.id);
             }
         }));

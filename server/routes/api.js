@@ -129,8 +129,12 @@ mongo.connect()
 
         //Endpoint to mark completed quizes
         router.get('/auth/complete', (req, res) => {
-            mongo.markComplete();
-            res.send('ok');
+            mongo.markComplete()
+                .then(() => res.send('ok'))
+                .catch(error => {
+                    logger.error("Error when marking quizzes complete: " + error);
+                    res.status(500).send(error);
+                });
         });
 
         router.use((req, res) => {
