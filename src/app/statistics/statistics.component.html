@@ -57,7 +57,7 @@
                 </thead>
                 <tbody>
                 <tr *ngFor="let stat of statsPrQuestion">
-                    <td>{{stat.quizItem.date | date: 'EEE dd.&nbsp;MMM yy'}}</td>
+                    <td style="white-space: nowrap">{{stat.quizItem.date | date: 'EEE dd.&nbsp;MMM yy'}}</td>
                     <td>{{stat.quizItem.question}}</td>
                     <td class="middle">{{stat.correct + stat.incorrect}}</td>
                     <td class="middle">{{(stat.correct * 100 / (stat.correct + stat.incorrect)) | number: '0.0-1' }} %</td>
