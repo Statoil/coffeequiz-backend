@@ -9,6 +9,14 @@
     <link rel="icon" type="image/png" href="assets/img/favicon.ico">
 </head>
 <body>
+<script>
+    function isInternetExplorer() {
+        return (navigator.appName === 'Microsoft Internet Explorer' ||  navigator.userAgent.match(/Trident/));
+    }
+    if (isInternetExplorer()) {
+        window.location="internet-explorer.html"
+    }
+</script>
 <app-root></app-root>
 </body>
 </html>
