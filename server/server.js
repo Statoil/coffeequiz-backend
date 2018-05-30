@@ -26,7 +26,7 @@ app.use((req, res, next) => {
 
 app.use('/api', api);
 
-app.get('/internet-explorer.html', (req, res) => {
+app.get('/ie', (req, res) => {
     res.sendFile(path.join(__dirname, '../dist/internet-explorer.html'));
 });
 
