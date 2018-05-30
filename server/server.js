@@ -26,6 +26,10 @@ app.use((req, res, next) => {
 
 app.use('/api', api);
 
+app.get('/internet-explorer.html', (req, res) => {
+    res.sendFile(path.join(__dirname, '../dist/internet-explorer.html'));
+});
+
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../dist/index.html'));
 });
