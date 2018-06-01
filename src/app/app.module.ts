@@ -17,6 +17,7 @@ import { QuizItemEditComponent } from './quiz-item-edit/quiz-item-edit.component
 import { QuizStatusComponent } from './quiz-status/quiz-status.component';
 import { StatisticsComponent } from './statistics/statistics.component';
 import {ChartsModule} from "ng2-charts";
+import {QuizFilterPipe} from "./quiz-filter.pipe";
 
 @NgModule({
     declarations: [
@@ -29,7 +30,8 @@ import {ChartsModule} from "ng2-charts";
         QuizMetadataComponent,
         QuizItemEditComponent,
         QuizStatusComponent,
-        StatisticsComponent
+        StatisticsComponent,
+        QuizFilterPipe
     ],
     imports: [
         BrowserModule,

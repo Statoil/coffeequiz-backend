@@ -6,6 +6,7 @@ import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import * as octicons from 'octicons';
 import {DomSanitizer} from "@angular/platform-browser";
 import {QuizMetadataComponent} from "../quiz-metadata/quiz-metadata.component";
+import {QuizFilter} from "../quizfilter";
 
 @Component({
     selector: 'app-quiz-list',
@@ -17,6 +18,8 @@ export class QuizListComponent implements OnInit {
     quizes: QuizMetadata[];
     removeIcon: any;
     graphIcon: any;
+    settingsIcon: any;
+    filter: QuizFilter = new QuizFilter(true, true, true);
 
     constructor(
         private quizService: QuizService,
@@ -30,6 +33,7 @@ export class QuizListComponent implements OnInit {
         this.getData();
         this.removeIcon = this.sanitizer.bypassSecurityTrustHtml(octicons.trashcan.toSVG());
         this.graphIcon = this.sanitizer.bypassSecurityTrustHtml(octicons.graph.toSVG());
+        this.settingsIcon = this.sanitizer.bypassSecurityTrustHtml(octicons.settings.toSVG());
     }
 
     getData() {

@@ -17,9 +17,32 @@
 <!-- Modal template end -->
 
 
-<div class="container-fluid">
+<div class="container-fluid" *ngIf="quizes">
 
     <h1 style="text-align: center">Quiz Admin</h1>
+
+    <div class="row">
+        <div class="col-0 col-lg-1"></div>
+
+        <div class="col-12 col-lg-11">
+
+
+            <div class="btn-group btn-group-toggle">
+            <label class="btn-primary" ngbButtonLabel>
+                <input type="checkbox" ngbButton [(ngModel)]="filter.planned"> PLANNED
+            </label>
+            <label class="btn-primary" ngbButtonLabel>
+                <input type="checkbox" ngbButton [(ngModel)]="filter.started"> STARTED
+            </label>
+            <label class="btn-primary" ngbButtonLabel>
+                <input type="checkbox" ngbButton [(ngModel)]="filter.completed"> COMPLETED
+            </label>
+        </div>
+
+        </div>
+        <div class="col-0 col-lg-1"></div>
+    </div>
+
 
     <div class="row">
         <div class="col-0 col-lg-1"></div>
@@ -32,13 +55,14 @@
                         <th>End time</th>
                         <th>Question count</th>
                         <th>Created by</th>
-                        <th>Status</th>
+                        <th>Status <button type="button" class="btn btn-outline-primary btn-sm octicon-button"
+                                   (click)="ab()" [innerHTML]="settingsIcon" style="padding: 2px 4px"></button></th>
                         <th></th>
                         <th *ngIf="isDeleteColumnVisible()"></th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let quiz of quizes" style="cursor: pointer">
+                    <tr *ngFor="let quiz of quizes | quizfilter: filter" style="cursor: pointer">
                         <td (click)="quizClicked(quiz.id)">{{quiz.name}}</td>
                         <td (click)="quizClicked(quiz.id)">{{quiz.startTime | date: 'EEE dd. MMM yy'}}</td>
                         <td (click)="quizClicked(quiz.id)">{{quiz.endTime  | date: 'EEE dd. MMM yy'}}</td>
