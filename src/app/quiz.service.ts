@@ -10,7 +10,7 @@ import {QuizFilter} from "./quizfilter";
 export class QuizService {
     private quizesUrl = 'api/auth/quizes';
     private quizUrl = 'api/auth/quiz';
-    private quizFilter: QuizFilter = new QuizFilter(false, true, true);
+    private quizFilter: QuizFilter = new QuizFilter(true, true, false);
 
 
     constructor(private http: HttpClient) {
