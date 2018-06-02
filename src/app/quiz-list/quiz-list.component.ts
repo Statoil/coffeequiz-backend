@@ -19,14 +19,16 @@ export class QuizListComponent implements OnInit {
     removeIcon: any;
     graphIcon: any;
     settingsIcon: any;
-    filter: QuizFilter = new QuizFilter(true, true, true);
+    filter: QuizFilter;
 
     constructor(
         private quizService: QuizService,
         private router: Router,
         private modalService: NgbModal,
         private sanitizer: DomSanitizer)
-    {}
+    {
+        this.filter = this.quizService.getPersistentFilter();
+    }
 
     // noinspection JSUnusedGlobalSymbols
     ngOnInit() {

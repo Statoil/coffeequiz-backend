@@ -4,11 +4,13 @@ import {Observable} from "rxjs/Observable";
 import {Quiz} from "./quiz";
 import {QuizMetadata} from "./quizmetadata";
 import {catchError} from "rxjs/operators";
+import {QuizFilter} from "./quizfilter";
 
 @Injectable()
 export class QuizService {
     private quizesUrl = 'api/auth/quizes';
     private quizUrl = 'api/auth/quiz';
+    private quizFilter: QuizFilter = new QuizFilter(false, true, true);
 
 
     constructor(private http: HttpClient) {
@@ -86,5 +88,12 @@ export class QuizService {
             console.error(error);
         })
     }
+
+    //Storing the filter object in the service ensures state are keep on navigation within site (until reload)
+    getPersistentFilter(): QuizFilter {
+        return this.quizFilter;
+    }
+
+
 
 }
