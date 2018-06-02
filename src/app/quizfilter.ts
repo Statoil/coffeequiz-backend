@@ -17,5 +17,9 @@ export class QuizFilter {
         return phases;
     }
 
+    allPhasesSelected(): boolean {
+        return this.planned && this.started && this.completed;
+    }
+
 
 }

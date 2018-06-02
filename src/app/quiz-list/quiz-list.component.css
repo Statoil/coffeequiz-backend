@@ -1,0 +1,7 @@
+:host >>> .popover {
+    max-width: 100%;
+}
+
+:host >>> .popover > .btn{
+    padding: 0;
+}

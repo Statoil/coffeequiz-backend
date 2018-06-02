@@ -24,3 +24,12 @@ button {
 .octicon-button:hover:disabled {
     fill: #007bff;
 }
+
+.octicon-button-primary {
+    fill: white;
+    font-size: 1px;
+}
+
+.octicon-button-primary:hover {
+    fill: 007bff;
+}

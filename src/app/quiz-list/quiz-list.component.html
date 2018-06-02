@@ -16,33 +16,26 @@
 </ng-template>
 <!-- Modal template end -->
 
+<!-- Modal template start -->
+<ng-template #filterPopoverContent>
+        <div class="btn-group btn-group-toggle">
+            <label class="btn-outline-primary btn-sm" ngbButtonLabel>
+                <input type="checkbox" ngbButton [(ngModel)]="filter.planned"> PLANNED
+            </label>
+            <label class="btn-outline-success btn-sm" ngbButtonLabel>
+                <input type="checkbox" ngbButton [(ngModel)]="filter.started"> STARTED
+            </label>
+            <label class="btn-outline-secondary btn-sm" ngbButtonLabel>
+                <input type="checkbox" ngbButton [(ngModel)]="filter.completed"> COMPLETED
+            </label>
+        </div>
+</ng-template>
+<!-- Modal template end -->
+
 
 <div class="container-fluid" *ngIf="quizes">
 
     <h1 style="text-align: center">Quiz Admin</h1>
-
-    <div class="row">
-        <div class="col-0 col-lg-1"></div>
-
-        <div class="col-12 col-lg-11">
-
-
-            <div class="btn-group btn-group-toggle">
-            <label class="btn-primary" ngbButtonLabel>
-                <input type="checkbox" ngbButton [(ngModel)]="filter.planned"> PLANNED
-            </label>
-            <label class="btn-primary" ngbButtonLabel>
-                <input type="checkbox" ngbButton [(ngModel)]="filter.started"> STARTED
-            </label>
-            <label class="btn-primary" ngbButtonLabel>
-                <input type="checkbox" ngbButton [(ngModel)]="filter.completed"> COMPLETED
-            </label>
-        </div>
-
-        </div>
-        <div class="col-0 col-lg-1"></div>
-    </div>
-
 
     <div class="row">
         <div class="col-0 col-lg-1"></div>
@@ -55,9 +48,10 @@
                         <th>End time</th>
                         <th>Question count</th>
                         <th>Created by</th>
-                        <th>Status <button type="button" class="btn btn-outline-primary btn-sm octicon-button"
-                                   (click)="ab()" [innerHTML]="settingsIcon" style="padding: 2px 4px"></button></th>
-                        <th></th>
+                        <th>Status <button type="button" class="btn btn-sm"
+                                           [ngClass]="{'btn-outline-primary octicon-button': filter.allPhasesSelected(), 'btn-primary octicon-button-primary': !filter.allPhasesSelected()}"
+                                           [ngbPopover]="filterPopoverContent" [innerHTML]="settingsIcon" style="padding: 2px 4px"></button></th>
+                        <th>{{filter.allPhasesSelected()}}</th>
                         <th *ngIf="isDeleteColumnVisible()"></th>
                     </tr>
                 </thead>
