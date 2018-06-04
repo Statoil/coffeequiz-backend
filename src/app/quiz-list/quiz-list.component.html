@@ -19,15 +19,16 @@
 <!-- Modal template start -->
 <ng-template #filterPopoverContent>
         <div class="btn-group btn-group-toggle">
+            <label class="btn-outline-secondary btn-sm" ngbButtonLabel>
+                <input type="checkbox" ngbButton [(ngModel)]="filter.completed"> COMPLETED
+            </label>
             <label class="btn-outline-primary btn-sm" ngbButtonLabel>
                 <input type="checkbox" ngbButton [(ngModel)]="filter.planned"> PLANNED
             </label>
             <label class="btn-outline-success btn-sm" ngbButtonLabel>
                 <input type="checkbox" ngbButton [(ngModel)]="filter.started"> STARTED
             </label>
-            <label class="btn-outline-secondary btn-sm" ngbButtonLabel>
-                <input type="checkbox" ngbButton [(ngModel)]="filter.completed"> COMPLETED
-            </label>
+
         </div>
 </ng-template>
 <!-- Modal template end -->
