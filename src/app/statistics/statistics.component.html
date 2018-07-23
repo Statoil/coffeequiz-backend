@@ -1,3 +1,6 @@
+<ng-template #popContent>
+    <span class="badge" style="background-color:lightgreen; color: darkgreen">Green</span> = correct answer</ng-template>
+
 <div *ngIf="quiz && overallStats && statsPrQuestion" class="container-fluid">
 
     <div class="row">
@@ -53,7 +56,7 @@
                     <th>Question</th>
                     <th class="middle">Number of responses</th>
                     <th class="middle">Correctness</th>
-                    <th class="middle">Result distribution
+                    <th class="middle" [ngbPopover]="popContent" triggers="mouseenter:mouseleave" popoverTitle="Color coding">Result distribution</th>
                 </thead>
                 <tbody>
                 <tr *ngFor="let stat of statsPrQuestion">
