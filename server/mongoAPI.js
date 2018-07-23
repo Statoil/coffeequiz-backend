@@ -176,6 +176,7 @@ function markQuizComplete(quizId) {
 }
 
 function markCompletedQuizes() {
+    logger.info('Running job "Mark Completed Quizes"');
     return getQuizes()
         .then(quizes => quizes.filter(quiz => quiz.phase === 'started').forEach(quiz => {
             if (moment().startOf('day').isSameOrAfter(moment(quiz.endTime).startOf('day').add(1, 'days'))) {
