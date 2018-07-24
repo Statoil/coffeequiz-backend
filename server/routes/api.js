@@ -51,6 +51,18 @@ mongo.connect()
             return principalName ? principalName.split('@')[0] : null;
         }
 
+        //Endpoint to mark completed quizes
+        router.get('/complete', (req, res) => {
+            mongo.markComplete()
+                .then(() => res.send('ok'))
+                .catch(error => {
+                    logger.error("Error when marking quizzes complete: " + error);
+                    res.status(500).send(error);
+                });
+        });
+
+        // --- Authorized requests ---
+
         router.get('/auth/quizes', (req, res) => {
             mongo.getQuizes()
                 .then(quizData => res.send(quizData));
@@ -125,16 +137,6 @@ mongo.connect()
         router.get('/auth/stats/:quizId', (req, res) => {
             mongo.getStatistics(req.params.quizId)
                 .then(response => res.send(response));
-        });
-
-        //Endpoint to mark completed quizes
-        router.get('/auth/complete', (req, res) => {
-            mongo.markComplete()
-                .then(() => res.send('ok'))
-                .catch(error => {
-                    logger.error("Error when marking quizzes complete: " + error);
-                    res.status(500).send(error);
-                });
         });
 
         router.use((req, res) => {

@@ -170,9 +170,11 @@ function getStatistics(quizId) {
     return db.collection('quizResponse').find({quizId, mode, platform}).toArray();
 }
 
-function markQuizComplete(quizId) {
-    db.collection('quiz').updateOne({_id: quizId}, {$set: {phase: 'completed'}});
-    logger.info(`Quiz ${quizId} marked as completed`);
+function markQuizComplete(quizId, name) {
+    db.collection('quiz').updateOne({_id: quizId}, {$set: {phase: 'completed'}})
+        .then(() => {
+            logger.info(`Quiz "${name}", id: ${quizId} marked as completed`);
+        });
 }
 
 function markCompletedQuizes() {
@@ -180,7 +182,7 @@ function markCompletedQuizes() {
     return getQuizes()
         .then(quizes => quizes.filter(quiz => quiz.phase === 'started').forEach(quiz => {
             if (moment().startOf('day').isSameOrAfter(moment(quiz.endTime).startOf('day').add(1, 'days'))) {
-                markQuizComplete(quiz.id);
+                markQuizComplete(quiz.id, quiz.name);
             }
         }));
 }
