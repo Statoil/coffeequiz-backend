@@ -52,7 +52,7 @@
                         <th>Status <button type="button" class="btn btn-sm"
                                            [ngClass]="{'btn-outline-primary octicon-button': filter.allPhasesSelected(), 'btn-primary octicon-button-primary': !filter.allPhasesSelected()}"
                                            [ngbPopover]="filterPopoverContent" [innerHTML]="settingsIcon" style="padding: 2px 4px"></button></th>
-                        <th>{{filter.allPhasesSelected()}}</th>
+                        <th></th>
                         <th *ngIf="isDeleteColumnVisible()"></th>
                     </tr>
                 </thead>

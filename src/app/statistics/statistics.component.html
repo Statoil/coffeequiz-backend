@@ -56,7 +56,8 @@
                     <th>Question</th>
                     <th class="middle">Number of responses</th>
                     <th class="middle">Correctness</th>
-                    <th class="middle" [ngbPopover]="popContent" triggers="mouseenter:mouseleave" popoverTitle="Color coding">Result distribution</th>
+                    <th class="middle"><span [ngbPopover]="popContent" triggers="mouseenter:mouseleave" style="cursor:default"
+                                             popoverTitle="Color coding">Result distribution</span></th>
                 </thead>
                 <tbody>
                 <tr *ngFor="let stat of statsPrQuestion">
