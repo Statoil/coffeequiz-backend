@@ -16,57 +16,19 @@ router.all('/*', (req, res, next) => {
     next();
 });
 
-router.post('/quiz-response', (req, res) => {
-    const quizResponse = req.body;
-    quizResponse.timestamp = new Date();
-    logger.debug("quiz response: ", quizResponse);
-    mongo.saveQuizResponse(quizResponse);
-    res.send({});
+// --------------------------- QUIZ ----------------------------------
+
+router.get('/quiz', (req, res) => {
+    mongo.getAllQuizes()
+        .then(quizData => res.send(quizData));
 });
 
-router.get('/quizes', (req, res) => {
+router.get('/quiz/notcompleted', (req, res) => {
     mongo.getNotCompletedQuizes()
         .then(quizData => res.send(quizData));
 });
 
 router.get('/quiz/:id', (req, res) => {
-    const id = req.params.id;
-    mongo.getQuizItems(id)
-        .then(quiz => {
-            res.send(quiz ? quiz : {})
-        });
-});
-
-router.get('/userinfo', (req, res) => {
-    let userId = getUserIdFromRequest(req);
-    const isAuthenticated = !_.isNil(userId) || !isAzure;
-    const loginUrl = process.env.LOGIN_URL;
-    res.send({userId, isAuthenticated, loginUrl});
-});
-
-function getUserIdFromRequest(req) {
-    let principalName = req.get('X-MS-CLIENT-PRINCIPAL-NAME');
-    return principalName ? principalName.split('@')[0] : null;
-}
-
-//Endpoint to mark completed quizes
-router.get('/complete', (req, res) => {
-    mongo.markComplete()
-        .then(() => res.send('ok'))
-        .catch(error => {
-            logger.error("Error when marking quizzes complete: " + error);
-            res.status(500).send(error);
-        });
-});
-
-// --- Authorized requests ---
-
-router.get('/auth/quizes', (req, res) => {
-    mongo.getAllQuizes()
-        .then(quizData => res.send(quizData));
-});
-
-router.get('/auth/quiz/:id', (req, res) => {
     const id = req.params.id;
     mongo.getQuiz(id)
         .then(quiz => {
@@ -78,25 +40,16 @@ router.get('/auth/quiz/:id', (req, res) => {
         });
 });
 
-router.get('/auth/publicholidays', (req, res) => {
-    mongo.getPublicHolidays()
-        .then(publicHolidays => res.send(publicHolidays));
-});
-
-router.delete('/auth/quiz/:id', (req, res) => {
+router.get('/quiz/:id/items', (req, res) => {
     const id = req.params.id;
-    mongo.deleteQuiz(id)
-        .then(() => {
-            res.status(200).send({ok: true});
-        })
-        .catch((error) => {
-            logger.error("Error when deleting quiz: " + error);
-            res.status(500).send(error);
+    mongo.getQuizItems(id)
+        .then(quiz => {
+            res.send(quiz ? quiz : {})
         });
 });
 
-
-router.put('/auth/quiz', (req, res) => {
+//TODO: Separate create & update quiz endpoints
+router.put('/quiz', (req, res) => {
     saveQuiz(req.body, getUserIdFromRequest(req))
         .then(quizId => mongo.getQuiz(quizId))
         .then(quiz => res.send(quiz))
@@ -115,7 +68,29 @@ function saveQuiz(quiz, userId) {
     return mongo.saveQuiz(quiz);
 }
 
-router.post('/auth/quiz/image', upload.single('imageFile'), (req, res) => {
+router.delete('/quiz/:id', (req, res) => {
+    const id = req.params.id;
+    mongo.deleteQuiz(id)
+        .then(() => {
+            res.status(200).send({ok: true});
+        })
+        .catch((error) => {
+            logger.error("Error when deleting quiz: " + error);
+            res.status(500).send(error);
+        });
+});
+
+//TODO: Add quizId to url
+router.post('/quiz/response', (req, res) => {
+    const quizResponse = req.body;
+    quizResponse.timestamp = new Date();
+    logger.debug("quiz response: ", quizResponse);
+    mongo.saveQuizResponse(quizResponse);
+    res.send({});
+});
+
+//TODO: Add quizId to url
+router.post('/quiz/image', upload.single('imageFile'), (req, res) => {
     const imageFile = req.file;
     saveImage(req.body.quizId, req.body.quizItemId, req.body.fileType, imageFile)
         .then(imageUrl => res.send({imageUrl}))
@@ -132,10 +107,44 @@ function saveImage(quizId, quizItemId, fileType, imageFile) {
     return azure.saveImageFileSystem(quizId, quizItemId, fileType, imageFile);
 }
 
-router.get('/auth/stats/:quizId', (req, res) => {
+router.get('/quiz/:quizId/responses', (req, res) => {
     mongo.getStatistics(req.params.quizId)
         .then(response => res.send(response));
 });
+
+//Endpoint to mark completed quizes
+
+//TODO: change to put
+router.get('/quiz/complete', (req, res) => {
+    mongo.markComplete()
+        .then(() => res.send('ok'))
+        .catch(error => {
+            logger.error("Error when marking quizzes complete: " + error);
+            res.status(500).send(error);
+        });
+});
+
+// ------------------------- GENERAL --------------------------
+
+router.get('/userinfo', (req, res) => {
+    let userId = getUserIdFromRequest(req);
+    const isAuthenticated = !_.isNil(userId) || !isAzure;
+    const loginUrl = process.env.LOGIN_URL;
+    res.send({userId, isAuthenticated, loginUrl});
+});
+
+
+function getUserIdFromRequest(req) {
+    let principalName = req.get('X-MS-CLIENT-PRINCIPAL-NAME');
+    return principalName ? principalName.split('@')[0] : null;
+}
+
+
+router.get('/publicholidays', (req, res) => {
+    mongo.getPublicHolidays()
+        .then(publicHolidays => res.send(publicHolidays));
+});
+
 
 router.use((req, res) => {
     logger.error("Non existing API route: " + req.originalUrl);
