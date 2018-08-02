@@ -9,7 +9,7 @@ const upload = multer({ dest: 'server/uploads/' });
 const _ = require('lodash');
 
 
-router.all('/auth/*', (req, res, next) => {
+router.all('/*', (req, res, next) => {
     if (isAzure && !req.get('X-MS-CLIENT-PRINCIPAL-NAME')) {
         res.status(401).send({error: 'Unauthorized'});
     }
@@ -141,7 +141,6 @@ router.use((req, res) => {
     logger.error("Non existing API route: " + req.originalUrl);
     res.status(400).send({error: "Bad request"});
 });
-
 
 
 
