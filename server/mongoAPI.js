@@ -9,7 +9,7 @@ const _ = require('lodash');
 
 const url = process.env.DB_URL || 'mongodb://localhost:27018/coffeequiz';
 const mode = process.env.MODE || 'dev';
-const platform = process.env.PLATFORM || 'web';
+const platform = process.env.PLATFORM ? [process.env.PLATFORM] : ['web', 'ios'];
 let db;
 
 async function connect() {
@@ -170,8 +170,8 @@ function saveQuiz(quiz) {
         });
 }
 
-function getStatistics(quizId) {
-    return db.collection('quizResponse').find({quizId, mode, platform}).toArray();
+function getResponses(quizId) {
+    return db.collection('quizResponse').find({quizId, mode, platform: {$in: platform}}).toArray();
 }
 
 function markQuizComplete(quizId, name) {
@@ -204,7 +204,7 @@ const mongoAPI = {
     createQuiz: createQuiz,
     getPublicHolidays:getPublicHolidays,
     populateEndDate: populateEndDate, //for testing
-    getStatistics: getStatistics,
+    getResponses: getResponses,
     markComplete: markCompletedQuizes
 };
 

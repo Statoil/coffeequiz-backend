@@ -80,9 +80,9 @@ router.delete('/quiz/:id', (req, res) => {
         });
 });
 
-//TODO: Add quizId to url
-router.post('/quiz/response', (req, res) => {
+router.post('/quiz/:id/response', (req, res) => {
     const quizResponse = req.body;
+    quizResponse.quizId = req.params.id;
     quizResponse.timestamp = new Date();
     logger.debug("quiz response: ", quizResponse);
     mongo.saveQuizResponse(quizResponse);

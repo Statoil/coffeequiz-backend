@@ -133,7 +133,7 @@ function saveImage(quizId, quizItemId, fileType, imageFile) {
 }
 
 router.get('/auth/stats/:quizId', (req, res) => {
-    mongo.getStatistics(req.params.quizId)
+    mongo.getResponses(req.params.quizId)
         .then(response => res.send(response));
 });
 
