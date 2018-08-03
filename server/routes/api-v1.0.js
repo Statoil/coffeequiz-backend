@@ -89,10 +89,9 @@ router.post('/quiz/response', (req, res) => {
     res.send({});
 });
 
-//TODO: Add quizId to url
-router.post('/quiz/image', upload.single('imageFile'), (req, res) => {
+router.post('/quiz/:id/image', upload.single('imageFile'), (req, res) => {
     const imageFile = req.file;
-    saveImage(req.body.quizId, req.body.quizItemId, req.body.fileType, imageFile)
+    saveImage(req.params.id, req.body.quizItemId, imageFile)
         .then(imageUrl => res.send({imageUrl}))
         .catch(error => {
             logger.error("Error when uploading image: " + error);
@@ -100,11 +99,11 @@ router.post('/quiz/image', upload.single('imageFile'), (req, res) => {
         });
 });
 
-function saveImage(quizId, quizItemId, fileType, imageFile) {
+function saveImage(quizId, quizItemId, imageFile) {
     if (isAzure) {
-        return azure.saveImage(quizId, quizItemId, fileType, imageFile);
+        return azure.saveImage(quizId, quizItemId, imageFile);
     }
-    return azure.saveImageFileSystem(quizId, quizItemId, fileType, imageFile);
+    return azure.saveImageFileSystem(quizId, quizItemId, imageFile);
 }
 
 router.get('/quiz/:quizId/responses', (req, res) => {

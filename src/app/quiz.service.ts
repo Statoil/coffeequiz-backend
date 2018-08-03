@@ -56,9 +56,14 @@ export class QuizService {
             })
     }
 
-    uploadFile(formData: FormData): Promise<any> {
+    uploadFile(quizId: string, quizItemId: number, file: any, fileType: string): Promise<any> {
+        const formData = new FormData();
+        formData.append('quizItemId', quizItemId.toString());
+        formData.append('imageFile', file);
+        formData.append('fileType', fileType);
+
         return this.http
-            .post('api/auth/quiz/image', formData)
+            .post(`api/v1.0/quiz/${quizId}/image`, formData)
             .toPromise()
     }
 

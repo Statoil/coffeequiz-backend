@@ -24,12 +24,7 @@ export class FileUploadComponent implements OnInit {
     onFileChange(event) {
         if(event.target.files.length > 0) {
             let file = event.target.files[0];
-            const formData = new FormData();
-            formData.append('quizId', this.quizId);
-            formData.append('quizItemId', this.quizItemId.toString());
-            formData.append('imageFile', file);
-            formData.append('fileType', file.type);
-            this.quizService.uploadFile(formData)
+            this.quizService.uploadFile(this.quizId, this.quizItemId, file, file.type)
                 .then(response => {
                     this.change.emit(response.imageUrl);
                     this.isLoading = false;
