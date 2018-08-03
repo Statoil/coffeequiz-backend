@@ -34,6 +34,10 @@ app.get('/ie', (req, res) => {
     res.sendFile(path.join(__dirname, '../dist/internet-explorer.html'));
 });
 
+app.get('/terms', (req, res) => {
+    res.sendFile(path.join(__dirname, '../dist/terms.html'));
+});
+
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../dist/index.html'));
 });
