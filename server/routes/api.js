@@ -6,7 +6,6 @@ const logger = require("../logger");
 const isAzure = process.env.BLOB_URL || false;
 const multer  = require('multer');
 const upload = multer({ dest: 'server/uploads/' });
-const path = require("path");
 const _ = require('lodash');
 
 mongo.connect()
@@ -17,11 +16,6 @@ mongo.connect()
                 res.status(401).send({error: 'Unauthorized'});
             }
             next();
-        });
-
-        router.get('/versioninfo', (req, res) => {
-            res.sendFile(path.join(__dirname, '../../dist/version.json'));
-
         });
 
         router.post('/quiz-response', (req, res) => {
