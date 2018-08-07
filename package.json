@@ -10,7 +10,7 @@
     "build": "ng build",
     "start": "node server/server.js",
     "lint": "ng lint",
-    "postinstall": "ng build --aot --prod && node server/version/version.js",
+    "postinstall": "node server/version/version.js",
     "test": "jasmine"
   },
   "private": true,
