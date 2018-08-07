@@ -9,7 +9,6 @@ import * as _ from 'lodash';
 })
 export class QuizFilterPipe implements PipeTransform {
     transform(quizList: Quiz[], filter: QuizFilter): any {
-        console.log("filter");
         if (!quizList || !filter) {
             return quizList;
         }
