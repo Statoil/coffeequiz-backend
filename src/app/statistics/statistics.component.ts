@@ -87,7 +87,7 @@ export class StatisticsComponent implements OnInit {
             statsPrQuestion.push(accumulatedStats);
         });
 
-        return _.orderBy(statsPrQuestion, ['quizItem.date'], ['asc']);
+        return _.sortBy(statsPrQuestion, (stat) => stat.quizItem.date.getTime());
     }
 
     private static getChartColors(answer: number):any {
