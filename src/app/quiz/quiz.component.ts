@@ -62,6 +62,8 @@ export class QuizComponent {
         if (this.quizItemEditComponent && this.quizItemEditComponent.hasUnsavedData()) {
             this.modalService.open(modalContent).result.then(() => {
                 this.setCurrentQuizItem(quizItem);
+            }, (reason) => {
+                console.log('Action cancelled. Reason: ' + reason);
             });
         }
         else {
