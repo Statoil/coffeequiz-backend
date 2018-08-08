@@ -7,7 +7,9 @@ const path = require("path");
 const logger = require("./logger");
 const cors = require('cors');
 const api = require('./routes/api');
+const api_v1_0 = require('./routes/api-v1.0');
 const http = require("http");
+const mongo = require("./mongoAPI");
 
 const port = process.env.PORT || 3000;
 
@@ -24,10 +26,20 @@ app.use((req, res, next) => {
     next();
 });
 
+mongo.connect();
+app.use('/api/v1.0', api_v1_0);
 app.use('/api', api);
 
 app.get('/ie', (req, res) => {
     res.sendFile(path.join(__dirname, '../dist/internet-explorer.html'));
+});
+
+app.get('/noaccess', (req, res) => {
+    res.sendFile(path.join(__dirname, '../dist/no-access.html'));
+});
+
+app.get('/terms', (req, res) => {
+    res.sendFile(path.join(__dirname, '../dist/terms.html'));
 });
 
 app.get('*', (req, res) => {

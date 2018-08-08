@@ -19,7 +19,8 @@
             "assets": [
               "src/assets",
               "src/favicon.ico",
-              "src/internet-explorer.html"
+              "src/internet-explorer.html",
+              "src/no-access.html"
             ],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",

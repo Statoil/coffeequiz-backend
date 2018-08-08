@@ -3,7 +3,7 @@ services:
 
   mongo:
     image: mongo:3.4
-    container_name: statoilquiz-mongo
+    container_name: coffeequiz-mongo
     ports:
       - 27018:27017
     volumes:

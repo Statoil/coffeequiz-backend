@@ -9,14 +9,18 @@ const _ = require('lodash');
 
 const url = process.env.DB_URL || 'mongodb://localhost:27018/coffeequiz';
 const mode = process.env.MODE || 'dev';
-const platform = process.env.PLATFORM || 'web';
+const platform = process.env.PLATFORM ? [process.env.PLATFORM] : ['web', 'ios'];
 let db;
 
-function connect() {
-    return MongoClient.connect(url)
+async function connect() {
+    await MongoClient.connect(url)
         .then(database => {
             logger.info("Connected to " + url);
             db = database;
+        })
+        .catch(error => {
+            logger.error(error);
+            process.exit();
         });
 }
 
@@ -70,7 +74,7 @@ function isPublicHoliday(date, publicHolidays) {
     return false;
 }
 
-function getQuizes() {
+function getAllQuizes() {
     return getPublicHolidays()
         .then(publicHolidays => {
             return db.collection('quiz').find().toArray()
@@ -100,8 +104,8 @@ function getEndDateForQuiz(quiz, publicHolidays) {
     return quiz.quizItems[quiz.quizItems.length - 1].date;
 }
 
-function getQuizesForApp() {
-    return getQuizes()
+function getNotCompletedQuizes() {
+    return getAllQuizes()
         .then(quizes => quizes.filter(quiz => moment(quiz.endTime).isSameOrAfter(moment().startOf('day'))));
 }
 
@@ -166,8 +170,8 @@ function saveQuiz(quiz) {
         });
 }
 
-function getStatistics(quizId) {
-    return db.collection('quizResponse').find({quizId, mode, platform}).toArray();
+function getResponses(quizId) {
+    return db.collection('quizResponse').find({quizId, mode, platform: {$in: platform}}).toArray();
 }
 
 function markQuizComplete(quizId, name) {
@@ -179,7 +183,7 @@ function markQuizComplete(quizId, name) {
 
 function markCompletedQuizes() {
     logger.info('Running job "Mark Completed Quizes"');
-    return getQuizes()
+    return getAllQuizes()
         .then(quizes => quizes.filter(quiz => quiz.phase === 'started').forEach(quiz => {
             if (moment().startOf('day').isSameOrAfter(moment(quiz.endTime).startOf('day').add(1, 'days'))) {
                 markQuizComplete(quiz.id, quiz.name);
@@ -187,12 +191,16 @@ function markCompletedQuizes() {
         }));
 }
 
+function getDevice(hash) {
+    return db.collection('client').findOne({hash});
+}
+
 
 const mongoAPI = {
     connect: connect,
     saveQuizResponse: saveQuizResponse,
-    getQuizes: getQuizes,
-    getQuizesForApp: getQuizesForApp,
+    getAllQuizes: getAllQuizes,
+    getNotCompletedQuizes: getNotCompletedQuizes,
     getQuiz: getQuiz,
     deleteQuiz: deleteQuiz,
     getQuizItems: getQuizItems,
@@ -200,8 +208,9 @@ const mongoAPI = {
     createQuiz: createQuiz,
     getPublicHolidays:getPublicHolidays,
     populateEndDate: populateEndDate, //for testing
-    getStatistics: getStatistics,
-    markComplete: markCompletedQuizes
+    getResponses: getResponses,
+    markComplete: markCompletedQuizes,
+    getDevice: getDevice
 };
 
 module.exports = mongoAPI;

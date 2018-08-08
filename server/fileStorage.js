@@ -11,12 +11,12 @@ const clientUploadPath = 'uploads';
 const path = require('path');
 
 
-function saveImage(quizId, quizItemId, fileType, imageFile) {
+function saveImage(quizId, quizItemId, imageFile) {
     return new Promise((resolve, reject) => {
 
         getExistingFilesInAzureUploadDir(quizId)
             .then(files => {
-                const fileName = getFileName(quizId, quizItemId, fileType, files);
+                const fileName = getFileName(quizId, quizItemId, imageFile.mimetype, files);
                 logger.debug("Creating blob: " + fileName);
                 blobService.createBlockBlobFromLocalFile(containerName, fileName, imageFile.path, (error) => {
                     if (!error) {
@@ -30,7 +30,7 @@ function saveImage(quizId, quizItemId, fileType, imageFile) {
     });
 }
 
-function saveImageFileSystem(quizId, quizItemId, fileType, imageFile) {
+function saveImageFileSystem(quizId, quizItemId, imageFile) {
     const uploadDir = path.join(uploadPath, quizId);
     if (!fs.existsSync(uploadDir)) {
         logger.debug("Creating upload directory: " + uploadDir);
@@ -38,7 +38,7 @@ function saveImageFileSystem(quizId, quizItemId, fileType, imageFile) {
     }
     return getExistingFilesInUploadDir(uploadDir)
         .then(files => {
-            let fileName = getFileName(quizId, quizItemId, fileType, files);
+            let fileName = getFileName(quizId, quizItemId, imageFile.mimetype, files);
             fs.renameSync(imageFile.path, path.join(uploadPath, fileName));
             return path.join(clientUploadPath, fileName);
         })
