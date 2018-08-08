@@ -15,7 +15,12 @@ export class AppComponent {
             .then(userInfo => {
                 this.isAuthenticated = userInfo.isAuthenticated;
                 if (!userInfo || !userInfo.isAuthenticated) {
-                    window.location.href = userInfo.loginUrl;
+                    if (userInfo.loginUrl) {
+                        window.location.href = userInfo.loginUrl;
+                    }
+                    else {
+                        window.location.href = '/noaccess';
+                    }
                 }
             })
     }

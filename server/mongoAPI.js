@@ -191,6 +191,10 @@ function markCompletedQuizes() {
         }));
 }
 
+function getDevice(hash) {
+    return db.collection('client').findOne({hash});
+}
+
 
 const mongoAPI = {
     connect: connect,
@@ -205,7 +209,8 @@ const mongoAPI = {
     getPublicHolidays:getPublicHolidays,
     populateEndDate: populateEndDate, //for testing
     getResponses: getResponses,
-    markComplete: markCompletedQuizes
+    markComplete: markCompletedQuizes,
+    getDevice: getDevice
 };
 
 module.exports = mongoAPI;

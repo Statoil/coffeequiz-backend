@@ -7,14 +7,47 @@ const isAzure = process.env.BLOB_URL || false;
 const multer  = require('multer');
 const upload = multer({ dest: 'server/uploads/' });
 const _ = require('lodash');
+const NodeCache = require( "node-cache" );
+const cache = new NodeCache({stdTTL: 3600 * 6});
 
 
-router.all('/*', (req, res, next) => {
-    if (isAzure && !req.get('X-MS-CLIENT-PRINCIPAL-NAME')) {
+router.all('/*', authenticate);
+
+async function authenticate(req, res, next) {
+    if (isAzure && (!authenticateAzureAD(req) && !await authenticateHeader(req))) {
         res.status(401).send({error: 'Unauthorized'});
     }
-    next();
-});
+    else {
+        next();
+    }
+}
+
+//User authenticated in AzureAD
+function authenticateAzureAD(request) {
+    return request.get('X-MS-CLIENT-PRINCIPAL-NAME');
+}
+
+//Client provides secret in header
+async function authenticateHeader(request) {
+    const token = request.get('X-COFFEEQUIZ-TOKEN');
+    if (!token) {
+        return false;
+    }
+    let isValid = cache.get(token);
+    if (isValid === undefined) {
+        isValid = await validateToken(token);
+        cache.set(token, isValid);
+    }
+    return isValid;
+}
+
+async function validateToken(token) {
+    // noinspection UnnecessaryLocalVariableJS
+    const hash = token;
+    let device = await mongo.getDevice(hash);
+    return (!_.isNil(device) && device.deviceName);
+}
+
 
 // --------------------------- QUIZ ----------------------------------
 
