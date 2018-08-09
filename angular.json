@@ -20,7 +20,8 @@
               "src/assets",
               "src/favicon.ico",
               "src/internet-explorer.html",
-              "src/no-access.html"
+              "src/no-access.html",
+              "src/terms.html"
             ],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
