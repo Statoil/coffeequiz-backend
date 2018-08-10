@@ -154,7 +154,7 @@ function saveImage(quizId, quizItemId, imageFile) {
 }
 
 router.get('/quiz/:quizId/responses', (req, res) => {
-    mongo.getStatistics(req.params.quizId)
+    mongo.getResponses(req.params.quizId)
         .then(response => res.send(response));
 });
 
