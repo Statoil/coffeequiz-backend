@@ -67,6 +67,11 @@ export class StatisticsComponent implements OnInit {
         const statsPrQuestion = [];
 
         Object.keys(prQuizItem).forEach(quizItemId => {
+            let quizItem = quizData.getQuizItem(Number(quizItemId));
+            if (!quizItem) {
+                console.error(`Statistics found, but no quiz data for quiz item id: ${quizItemId}`);
+                return;
+            }
             const quizGroup = prQuizItem[quizItemId];
             const accumulatedStats = quizGroup.reduce((accumulator, currentValue) => {
                 accumulator[currentValue.isCorrect ? 'correct' : 'incorrect']++;
@@ -74,7 +79,7 @@ export class StatisticsComponent implements OnInit {
                 return accumulator;
             }, {correct:0, incorrect:0, 1:0, 2:0, 3:0});
 
-            let quizItem = quizData.getQuizItem(Number(quizItemId));
+
             accumulatedStats.quizItem = quizItem;
             accumulatedStats.pieChartData = {
                 labels: [

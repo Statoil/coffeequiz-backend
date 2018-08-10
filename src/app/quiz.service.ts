@@ -8,8 +8,7 @@ import {QuizFilter} from "./quizfilter";
 
 @Injectable()
 export class QuizService {
-    private quizesUrl = 'api/auth/quizes';
-    private quizUrl = 'api/auth/quiz';
+    private baseUrl = 'api/v1.0';
     private quizFilter: QuizFilter = new QuizFilter(true, true, false);
 
 
@@ -17,7 +16,7 @@ export class QuizService {
     }
 
     getQuizes(): Observable<QuizMetadata[]> {
-        return this.http.get<QuizMetadata[]>(this.quizesUrl)
+        return this.http.get<QuizMetadata[]>(`${this.baseUrl}/quiz`)
             .pipe(
                 catchError(error => {
                     console.error(error);
@@ -27,7 +26,7 @@ export class QuizService {
     }
 
     getQuiz(quizId): Promise<Quiz> {
-        return this.http.get<Quiz[]>(`${this.quizUrl}/${quizId}`)
+        return this.http.get<Quiz[]>(`${this.baseUrl}/quiz/${quizId}`)
             .toPromise()
             .then(rawQuiz => Quiz.fromObj(rawQuiz))
             .catch(error => {
@@ -36,9 +35,20 @@ export class QuizService {
             })
     }
 
-    saveQuiz(quiz: any): Promise<Quiz> {
+    createQuiz(quiz: Quiz): Promise<Quiz> {
         return this.http
-            .put<any>(`${this.quizUrl}`, quiz)
+            .post<any>(`${this.baseUrl}/quiz`, quiz)
+            .toPromise()
+            .then(rawQuiz => Quiz.fromObj(rawQuiz))
+            .catch(error => {
+                console.error(error);
+                return null;
+            })
+    }
+
+    updateQuiz(quiz: Quiz): Promise<Quiz> {
+        return this.http
+            .put<any>(`${this.baseUrl}/quiz/${quiz._id}`, quiz)
             .toPromise()
             .then(rawQuiz => Quiz.fromObj(rawQuiz))
             .catch(error => {
@@ -49,7 +59,7 @@ export class QuizService {
 
     deleteQuiz(quiz: any): Promise<void> {
         return this.http
-            .delete<any>(`${this.quizUrl}/${quiz.id}`)
+            .delete<any>(`${this.baseUrl}/quiz/${quiz.id}`)
             .toPromise()
             .catch(error => {
                 console.error(error);
@@ -58,19 +68,18 @@ export class QuizService {
 
     uploadFile(quizId: string, quizItemId: number, file: any, fileType: string): Promise<any> {
         const formData = new FormData();
-        formData.append('quizId', quizId);
         formData.append('quizItemId', quizItemId.toString());
         formData.append('imageFile', file);
         formData.append('fileType', fileType);
 
         return this.http
-            .post(`/api/auth/quiz/image`, formData)
+            .post(`${this.baseUrl}/quiz/${quizId}/image`, formData)
             .toPromise()
     }
 
     userInfo() : Promise<any> {
         return this.http
-            .get<any>('api/userinfo')
+            .get<any>(`${this.baseUrl}/userinfo`)
             .toPromise()
             .catch(error => {
                 console.error(error);
@@ -79,7 +88,7 @@ export class QuizService {
 
     publicHolidays() : Promise<any> {
         return this.http
-            .get<any>('api/auth/publicholidays')
+            .get<any>(`${this.baseUrl}/publicholidays`)
             .toPromise()
             .catch(error => {
             console.error(error);
@@ -88,7 +97,7 @@ export class QuizService {
 
     statistics(quizId) : Promise<any> {
         return this.http
-            .get<any>(`api/auth/stats/${quizId}`)
+            .get<any>(`${this.baseUrl}/quiz/${quizId}/responses`)
             .toPromise()
             .catch(error => {
             console.error(error);

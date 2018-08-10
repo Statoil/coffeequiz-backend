@@ -81,25 +81,39 @@ router.get('/quiz/:id/items', (req, res) => {
         });
 });
 
-//TODO: Separate create & update quiz endpoints
-router.put('/quiz', (req, res) => {
-    saveQuiz(req.body, getUserIdFromRequest(req))
+//Update quiz
+router.put('/quiz/:id', (req, res) => {
+    const quizId = req.params.id;
+    const quiz = req.body;
+    if (quizId !== quiz._id) {
+        const errorMsg = `Integrity check fail - mismatch in url quizId(${quizId}) and object quizId(${quiz._id})`;
+        logger.error(errorMsg);
+        res.status(500).send({error: errorMsg});
+    }
+    else {
+        mongo.saveQuiz(quiz)
+            .then(quizId => mongo.getQuiz(quizId))
+            .then(quiz => res.send(quiz))
+            .catch(error => {
+                logger.error("Error when updating quiz: " + error);
+                res.status(500).send(error);
+            })
+    }
+});
+
+//Create quiz
+router.post('/quiz', (req, res) => {
+    const userId = getUserIdFromRequest(req);
+    const quiz = req.body;
+    logger.info(`User ${userId} creating new quiz: "${quiz.name}"`);
+    mongo.createQuiz(quiz)
         .then(quizId => mongo.getQuiz(quizId))
         .then(quiz => res.send(quiz))
         .catch(error => {
-            logger.error("Error when saving quiz: " + error);
+            logger.error("Error when creating quiz: " + error);
             res.status(500).send(error);
-        })
+        });
 });
-
-function saveQuiz(quiz, userId) {
-    if (!quiz._id) {
-        quiz.createdBy = userId;
-        logger.info(`User ${userId} creating new quiz: "${quiz.name}"`);
-        return mongo.createQuiz(quiz);
-    }
-    return mongo.saveQuiz(quiz);
-}
 
 router.delete('/quiz/:id', (req, res) => {
     const id = req.params.id;
@@ -140,7 +154,7 @@ function saveImage(quizId, quizItemId, imageFile) {
 }
 
 router.get('/quiz/:quizId/responses', (req, res) => {
-    mongo.getStatistics(req.params.quizId)
+    mongo.getResponses(req.params.quizId)
         .then(response => res.send(response));
 });
 
@@ -179,7 +193,7 @@ router.get('/publicholidays', (req, res) => {
 
 
 router.use((req, res) => {
-    logger.error("Non existing API route: " + req.originalUrl);
+    logger.error(`Non existing API route: ${req.method} ${req.originalUrl}`);
     res.status(400).send({error: "Bad request"});
 });
 
