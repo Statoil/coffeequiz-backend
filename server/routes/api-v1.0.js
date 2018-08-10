@@ -81,25 +81,36 @@ router.get('/quiz/:id/items', (req, res) => {
         });
 });
 
-//TODO: Separate create & update quiz endpoints
-router.put('/quiz', (req, res) => {
-    saveQuiz(req.body, getUserIdFromRequest(req))
-        .then(quizId => mongo.getQuiz(quizId))
+//Update quiz
+router.put('/quiz/:id', (req, res) => {
+    const quizId = req.params.id;
+    const quiz = req.body;
+    if (quizId !== quiz.id) {
+        const errorMsg = `Integrity check fail - mismatch in url quizId(${quizId}) and object quizId(${quiz.id})`;
+        logger.error(errorMsg);
+        res.status(500).send({error: errorMsg});
+    }
+    mongo.saveQuiz(quiz)
         .then(quiz => res.send(quiz))
         .catch(error => {
-            logger.error("Error when saving quiz: " + error);
+            logger.error("Error when updating quiz: " + error);
             res.status(500).send(error);
         })
 });
 
-function saveQuiz(quiz, userId) {
-    if (!quiz._id) {
-        quiz.createdBy = userId;
-        logger.info(`User ${userId} creating new quiz: "${quiz.name}"`);
-        return mongo.createQuiz(quiz);
-    }
-    return mongo.saveQuiz(quiz);
-}
+//Create quiz
+router.post('/quiz', (req, res) => {
+    const userId = getUserIdFromRequest(req);
+    const quiz = req.body;
+    logger.info(`User ${userId} creating new quiz: "${quiz.name}"`);
+    mongo.createQuiz(quiz)
+        .then(quizId => mongo.getQuiz(quizId))
+        .then(quiz => res.send(quiz))
+        .catch(error => {
+            logger.error("Error when creating quiz: " + error);
+            res.status(500).send(error);
+        });
+});
 
 router.delete('/quiz/:id', (req, res) => {
     const id = req.params.id;
