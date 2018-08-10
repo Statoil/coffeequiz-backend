@@ -100,7 +100,7 @@ export class QuizComponent {
     }
 
     saveQuiz(): Promise<Quiz> {
-        return this.quizService.saveQuiz(this.quiz);
+        return this.quizService.updateQuiz(this.quiz);
     }
 
     saveQuizItem(quizItem: QuizItem) {

@@ -85,17 +85,20 @@ router.get('/quiz/:id/items', (req, res) => {
 router.put('/quiz/:id', (req, res) => {
     const quizId = req.params.id;
     const quiz = req.body;
-    if (quizId !== quiz.id) {
-        const errorMsg = `Integrity check fail - mismatch in url quizId(${quizId}) and object quizId(${quiz.id})`;
+    if (quizId !== quiz._id) {
+        const errorMsg = `Integrity check fail - mismatch in url quizId(${quizId}) and object quizId(${quiz._id})`;
         logger.error(errorMsg);
         res.status(500).send({error: errorMsg});
     }
-    mongo.saveQuiz(quiz)
-        .then(quiz => res.send(quiz))
-        .catch(error => {
-            logger.error("Error when updating quiz: " + error);
-            res.status(500).send(error);
-        })
+    else {
+        mongo.saveQuiz(quiz)
+            .then(quizId => mongo.getQuiz(quizId))
+            .then(quiz => res.send(quiz))
+            .catch(error => {
+                logger.error("Error when updating quiz: " + error);
+                res.status(500).send(error);
+            })
+    }
 });
 
 //Create quiz
@@ -190,7 +193,7 @@ router.get('/publicholidays', (req, res) => {
 
 
 router.use((req, res) => {
-    logger.error("Non existing API route: " + req.originalUrl);
+    logger.error(`Non existing API route: ${req.method} ${req.originalUrl}`);
     res.status(400).send({error: "Bad request"});
 });
 

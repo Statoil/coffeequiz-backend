@@ -10,6 +10,8 @@ import {QuizFilter} from "./quizfilter";
 export class QuizService {
     private quizesUrl = 'api/auth/quizes';
     private quizUrl = 'api/auth/quiz';
+
+    private baseUrl = 'api/v1.0';
     private quizFilter: QuizFilter = new QuizFilter(true, true, false);
 
 
@@ -36,9 +38,20 @@ export class QuizService {
             })
     }
 
-    saveQuiz(quiz: any): Promise<Quiz> {
+    createQuiz(quiz: Quiz): Promise<Quiz> {
         return this.http
-            .put<any>(`${this.quizUrl}`, quiz)
+            .post<any>(`${this.baseUrl}/quiz`, quiz)
+            .toPromise()
+            .then(rawQuiz => Quiz.fromObj(rawQuiz))
+            .catch(error => {
+                console.error(error);
+                return null;
+            })
+    }
+
+    updateQuiz(quiz: Quiz): Promise<Quiz> {
+        return this.http
+            .put<any>(`${this.baseUrl}/quiz/${quiz._id}`, quiz)
             .toPromise()
             .then(rawQuiz => Quiz.fromObj(rawQuiz))
             .catch(error => {
