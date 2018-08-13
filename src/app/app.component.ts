@@ -13,18 +13,14 @@ export class AppComponent {
     constructor(private quizService: QuizService) {
         this.quizService.userInfo()
             .then(userInfo => {
-                this.isAuthenticated = userInfo.isAuthenticated;
-                if (userInfo && userInfo.isAuthenticated && userInfo.loginUrl) {
-                        window.location.href = userInfo.loginUrl;
-                }
-                else {
+                if (!userInfo || (!userInfo.isAuthenticated && !userInfo.loginUrl)) {
                     window.location.href = '/noaccess';
                 }
-            })
-            .catch(error => {
-                console.error(error);
-                window.location.href = '/noaccess';       
-            })
+                this.isAuthenticated = userInfo.isAuthenticated;
+                if (userInfo.loginUrl) {
+                    window.location.href = userInfo.loginUrl;
+                }
+            });
     }
 
 
