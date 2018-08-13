@@ -79,11 +79,8 @@ export class QuizService {
 
     userInfo() : Promise<any> {
         return this.http
-            .get<any>(`${this.baseUrl}/userinfo`)
+            .get<any>(`userinfo`)
             .toPromise()
-            .catch(error => {
-                console.error(error);
-            })
     }
 
     publicHolidays() : Promise<any> {

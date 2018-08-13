@@ -11,14 +11,28 @@ const NodeCache = require( "node-cache" );
 const cache = new NodeCache({stdTTL: 3600 * 6});
 
 
+// Excluded from authentication, by placement before auth filter
+router.get('/userinfo', (req, res) => {
+    let userId = getUserIdFromRequest(req);
+    const isAuthenticated = !_.isNil(userId) || !isAzure;
+    const loginUrl = process.env.LOGIN_URL;
+    res.send({userId, isAuthenticated, loginUrl});
+});
+
+
+function getUserIdFromRequest(req) {
+    let principalName = req.get('X-MS-CLIENT-PRINCIPAL-NAME');
+    return principalName ? principalName.split('@')[0] : null;
+}
+
 router.all('/*', authenticate);
 
 async function authenticate(req, res, next) {
-    if (isAzure && (!authenticateAzureAD(req) && !await authenticateHeader(req))) {
-        res.status(401).send({error: 'Unauthorized'});
+    if (!isAzure || authenticateAzureAD(req) || await authenticateHeader(req)) {
+        next();
     }
     else {
-        next();
+        res.status(401).send({error: 'Unauthorized'});
     }
 }
 
@@ -172,20 +186,6 @@ router.get('/quiz/complete', (req, res) => {
 
 // ------------------------- GENERAL --------------------------
 
-router.get('/userinfo', (req, res) => {
-    let userId = getUserIdFromRequest(req);
-    const isAuthenticated = !_.isNil(userId) || !isAzure;
-    const loginUrl = process.env.LOGIN_URL;
-    res.send({userId, isAuthenticated, loginUrl});
-});
-
-
-function getUserIdFromRequest(req) {
-    let principalName = req.get('X-MS-CLIENT-PRINCIPAL-NAME');
-    return principalName ? principalName.split('@')[0] : null;
-}
-
-
 router.get('/publicholidays', (req, res) => {
     mongo.getPublicHolidays()
         .then(publicHolidays => res.send(publicHolidays));
@@ -196,7 +196,6 @@ router.use((req, res) => {
     logger.error(`Non existing API route: ${req.method} ${req.originalUrl}`);
     res.status(400).send({error: "Bad request"});
 });
-
 
 
 module.exports = router;

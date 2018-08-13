@@ -21,6 +21,10 @@ export class AppComponent {
                     window.location.href = '/noaccess';
                 }
             })
+            .catch(error => {
+                console.error(error);
+                window.location.href = '/noaccess';       
+            })
     }
 
 
