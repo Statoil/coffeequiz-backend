@@ -14,13 +14,11 @@ export class AppComponent {
         this.quizService.userInfo()
             .then(userInfo => {
                 this.isAuthenticated = userInfo.isAuthenticated;
-                if (!userInfo || !userInfo.isAuthenticated) {
-                    if (userInfo.loginUrl) {
+                if (userInfo && userInfo.isAuthenticated && userInfo.loginUrl) {
                         window.location.href = userInfo.loginUrl;
-                    }
-                    else {
-                        window.location.href = '/noaccess';
-                    }
+                }
+                else {
+                    window.location.href = '/noaccess';
                 }
             })
     }
