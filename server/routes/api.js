@@ -9,6 +9,11 @@ const upload = multer({ dest: 'server/uploads/' });
 const _ = require('lodash');
 
 
+router.all('*', (req, res, next) => {
+    logger.warn("Using deprecated API: " + req.originalUrl);
+    next();
+});
+
 router.all('/auth/*', (req, res, next) => {
     if (isAzure && !req.get('X-MS-CLIENT-PRINCIPAL-NAME')) {
         res.status(401).send({error: 'Unauthorized'});

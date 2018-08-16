@@ -8,10 +8,14 @@ const multer  = require('multer');
 const upload = multer({ dest: 'server/uploads/' });
 const _ = require('lodash');
 const NodeCache = require( "node-cache" );
-const cache = new NodeCache({stdTTL: 3600 * 6});
+const cache = new NodeCache({stdTTL: 60 * 5}); //Device info cached for 5 minutes
+
+const TOKEN_KEY = 'X-COFFEEQUIZ-TOKEN';
+const DEVICE_NAME_KEY = "X-COFFEEQUIZ-DEVICE-NAME";
+const DEVICE_ID_KEY = "X-COFFEEQUIZ-DEVICE-ID";
 
 
-// Excluded from authentication, by placement before auth filter
+// ******************** Open Endpoints ************************
 router.get('/userinfo', (req, res) => {
     let userId = getUserIdFromRequest(req);
     const isAuthenticated = !_.isNil(userId) || !isAzure;
@@ -19,16 +23,31 @@ router.get('/userinfo', (req, res) => {
     res.send({userId, isAuthenticated, loginUrl});
 });
 
-
 function getUserIdFromRequest(req) {
     let principalName = req.get('X-MS-CLIENT-PRINCIPAL-NAME');
     return principalName ? principalName.split('@')[0] : null;
 }
 
-router.all('/*', authenticate);
+// **************** APP Endpoints ****************************
 
-async function authenticate(req, res, next) {
-    if (!isAzure || authenticateAzureAD(req) || await authenticateHeader(req)) {
+router.all('/app/*', authenticateApp);
+
+async function authenticateApp(req, res, next) {
+    const token = req.get(TOKEN_KEY);
+    if (!token) {
+        res.status(401).send({error: 'Unauthorized'});
+        return;
+    }
+    let device = cache.get(token);
+    if (_.isNil(device)) {
+        device = await mongo.getDevice(token);
+        if (device) {
+            cache.set(token, device);
+        }
+    }
+    if (device) {
+        req.headers[DEVICE_NAME_KEY] = device.deviceName;
+        req.headers[DEVICE_ID_KEY] = device._id.toString();
         next();
     }
     else {
@@ -36,42 +55,51 @@ async function authenticate(req, res, next) {
     }
 }
 
+router.get('/app/quiz/notcompleted', (req, res) => {
+    mongo.getNotCompletedQuizes()
+        .then(quizData => res.send(quizData));
+});
+
+
+router.post('/app/quiz/:id/response', (req, res) => {
+    const quizResponse = req.body;
+    quizResponse.quizId = req.params.id;
+    quizResponse.timestamp = new Date();
+    quizResponse.deviceId = req.headers[DEVICE_ID_KEY];
+    quizResponse.deviceName = req.headers[DEVICE_NAME_KEY];
+    logger.debug("quiz response: ", quizResponse);
+    mongo.saveQuizResponse(quizResponse);
+    res.send({});
+});
+
+router.get('/app/quiz/:id/items', (req, res) => {
+    const id = req.params.id;
+    mongo.getQuizItems(id)
+        .then(quiz => {
+            res.send(quiz ? quiz : {})
+        });
+});
+
+
+// **************** Admin Endpoints **************************
+
+
+router.all('/*', authenticateAzureAD);
+
 //User authenticated in AzureAD
-function authenticateAzureAD(request) {
-    return request.get('X-MS-CLIENT-PRINCIPAL-NAME');
-}
-
-//Client provides secret in header
-async function authenticateHeader(request) {
-    const token = request.get('X-COFFEEQUIZ-TOKEN');
-    if (!token) {
-        return false;
+function authenticateAzureAD(req, res, next) {
+    if (!isAzure || !_.isNil(req.get('X-MS-CLIENT-PRINCIPAL-NAME'))) {
+        next();
     }
-    let isValid = cache.get(token);
-    if (isValid === undefined) {
-        isValid = await validateToken(token);
-        cache.set(token, isValid);
+    else {
+        res.status(401).send({error: 'Unauthorized'});
     }
-    return isValid;
 }
-
-async function validateToken(token) {
-    // noinspection UnnecessaryLocalVariableJS
-    const hash = token;
-    let device = await mongo.getDevice(hash);
-    return (!_.isNil(device) && device.deviceName);
-}
-
 
 // --------------------------- QUIZ ----------------------------------
 
 router.get('/quiz', (req, res) => {
     mongo.getAllQuizes()
-        .then(quizData => res.send(quizData));
-});
-
-router.get('/quiz/notcompleted', (req, res) => {
-    mongo.getNotCompletedQuizes()
         .then(quizData => res.send(quizData));
 });
 
@@ -87,13 +115,7 @@ router.get('/quiz/:id', (req, res) => {
         });
 });
 
-router.get('/quiz/:id/items', (req, res) => {
-    const id = req.params.id;
-    mongo.getQuizItems(id)
-        .then(quiz => {
-            res.send(quiz ? quiz : {})
-        });
-});
+
 
 //Update quiz
 router.put('/quiz/:id', (req, res) => {
@@ -141,14 +163,6 @@ router.delete('/quiz/:id', (req, res) => {
         });
 });
 
-router.post('/quiz/:id/response', (req, res) => {
-    const quizResponse = req.body;
-    quizResponse.quizId = req.params.id;
-    quizResponse.timestamp = new Date();
-    logger.debug("quiz response: ", quizResponse);
-    mongo.saveQuizResponse(quizResponse);
-    res.send({});
-});
 
 router.post('/quiz/:id/image', upload.single('imageFile'), (req, res) => {
     const imageFile = req.file;

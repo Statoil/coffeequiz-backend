@@ -191,8 +191,8 @@ function markCompletedQuizes() {
         }));
 }
 
-function getDevice(hash) {
-    return db.collection('client').findOne({hash});
+function getDevice(token) {
+    return db.collection('device').findOne({token});
 }
 
 
@@ -207,7 +207,7 @@ const mongoAPI = {
     saveQuiz: saveQuiz,
     createQuiz: createQuiz,
     getPublicHolidays:getPublicHolidays,
-    populateEndDate: populateEndDate, //for testing
+    populateEndDate: populateEndDate, //exposed for testing
     getResponses: getResponses,
     markComplete: markCompletedQuizes,
     getDevice: getDevice
