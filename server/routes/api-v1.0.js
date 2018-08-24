@@ -141,6 +141,7 @@ router.put('/quiz/:id', (req, res) => {
 router.post('/quiz', (req, res) => {
     const userId = getUserIdFromRequest(req);
     const quiz = req.body;
+    quiz.createdBy = userId;
     logger.info(`User ${userId} creating new quiz: "${quiz.name}"`);
     mongo.createQuiz(quiz)
         .then(quizId => mongo.getQuiz(quizId))
