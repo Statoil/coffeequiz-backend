@@ -127,6 +127,7 @@ router.put('/quiz/:id', (req, res) => {
         res.status(500).send({error: errorMsg});
     }
     else {
+        quiz.createdBy = getUserIdFromRequest(req);
         mongo.saveQuiz(quiz)
             .then(quizId => mongo.getQuiz(quizId))
             .then(quiz => res.send(quiz))
