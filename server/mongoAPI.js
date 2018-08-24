@@ -106,7 +106,7 @@ function getEndDateForQuiz(quiz, publicHolidays) {
 
 function getNotCompletedQuizes() {
     return getAllQuizes()
-        .then(quizes => quizes.filter(quiz => moment(quiz.endTime).isSameOrAfter(moment().startOf('day'))));
+        .then(quizes => quizes.filter(quiz => quiz.phase.toUpperCase() !== 'COMPLETED'));
 }
 
 function getQuiz(quizId) {
