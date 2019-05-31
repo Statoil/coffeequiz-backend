@@ -2,9 +2,9 @@ version: '3'
 services:
 
   mongo:
-    image: mongo:3.4
+    image: mongo
     container_name: coffeequiz-mongo
     ports:
       - 27018:27017
     volumes:
-      - /data/statoilquiz/mongodb:/data/db
+      - /data/coffeequiz/mongodb:/data/db
