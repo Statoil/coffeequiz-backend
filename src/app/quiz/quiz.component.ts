@@ -16,7 +16,7 @@ import {DomSanitizer} from "@angular/platform-browser";
 })
 export class QuizComponent {
 
-    @ViewChild(QuizItemEditComponent)
+    @ViewChild(QuizItemEditComponent, {static: false})
     private quizItemEditComponent: QuizItemEditComponent;
 
     quiz: Quiz;
