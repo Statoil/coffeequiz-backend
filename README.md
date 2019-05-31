@@ -1,3 +1,3 @@
 # Coffeserver
 
-REST API and admin GUI for CoffeQuiz app
+REST API and admin GUI for CoffeeQuiz app
