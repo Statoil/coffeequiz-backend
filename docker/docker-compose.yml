@@ -7,4 +7,4 @@ services:
     ports:
       - 27018:27017
     volumes:
-      - /data/coffeequiz/mongodb:/data/db
+      - /opt/data/coffeequiz/mongodb:/data/db
