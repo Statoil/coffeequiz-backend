@@ -15,7 +15,7 @@ let db;
 async function connect() {
     await MongoClient.connect(url)
         .then(database => {
-            logger.info("Connected to " + url);
+            logger.info("Connected to " + url.substring(0, 15) + " ...");
             db = database;
         })
         .catch(error => {
