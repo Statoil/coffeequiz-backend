@@ -27,24 +27,32 @@ app.use((req, res, next) => {
 });
 
 mongo.connect();
+app.use(errorHandler);
+app.all('*', logRequest)
 app.use('/api/v1.0', api_v1_0);
 app.use('/api', api);
 
-app.get('/ie', (req, res) => {
-    res.sendFile(path.join(__dirname, '../dist/internet-explorer.html'));
-});
+app.get('/ie', (req, res) => res.sendFile(path.join(__dirname, '../dist/internet-explorer.html')));
+app.get('/noaccess', (req, res) => res.sendFile(path.join(__dirname, '../dist/no-access.html')));
+app.get('/terms', (req, res) => res.sendFile(path.join(__dirname, '../dist/terms.html')));
+app.get('*', (req, res) => res.sendFile(path.join(__dirname, '../dist/index.html')));
 
-app.get('/noaccess', (req, res) => {
-    res.sendFile(path.join(__dirname, '../dist/no-access.html'));
-});
+function errorHandler (err, req, res, next) {
+    logger.error(err.stack);
+    if (res.headersSent) {
+        return next(err)
+    }
+    res.status(500).send(err.stack);
+}
 
-app.get('/terms', (req, res) => {
-    res.sendFile(path.join(__dirname, '../dist/terms.html'));
-});
-
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../dist/index.html'));
-});
+function logRequest(req, res, next) {
+    let payloadLog = '';
+    if (Object.keys(req.body).length > 0) {
+        payloadLog = 'Payload: ' + JSON.stringify(req.body);
+    }
+    logger.debug(`${req.method} ${req.url} ${payloadLog}`);
+    next();
+}
 
 const server = http.createServer(app);
 server.listen(port,
