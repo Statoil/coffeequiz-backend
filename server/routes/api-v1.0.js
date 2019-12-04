@@ -184,7 +184,10 @@ function saveImage(quizId, quizItemId, imageFile) {
 
 router.get('/quiz/:quizId/responses', (req, res) => {
     mongo.getResponses(req.params.quizId)
-        .then(response => res.send(response));
+        .then(response => {
+            logger.debug("Returning responses: " + JSON.stringify(response));
+            res.send(response);
+        });
 });
 
 //Endpoint to mark completed quizes
