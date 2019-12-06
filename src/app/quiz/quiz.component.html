@@ -61,9 +61,9 @@
             <table class="table table-hover">
                 <thead>
                 <tr>
-                    <th style="width:110px">Date</th>
+                    <th style="width:148px">Date</th>
                     <th>Question</th>
-                    <th style="width:121px"></th>
+                    <th style="width:132px"></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -71,7 +71,8 @@
                     [ngClass]="{'table-primary':quizItem && (quizItem.quizItemId === quizItm.quizItemId)}">
                     <td>{{quizItm.date | date: 'EEE dd.&nbsp;MMM yy'}}</td>
                     <td>{{quizItm.question}}</td>
-                    <td>
+                    <td style="text-align: right;">
+                        <span [innerHtml]="icons.alert" *ngIf="!quizItm.isValid()" class="octicon-symbol" style="padding-right: 5px; fill:red;" ngbPopover="Quiz item has invalid or missing data!" triggers="mouseenter:mouseleave" placement="left"></span>
                         <button type="button" class="btn btn-outline-primary btn-sm octicon-button"
                                 (click)="moveUp(quizItm)" [innerHTML]="icons.up" *ngIf="!quizItm.isHistoric()" [disabled]="quizItm.isActiveToday()"></button>
 
@@ -80,7 +81,7 @@
 
                         <button type="button" class="btn btn-outline-primary btn-sm octicon-button"
                                 (click)="deleteQuizItem(quizItm, confirmDeleteContent)" [innerHTML]="icons.remove" *ngIf="!quizItm.isHistoric()" [disabled]="quizItm.isActiveToday()"></button>
-                        <span [innerHtml]="icons.lock" *ngIf="quizItm.isHistoric()" class="octicon-symbol" style="float:right" ngbPopover="Quiz items in the past are not editable" triggers="mouseenter:mouseleave" placement="left"></span>
+                        <span [innerHtml]="icons.lock" *ngIf="quizItm.isHistoric()" class="octicon-symbol" ngbPopover="Quiz items in the past are not editable" triggers="mouseenter:mouseleave" placement="left"></span>
                     </td>
                 </tr>
                 </tbody>
