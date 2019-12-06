@@ -15,7 +15,8 @@ export class QuizItem {
     ) {}
 
     static fromObj(rawQuizItem: any) {
-        return new QuizItem(rawQuizItem.quizItemId, rawQuizItem.imageUrl, rawQuizItem.question, rawQuizItem.alternative1,
+        //Special validation for image URL, as this for unknown reasons happens to be stored as an object on some rare occations
+        return new QuizItem(rawQuizItem.quizItemId, typeof rawQuizItem.imageUrl === "string" ? rawQuizItem.imageUrl : null, rawQuizItem.question, rawQuizItem.alternative1,
             rawQuizItem.alternative2, rawQuizItem.alternative3, rawQuizItem.answer, new Date(rawQuizItem.date));
     }
 
@@ -43,6 +44,11 @@ export class QuizItem {
 
     public isHistoric(): boolean {
         return moment(this.date).isBefore(moment().startOf('day'));
+    }
+
+    public isValid(): boolean {
+        return !_.isNil(this.imageUrl) && typeof this.imageUrl === "string" && !_.isNil(this.question) && !_.isNil(this.alternative1)
+        && !_.isNil(this.alternative2) && !_.isNil(this.alternative3) && !_.isNil(this.answer) ;
     }
 
     public isActiveToday(): boolean {
