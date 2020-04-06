@@ -6,4 +6,5 @@ Thumbs.db
 *.log
 *.iml
 /server/uploads/*
+.vscode
 !/server/uploads/.gitkeep
